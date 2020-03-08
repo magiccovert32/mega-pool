@@ -41,7 +41,7 @@ class Dashboard extends CI_Controller {
 
 		$data['user_details'] = $this->Usermaster_model->getUserDetailsByUserId($this->session->userdata('user_id'));
 
-		$this->front_template_inner->set('title', 'Mega Pool:: My Dashboard');
+		$this->front_template_inner->set('title', 'Supersportspool :: My Dashboard');
 		$this->front_template_inner->set('header', 'My Dashboard');
 		$this->front_template_inner->set('action', 'my_dashboard');	
 		$this->front_template_inner->set('page_icon', 'pe-7s-graph2');

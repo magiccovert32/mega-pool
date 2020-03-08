@@ -8,9 +8,7 @@
 			<hr>
 			<img class="img-fluid rounded" style="max-width: 50%" src="<?php echo base_url('assets/uploads/blog_logo/'.$blog_details['blog_image_path']); ?>" alt="">
 			<div style="min-height: calc(80vh - 100px);">
-				<p>
-					<?php echo $blog_details['blog_content']; ?>
-				</p>
+				<?php echo $blog_details['blog_content']; ?>
 				<br/>
 			</div>
 			
@@ -20,13 +18,7 @@
 
 <style>
 	img {
-    float: left;
-    margin: 0 20px 20px 0;
-}
-
-p {
-    text-align: justify;
-    text-indent: 2em;
-	font-size: 15px;
-}
+		float: left;
+		margin: 0 20px 20px 0;
+	}
 </style>

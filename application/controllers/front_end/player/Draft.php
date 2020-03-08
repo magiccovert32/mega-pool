@@ -105,7 +105,7 @@ class Draft extends CI_Controller {
 	public function draft(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Draft');
+		$this->front_template_inner->set('title', 'Supersportspool :: Draft');
 		$this->front_template_inner->set('header', 'Draft');	
 		$this->front_template_inner->set('action', 'my_draft');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-plus');

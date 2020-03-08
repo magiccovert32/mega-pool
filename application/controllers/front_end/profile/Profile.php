@@ -39,7 +39,7 @@ class Profile extends CI_Controller {
 
 		$data['user_details'] = $this->Usermaster_model->getUserDetailsByUserId($this->session->userdata('user_id'));
 
-		$this->front_template_inner->set('title', 'Mega Pool:: My Profile');
+		$this->front_template_inner->set('title', 'Supersportspool :: My Profile');
 		$this->front_template_inner->set('header', 'My Profile');
 		$this->front_template_inner->set('action', 'my_profile');	
 		$this->front_template_inner->set('page_icon', 'pe-7s-settings');			

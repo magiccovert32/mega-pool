@@ -121,7 +121,7 @@ class Blog extends CI_Controller {
 					if($_FILES){
 						if(!empty($_FILES['blog_image_path']["tmp_name"])){
 							#check size grater than 1MB
-							if($_FILES['blog_image_path']['size'] > 1000000){
+							if($_FILES['blog_image_path']['size'] > 2000000){
 								$this->session->set_flashdata('blog_item', array('message' => 'Please upload logo within 1MB.','class' => 'danger'));
 								redirect(base_url('admin-add-blog')); 
 							}else{
@@ -193,7 +193,7 @@ class Blog extends CI_Controller {
 					if($_FILES){
 						if(!empty($_FILES['blog_image_path']["tmp_name"])){
 							#check size grater than 1MB
-							if($_FILES['blog_image_path']['size'] > 1000000){
+							if($_FILES['blog_image_path']['size'] > 2000000){
 								$this->session->set_flashdata('blog_item', array('message' => 'Please upload logo within 1MB.','class' => 'danger'));
 								redirect(base_url('admin-edit-blog/'.$blog_id)); 
 							}else{

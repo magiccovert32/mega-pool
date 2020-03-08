@@ -142,9 +142,12 @@ $route['update-match-point']			= 'admin/match/update_match_point';
 
 $route['cms/about-us']		= 'admin/cms/about_us';
 $route['cms/contact-us']	= 'admin/cms/contact_us';
+$route['cms/privacy-policy']= 'admin/cms/privacy_policy';
 
 $route['about-us']		= 'front_end/cms/about_us';
 $route['contact-us']	= 'front_end/cms/contact_us';
+$route['privacy-policy']= 'front_end/cms/privacy_policy';
+
 /**
  * 
  * FRONT END ROUTE

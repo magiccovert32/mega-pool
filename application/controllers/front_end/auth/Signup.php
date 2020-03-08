@@ -43,7 +43,7 @@ class Signup extends CI_Controller {
 	public function create_account(){
 		$data = array();
 
-		$this->front_template_login->set('title', 'Mega Pool:: Create Account');
+		$this->front_template_login->set('title', 'Supersportspool :: Create Account');
 		$this->front_template_login->set('header', 'Create Account');				
 		$this->front_template_login->load('front_template_login', 'contents' , 'front_end/auth/signup/create_account', $data);
 	}
@@ -133,7 +133,7 @@ class Signup extends CI_Controller {
 	public function verify_account(){
 		$data = array();
 
-		$this->front_template_login->set('title', 'Mega Pool:: Verify Account');
+		$this->front_template_login->set('title', 'Supersportspool :: Verify Account');
 		$this->front_template_login->set('header', 'Verify Account');			
 
 		$link = $this->uri->segment(2);

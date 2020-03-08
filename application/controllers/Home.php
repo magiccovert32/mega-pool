@@ -31,9 +31,10 @@ class Home extends CI_Controller {
 	public function index(){
 		$data = array();
 
-		$this->front_template->set('title', 'Mega Pool:: Home');
+		$this->front_template->set('title', 'Supersportspool :: Home');
 		$this->front_template->set('header', 'Home');
-		
+		$this->front_template->set('action', 'home');
+
 		$data['blog'] = $this->Blog_model->getAllActiveBlog();
 		
 		$this->front_template->load('front_template', 'contents' , 'front_end/home/index', $data);
@@ -43,12 +44,14 @@ class Home extends CI_Controller {
 	public function blog_details(){
 		$data = array();
 
-		$this->front_template->set('title', 'Mega Pool:: Home');
+		$this->front_template->set('title', 'Supersportspool :: Blog');
 		$this->front_template->set('header', 'Home');
-		
+		$this->front_template->set('action', 'blog');
+
 		$blog_url = $this->uri->segment(2);
 		
 		if($data['blog_details'] = $this->Blog_model->getBlogDetails($blog_url)){
+			$this->front_template->set('title', 'Supersportspool :: '.$data['blog_details']['blog_title']);
 			$this->front_template->load('front_template', 'contents' , 'front_end/home/blog_details', $data);
 		}else{
 			$this->output->set_status_header('404');

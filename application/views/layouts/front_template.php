@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<link rel="icon" href="<?php echo base_url(); ?>/assets/images/fav.png" type="image/png" sizes="16x16">
-    <title>Modern Business - Start Bootstrap Template</title>
+    <title><?php echo $title; ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url(); ?>assets/new_assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +17,8 @@
     <link href="<?php echo base_url(); ?>assets/new_assets/css/modern-business.css" rel="stylesheet">
 	
 	<link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
-	
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i&display=swap" rel="stylesheet">	
+
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -28,7 +29,7 @@
 	
 	<style>
 		body{
-			font-family: nunito,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+			font-family: 'Lato', sans-serif;
 			font-size: 14px;
 			color: #212529;
 			background: #F8F9FA;
@@ -111,7 +112,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="<?php echo base_url('/'); ?>">
-				<img src="<?php echo base_url('assets/images/logo-inverse.png'); ?>?text=Supersportspool" alt="" width="40" height="40"> Supersportspool.com
+				<img src="<?php echo base_url('assets/images/logo-inverse.png'); ?>?text=Supersportspool" alt="" width="40" height="40"> Supersportspool
 			</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -119,13 +120,16 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('/'); ?>">Home</a>
+                        <a class="nav-link" <?php if($action == 'home'){ ?> style="color: #FFF !important;" <?php } ?> href="<?php echo base_url('/'); ?>">Home</a>
                     </li>
 					<li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('about-us'); ?>">About</a>
+                        <a class="nav-link" <?php if($action == 'about_us'){ ?> style="color: #FFF !important;" <?php } ?> href="<?php echo base_url('about-us'); ?>">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('contact-us'); ?>">Contact</a>
+                        <a class="nav-link" <?php if($action == 'contact_us'){ ?> style="color: #FFF !important;" <?php } ?> href="<?php echo base_url('contact-us'); ?>">Contact Us</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" <?php if($action == 'privacy_policy'){ ?> style="color: #FFF !important;" <?php } ?> href="<?php echo base_url('privacy-policy'); ?>">Privacy Policy</a>
                     </li>
                    
 					<?php if($this->session->userdata('user_session_id') != null){ ?>

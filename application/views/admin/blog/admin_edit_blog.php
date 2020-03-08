@@ -1,3 +1,5 @@
+<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="main-card mb-3 card">
@@ -73,3 +75,7 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	CKEDITOR.replace( 'blog_content' );
+</script>

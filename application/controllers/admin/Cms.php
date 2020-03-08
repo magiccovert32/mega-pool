@@ -44,7 +44,7 @@ class Cms extends CI_Controller {
 
 		$this->admin_template->set('title', 'About Page Content');
 		$this->admin_template->set('header', 'About Page Content');
-		$this->admin_template->set('action', 'cms');
+		$this->admin_template->set('action', 'about_us');
 		$this->admin_template->set('page_icon', 'pe-7s-plus');
 		
 		$data['page_details'] = $this->Cms_pages_model->getPageDetailsByPageUrl('about_us');
@@ -73,7 +73,7 @@ class Cms extends CI_Controller {
 
 		$this->admin_template->set('title', 'Contact Page Content');
 		$this->admin_template->set('header', 'Contact Page Content');
-		$this->admin_template->set('action', 'cms');
+		$this->admin_template->set('action', 'contact_us');
 		$this->admin_template->set('page_icon', 'pe-7s-plus');
 		
 		$data['page_details'] = $this->Cms_pages_model->getPageDetailsByPageUrl('contact_us');
@@ -93,6 +93,35 @@ class Cms extends CI_Controller {
 			redirect(base_url('cms/contact-us')); 
 		}else{
 			$this->admin_template->load('admin_template', 'contents' , 'admin/cms/contact_us', $data);
+		}
+	}
+	
+	
+	public function privacy_policy(){
+		$data = array();
+
+		$this->admin_template->set('title', 'Privacy Policy Content');
+		$this->admin_template->set('header', 'Privacy Policy Content');
+		$this->admin_template->set('action', 'privacy_policy');
+		$this->admin_template->set('page_icon', 'pe-7s-plus');
+		
+		$data['page_details'] = $this->Cms_pages_model->getPageDetailsByPageUrl('privacy_policy');
+		
+		if($this->input->post()){
+			$page_title			= trim($this->input->post('page_title'));
+			$page_content		= trim($this->input->post('page_content'));
+			
+			$cms_array = array(
+							'page_title' 	=> $page_title,
+							'page_content' 	=> $page_content,
+							);
+			
+			$this->Cms_pages_model->update($cms_array,'privacy_policy');
+			
+			$this->session->set_flashdata('item', array('message' => 'Page updated','class' => 'success'));
+			redirect(base_url('cms/privacy-policy')); 
+		}else{
+			$this->admin_template->load('admin_template', 'contents' , 'admin/cms/privacy_policy', $data);
 		}
 	}
 }

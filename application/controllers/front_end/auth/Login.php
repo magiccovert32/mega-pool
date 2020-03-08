@@ -39,7 +39,7 @@ class Login extends CI_Controller {
 		
 		$data = array();
 
-		$this->front_template_login->set('title', 'Mega Pool:: Account Login');
+		$this->front_template_login->set('title', 'Supersportspool :: Account Login');
 		$this->front_template_login->set('header', 'Account Login');				
 		$this->front_template_login->load('front_template_login', 'contents' , 'front_end/auth/login/account_login', $data);
 	}

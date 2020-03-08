@@ -104,7 +104,7 @@ class Megapool extends CI_Controller {
 	public function create_megapool(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Create Megapool');
+		$this->front_template_inner->set('title', 'Supersportspool :: Create Megapool');
 		$this->front_template_inner->set('header', 'Create Megapool');	
 		$this->front_template_inner->set('action', 'create_megapool');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-plus');	
@@ -206,7 +206,7 @@ class Megapool extends CI_Controller {
 	public function edit_megapool(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Edit Megapool');
+		$this->front_template_inner->set('title', 'Supersportspool :: Edit Megapool');
 		$this->front_template_inner->set('header', 'Edit Megapool');	
 		$this->front_template_inner->set('action', 'my_megapool');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-note');	
@@ -335,7 +335,7 @@ class Megapool extends CI_Controller {
 	public function view_megapool(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: View Megapool');
+		$this->front_template_inner->set('title', 'Supersportspool :: View Megapool');
 		$this->front_template_inner->set('header', 'View Megapool');	
 		$this->front_template_inner->set('action', 'view_megapool');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-note');	
@@ -498,7 +498,7 @@ class Megapool extends CI_Controller {
 	public function invite_player(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Invite Players');
+		$this->front_template_inner->set('title', 'Supersportspool :: Invite Players');
 		$this->front_template_inner->set('header', 'Invite Players');	
 		$this->front_template_inner->set('action', 'invite_player');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-add-user');	

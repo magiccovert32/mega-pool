@@ -104,7 +104,7 @@ class Draft extends CI_Controller {
 	public function create_draft(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Create Draft');
+		$this->front_template_inner->set('title', 'Supersportspool :: Create Draft');
 		$this->front_template_inner->set('header', 'Create Draft');	
 		$this->front_template_inner->set('action', 'create_draft');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-plus');
@@ -260,7 +260,7 @@ class Draft extends CI_Controller {
 	public function edit_draft(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Edit Draft');
+		$this->front_template_inner->set('title', 'Supersportspool :: Edit Draft');
 		$this->front_template_inner->set('header', 'Edit Draft');	
 		$this->front_template_inner->set('action', 'my_draft');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-note');
@@ -288,7 +288,7 @@ class Draft extends CI_Controller {
 	public function add_player(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: Add Player');
+		$this->front_template_inner->set('title', 'Supersportspool :: Add Player');
 		$this->front_template_inner->set('header', 'Add Player');	
 		$this->front_template_inner->set('action', 'my_draft');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-note');
@@ -411,7 +411,7 @@ class Draft extends CI_Controller {
 	public function view_draft(){
 		$data = array();
 
-		$this->front_template_inner->set('title', 'Mega Pool:: View Draft');
+		$this->front_template_inner->set('title', 'Supersportspool :: View Draft');
 		$this->front_template_inner->set('header', 'Draft Information');	
 		$this->front_template_inner->set('action', 'my_draft');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-note');
