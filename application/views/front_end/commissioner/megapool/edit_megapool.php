@@ -24,12 +24,12 @@
 								</div>
 							</div>
 							
-							<div class="col-sm-12 col-md-6">
+							<!--<div class="col-sm-12 col-md-6">
 								<div class="position-relative form-group">
 									<label for="entry_fee" class="">Entry Fee (USD) <small class="text-info">This fee will be required for any player to join this league.</small></label>
 									<input name="entry_fee" value="<?php echo $league_details['entry_fee']; ?>" id="entry_fee" placeholder="Enter entry fee" type="text" class="form-control" required="required" autocomlete="off">
 								</div>
-							</div>
+							</div>-->
 						</div>
 						
 						<div class="row">

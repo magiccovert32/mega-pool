@@ -186,8 +186,7 @@ class Draft extends CI_Controller {
 		$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/player/draft/draft_details', $data);
 	}
 	
-	function sorting($a,$b) 
-	{
+	function sorting($a,$b) {
 		return ($a["total_point"] >= $b["total_point"]) ? -1 : 1;
 	}
 	
@@ -233,5 +232,47 @@ class Draft extends CI_Controller {
 
 		echo json_encode($response);
 		die;
+	}
+	
+	
+	public function view_draft_standings_table(){
+		$data 		= array();
+		$draft_url	= $this->uri->segment(2);
+		
+		if($draft_url != ''){
+			$draft_details = $this->Draftmaster_model->getDraftDetailsByDraftUrl($draft_url);
+			
+			if($draft_details){
+				$leagueId = $draft_details['league_id'];
+								
+				$data['league_details'] 		= $this->Leaguemaster_model->getLeagueDetailsByLeagueIdByAdmin($leagueId);
+				$data['league_team_count'] 		= $this->Leaguemaster_model->getLeagueTeamCount($leagueId);
+				$data['league_team_position'] 	= $this->Leaguemaster_model->getLeagueTeamPositionPoint($leagueId);
+				$data['league_teams'] 			= $this->Leaguemaster_model->getAllTeamByLeagueId($leagueId);
+				
+				$team_score_position = array();
+				
+				if($data['league_teams']){
+					foreach($data['league_teams'] as $key=>$team){
+						$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
+						
+						if($teamResult){
+							$team['play_count'] = $teamResult['play_count'];
+							$team['draw_count'] = $teamResult['draw_count'];
+							$team['win_count'] 	= $teamResult['win_count'];
+							$team['total_point']= $teamResult['total_point'];
+						}
+						
+						$team_score_position[$key] = $team;
+					}
+				}
+				
+				usort($team_score_position, array($this,'sorting'));
+				
+				$data['team_score_position'] = $team_score_position;
+			}
+		}
+		
+		$this->load->view('front_end/player/draft/view_draft_standings_table', $data);
 	}
 }

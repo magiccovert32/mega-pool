@@ -357,12 +357,17 @@
 						</li>
 						
 						<li class="app-sidebar__heading">CMS Pages</li>
-						<li <?php if(in_array($action, array('about_us','contact_us','privacy_policy'))){ ?> class="mm-active" <?php } ?>>
+						<li <?php if(in_array($action, array('about_us','contact_us','privacy_policy','home_page'))){ ?> class="mm-active" <?php } ?>>
 							<a href="#">
 								<i class="metismenu-icon pe-7s-network"></i> Page Management
 								<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
 							</a>
 							<ul>
+								<li>
+									<a href="<?php echo  base_url('cms/home-page'); ?>" <?php if($action == 'home_page'){ ?> class="mm-active" <?php } ?>>
+										<i class="metismenu-icon"></i> Home Page
+									</a>
+								</li>
 								<li>
 									<a href="<?php echo  base_url('cms/about-us'); ?>" <?php if($action == 'about_us'){ ?> class="mm-active" <?php } ?>>
 										<i class="metismenu-icon"></i> About Page

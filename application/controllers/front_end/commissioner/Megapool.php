@@ -125,10 +125,10 @@ class Megapool extends CI_Controller {
 			$sport_id			= $this->input->post('sport_id');
 			$league_title		= trim($this->input->post('mega_pool_title'));
 			$selected_league 	= $this->input->post('selected_league');
-			$entry_fee 			= $this->input->post('entry_fee');
+			//$entry_fee 			= $this->input->post('entry_fee');
 			$user_id			= $this->session->userdata('user_id');
 
-			if($league_title != '' && $selected_league != '' && $_FILES != null && $sport_id != '' && is_array($sport_id) && is_numeric($entry_fee)){
+			if($league_title != '' && $selected_league != '' && $_FILES != null && $sport_id != '' && is_array($sport_id)){
 				#Check League name exists
 				if($this->Megapoolmaster_model->checkLeagueNameExists($league_title)){
 					$response = array('status' => 0,'message' => 'League name already exists into this system. Please try with different name.');
@@ -153,7 +153,7 @@ class Megapool extends CI_Controller {
 									$leagueData = array(
 													'related_sport_id'	=> implode(',',$sport_id),
 													'mega_pool_title' 	=> $league_title,
-													'entry_fee'			=> $entry_fee,
+													//'entry_fee'			=> $entry_fee,
 													'mega_pool_url'		=> strtolower($url),
 													'league_logo' 		=> $league_image,
 													'created_by' 		=> $user_id,
@@ -241,7 +241,7 @@ class Megapool extends CI_Controller {
 			$old_league_image	= trim($this->input->post('old_league_logo'));
 			$league_title		= trim($this->input->post('mega_pool_title'));
 			$league_status 		= trim($this->input->post('league_status'));
-			$entry_fee 			= $this->input->post('entry_fee');
+			//$entry_fee 			= $this->input->post('entry_fee');
 			$user_id			= $this->session->userdata('user_id');
 
 			$leagueDetails 		= $this->Megapoolmaster_model->getLeagueDetailsByUrlAndCommissionerId($league_url,$user_id);
@@ -249,7 +249,7 @@ class Megapool extends CI_Controller {
 			if($leagueDetails){
 				$league_id = $leagueDetails['mega_pool_id'];
 
-				if($league_title != '' && $selected_league != '' && $sport_id != '' && is_array($sport_id) && is_numeric($entry_fee)){
+				if($league_title != '' && $selected_league != '' && $sport_id != '' && is_array($sport_id)){
 					#Check League name exists
 					if($this->Leaguemaster_model->checkLeagueNameExistsWithOutLeagueId($league_title,$league_id)){
 						$response = array('status' => 0,'message' => 'League name already exists into this system. Please try with different name.');
@@ -286,7 +286,7 @@ class Megapool extends CI_Controller {
 										'mega_pool_title' 	=> $league_title,
 										'mega_pool_url'		=> strtolower($url),
 										'league_logo' 		=> $league_image,
-										'entry_fee'			=> $entry_fee,
+										//'entry_fee'			=> $entry_fee,
 										'current_status'	=> $league_status,
 										'last_modified_on'	=> @date('Y-m-d h:i:s'),
 										'last_modified_by' 	=> $user_id,
@@ -488,6 +488,49 @@ class Megapool extends CI_Controller {
 	}
 	
 	
+	public function my_invitation(){
+		$userId = $this->session->userdata('user_id');
+
+		$this->front_template_inner->set('title', 'Invitation Management');
+		$this->front_template_inner->set('header', 'Invitation Management');
+		$this->front_template_inner->set('action', 'my_invitation');
+		$this->front_template_inner->set('page_icon', 'pe-7s-note2');
+		
+		$data = array();
+		$config["base_url"] 		= base_url() . "my-invitation";
+		$config["total_rows"] 		= $this->Invitationmaster_model->getTotalInvitationCountCommissionerId($userId);
+		$config["uri_segment"] 		= 2;
+		$config["per_page"] 		= 50;
+		$choice 					= $config["total_rows"] / $config["per_page"];
+		$config["num_links"] 		= round($choice);
+		$config['use_page_numbers'] = true; 
+		$page 						= ($this->uri->segment($config["uri_segment"] )) ? $this->uri->segment($config["uri_segment"] ) : 0;
+		$data["invitation_list"] 	= $this->Invitationmaster_model->getAllInvitationByCommissionerId($page,$config["per_page"],$userId);
+		$config['full_tag_open'] 	= '<ul class="pagination pull-right">';
+		$config['full_tag_close'] 	= '</ul>';
+		$config['first_link'] 		= '&laquo; First';
+		$config['first_tag_open'] 	= '<li class="prev page">';
+		$config['first_tag_close'] 	= '</li>' . "\n";
+		$config['last_link'] 		= 'Last &raquo;';
+		$config['last_tag_open'] 	= '<li class="next page">';
+		$config['last_tag_close'] 	= '</li>' . "\n";
+		$config['next_link'] 		= 'Next &rarr;';
+		$config['next_tag_open'] 	= '<li class="next page">';
+		$config['next_tag_close'] 	= '</li>' . "\n";
+		$config['prev_link'] 		= '&larr; Previous';
+		$config['prev_tag_open'] 	= '<li class="prev page">';
+		$config['prev_tag_close'] 	= '</li>' . "\n";
+		$config['cur_tag_open'] 	= '<li class="active"><a href="">';
+		$config['cur_tag_close'] 	= '</a></li>';
+		$config['num_tag_open'] 	= '<li class="page">';
+		$config['num_tag_close'] 	= '</li>' . "\n";
+
+		$this->pagination->initialize($config);
+
+		$data["links"] 	= $this->pagination->create_links();
+			
+		$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/commissioner/megapool/my_invitation', $data);
+	}
 	
 	
 	/**

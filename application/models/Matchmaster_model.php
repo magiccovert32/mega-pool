@@ -39,7 +39,7 @@ class Matchmaster_model extends CI_Model {
 	 */
 	public function update($data,$match_id){
 		$this->db->where('match_id',$match_id);
-		$this->db->where('is_published','2');
+		//$this->db->where('is_published','2');
 
 		if($this->db->update('match_master',$data)){
 			return true;
@@ -60,7 +60,7 @@ class Matchmaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllMatchForAdmin($page=0,$perpage,$league_id){		
+	public function getAllMatchForAdmin($page=0,$perpage,$league_id,$team){		
 		$page = $page-1;
 		
 		if ($page<0) { 
@@ -70,16 +70,30 @@ class Matchmaster_model extends CI_Model {
 		$from = $page*$perpage;
 		$this->db->limit($perpage, $from);
 		
-		$query = $this->db->select("MM.*,TM1.team_title as home_team,TM1.team_logo as home_team_logo,TM2.team_title as away_team,TM2.team_logo as away_team_logo")
-                        ->from("match_master MM")
-						->join('teams_master TM1', 'TM1.team_id = MM.home_team_id', 'left')
-						->join('teams_master TM2', 'TM2.team_id = MM.away_team_id', 'left')
-						->where('league_id',$league_id)
-						->where('match_status != 3')
-						->group_by('MM.match_id')
-						->order_by('MM.match_date DESC')
-						->get();
-                        
+		if(strlen($team) > 0){
+			$query = $this->db->select("MM.*,TM1.team_title as home_team,TM1.team_logo as home_team_logo,TM2.team_title as away_team,TM2.team_logo as away_team_logo")
+							->from("match_master MM")
+							->join('teams_master TM1', 'TM1.team_id = MM.home_team_id', 'left')
+							->join('teams_master TM2', 'TM2.team_id = MM.away_team_id', 'left')
+							->where('league_id',$league_id)
+							->where("(TM1.team_title LIKE '%".$team."%' OR TM2.team_title LIKE '%".$team."%')")
+							->where('match_status != 3')
+							->group_by('MM.match_id')
+							->order_by('MM.match_date DESC')
+							->get();
+		}else{
+            $query = $this->db->select("MM.*,TM1.team_title as home_team,TM1.team_logo as home_team_logo,TM2.team_title as away_team,TM2.team_logo as away_team_logo")
+							->from("match_master MM")
+							->join('teams_master TM1', 'TM1.team_id = MM.home_team_id', 'left')
+							->join('teams_master TM2', 'TM2.team_id = MM.away_team_id', 'left')
+							->where('league_id',$league_id)
+							->where('match_status != 3')
+							->group_by('MM.match_id')
+							->order_by('MM.match_date DESC')
+							->get();            
+		}
+		
+		
         if($query->num_rows() > 0){
 			return $query->result_array();
 		}else{
@@ -96,12 +110,23 @@ class Matchmaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getTotalMatchCountForAdmin($league_id){				
-		$query = $this->db->select("COUNT(MM.match_id) as count")
+	public function getTotalMatchCountForAdmin($league_id,$team){
+		if(strlen($team) > 0){
+			$query = $this->db->select("COUNT(MM.match_id) as count")
+                        ->from("match_master MM")
+						->join('teams_master TM1', 'TM1.team_id = MM.home_team_id', 'left')
+						->join('teams_master TM2', 'TM2.team_id = MM.away_team_id', 'left')
+						->where('league_id',$league_id)
+						->where("(TM1.team_title LIKE '%".$team."%' OR TM2.team_title LIKE '%".$team."%')")
+						->where('match_status != 3')
+						->get();
+		}else{
+			$query = $this->db->select("COUNT(MM.match_id) as count")
                         ->from("match_master MM")
 						->where('league_id',$league_id)
 						->where('match_status != 3')
 						->get();
+		}
                         
         if($query->num_rows() > 0){
 			$count =  $query->row();
@@ -152,7 +177,7 @@ class Matchmaster_model extends CI_Model {
                         ->from("match_master MM")
 						->where('match_url',$matchUrl)
 						->where('match_status != 3')
-						->where('is_published',2)
+						//->where('is_published',2)
 						->get();
                         
         if($query->num_rows() > 0){

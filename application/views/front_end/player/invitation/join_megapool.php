@@ -26,7 +26,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 col-xl-4">
+					<!--<div class="col-md-6 col-xl-4">
 						<div class="widget-content">
 							<div class="widget-content-wrapper">
 								<div class="widget-content-right ml-0 mr-3">
@@ -38,7 +38,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>-->
 					<div class="col-md-6 col-xl-4">
 						<div class="widget-content">
 							<div class="widget-content-wrapper">

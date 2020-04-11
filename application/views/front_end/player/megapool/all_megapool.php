@@ -34,11 +34,11 @@
 												</div>
 											</div>
 										</div>
-										<div class="row">
+										<!--<div class="row">
 											<div class="col-sm-12">
 												<div class="widget-numbers text-success">Entry $<?php echo $list['entry_fee']; ?></div>
 											</div>
-										</div>
+										</div>-->
 									</div>
 									
 									<div class="widget-content-right widget-content-actions">

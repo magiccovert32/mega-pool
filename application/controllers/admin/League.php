@@ -52,7 +52,7 @@ class League extends CI_Controller {
 		$config["base_url"] 		= base_url() . "admin-league-management";
 		$config["total_rows"] 		= $this->Leaguemaster_model->getTotalLeagueCountForAdmin();
 		$config["uri_segment"] 		= 2;
-		$config["per_page"] 		= 10;
+		$config["per_page"] 		= 30;
 		$choice 					= $config["total_rows"] / $config["per_page"];
 		$config["num_links"] 		= round($choice);
 		$config['use_page_numbers'] = true; 

@@ -187,10 +187,10 @@ class Blog_model extends CI_Model {
 	 *
 	 */
 	public function getAllActiveBlog(){				
-		$query = $this->db->select("blog_id,blog_title,blog_url, SUBSTR(blog_content, 1, 200) AS blog_content,blog_image_path")
+		$query = $this->db->select("blog_id,SUBSTR(blog_title, 1, 25) AS blog_title,blog_url, SUBSTR(blog_content, 1, 5) AS blog_content,blog_image_path")
                         ->from("blog")
 						->where("status", '1')
-						//->order_by('blog_id DESC')
+						->order_by('blog_id DESC')
 						->get();
  
         if($query->num_rows() > 0){

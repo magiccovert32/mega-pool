@@ -22,11 +22,11 @@
 												</div>
 											</div>
 										</div>
-										<div class="row">
+										<!--<div class="row">
 											<div class="col-sm-12">
 												<span class="widget-numbers text-success">Entry $<?php echo $list['entry_fee']; ?></span>
 											</div>
-										</div>
+										</div>-->
 									</div>
 									<div class="widget-content-right widget-content-actions">
 										<button data-url="<?php echo $list['mega_pool_url']; ?>" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-success accept-invitation"><i class="ion-android-done-all btn-icon-wrapper"> </i>Accept</button>

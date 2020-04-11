@@ -231,9 +231,23 @@ class Megapoolmaster_model extends CI_Model {
 		}else{
 			return false;
 		}
-		
 	}
 
+	
+	public function getAllActiveDraftLeagueByPlayerId($userId){				
+		$query = $this->db->select("LM.league_id,league_title,DM.draft_url,DM.draft_title")
+						->from("draft_player_relation DPR")
+						->join('draft_master DM', 'DM.draft_id = DPR.draft_id', 'inner')
+						->join('leagues_master LM', 'LM.league_id = DM.league_id', 'inner')
+						->where('DPR.player_id',$userId)
+						->get();
+
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
 	
 	public function getAllPlayersByMegapoolLeagueId($page=0,$perpage, $leagueId){		
 		$page = $page-1;

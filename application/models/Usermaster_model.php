@@ -17,8 +17,13 @@ class Usermaster_model extends CI_Model {
 	 * @return result
 	 *
 	 */
-	public function getAuth($email,$password){
-		$query = $this->db->select("user_id,user_type_id,user_email,full_name,profile_image,current_status")->from("user_master")->where('user_email',$email)->where('user_password',$password)->get();
+	public function getAuth($email,$password,$user_type_id){
+		$query = $this->db->select("user_id,user_type_id,user_email,full_name,profile_image,current_status")
+							->from("user_master")
+							->where('user_email',$email)
+							->where('user_password',$password)
+							->where('user_type_id',$user_type_id)
+							->get();
 
 		if($query->num_rows() > 0){
 			return $query->row_array();
@@ -110,6 +115,19 @@ class Usermaster_model extends CI_Model {
 	}
 	
 	
+	public function checkEmailExistsByType($email,$user_type_id){				
+		$query = $this->db->select("user_id")
+                        ->from("user_master")
+						->where("user_email", $email)
+						->where("user_type_id", $user_type_id)
+						->get();
+ 
+        if($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 	public function checkEmailRecordExists($email){				
 		$query = $this->db->select("user_id")

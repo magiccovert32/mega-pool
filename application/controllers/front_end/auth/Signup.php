@@ -59,13 +59,14 @@ class Signup extends CI_Controller {
 			$full_name 		= trim($this->input->post('full_name'));	
 			$user_type_id 	= trim($this->input->post('user_type_id'));	
 			$login_email 	= trim($this->input->post('email'));
+			$dob 			= trim($this->input->post('dob'));
 			$login_password = md5(trim($this->input->post('password')));
 			
-			if($login_email != '' && $login_password != '' && $user_type_id != '' && $full_name != ''){
+			if($login_email != '' && $login_password != '' && $user_type_id != '' && $full_name != '' && $dob != ''){
 				if (!filter_var($login_email, FILTER_VALIDATE_EMAIL)) {
 					$response = array('status' => 0, 'message' => 'Please enter valid email address.');
 				}else{
-					$email_exists = $this->Usermaster_model->checkEmailExists($login_email);
+					$email_exists = $this->Usermaster_model->checkEmailExistsByType($login_email,$user_type_id);
 					
 					if(!$email_exists){
 						#save account information to database
@@ -77,6 +78,7 @@ class Signup extends CI_Controller {
 											'user_type_id'				=> $user_type_id,
 											'user_email'				=> $login_email,
 											'user_password'				=> $login_password,
+											'dob'						=> @date('Y-m-d', strtotime($dob)),
 											'email_verification_link' 	=> $email_verification_link,
 											'full_name'					=> $full_name
 											);

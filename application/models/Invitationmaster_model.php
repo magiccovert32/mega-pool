@@ -93,6 +93,55 @@ class Invitationmaster_model extends CI_Model {
 	}
 	
 	
+	/**
+	 *
+	 * Function used to get all invitation list count
+	 *
+	 * @return int
+	 * 
+	 *
+	 */
+	public function getTotalInvitationCountCommissionerId($userId){				
+		$query = $this->db->select("COUNT(IM.invitation_id ) as count")
+						->from("invitation_master IM")
+						->join('mega_pool_master MPM', 'MPM.mega_pool_id = IM.megapool_id', 'inner')
+						->where('MPM.created_by',$userId)
+						->get();
+                        
+        if($query->num_rows() > 0){
+			$count =  $query->row();
+			return $count->count;
+		}else{
+			return 0;
+		}
+	}
+	
+	
+	public function getAllInvitationByCommissionerId($page=0,$perpage, $userId){		
+		$page = $page-1;
+		
+		if ($page<0) { 
+			$page = 0;
+		}
+		
+		$from = $page*$perpage;
+		$this->db->limit($perpage, $from);
+		
+		$query = $this->db->select("IM.*,MPM.mega_pool_title")
+						->from("invitation_master IM")
+						->join('mega_pool_master MPM', 'MPM.mega_pool_id = IM.megapool_id', 'inner')
+						->where('MPM.created_by',$userId)
+						->group_by('IM.invitation_id')
+						->order_by('IM.created_date DESC')
+						->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+	
 	
 	public function checkInvitationByLeagueIdAndUserEmail($email,$id){				
 		$query = $this->db->select("COUNT(IM.invitation_id) as count")

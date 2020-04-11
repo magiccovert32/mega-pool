@@ -174,13 +174,13 @@ class Invitation extends CI_Controller {
 						if($this->Megapoolmaster_model->savePlayerRelation($joinData,$league_details['mega_pool_id'],$user_id)){
 							
 							#update wallet
-							$newWalletBalance = $wallet_details['wallet_balance'] - $league_details['entry_fee'];
-							
-							$walletData = array(
-											'wallet_balance' => $newWalletBalance,
-											);
-							
-							$this->Playerwallet_model->updateWallet($walletData,$user_id);
+							//$newWalletBalance = $wallet_details['wallet_balance'] - $league_details['entry_fee'];
+							//
+							//$walletData = array(
+							//				'wallet_balance' => $newWalletBalance,
+							//				);
+							//
+							//$this->Playerwallet_model->updateWallet($walletData,$user_id);
 							
 							#insert wallet transaction data
 							$transaction_id	= md5(@date('Y-m-d h:i:d').rand(100,300));
@@ -188,7 +188,7 @@ class Invitation extends CI_Controller {
 							$user_wallet_history = array(
 														'transaction_id'		=> $transaction_id,
 														'wallet_id' 	 		=> $wallet_details['player_wallet_id'],
-														'transaction_amount'	=> $league_details['entry_fee'],
+														//'transaction_amount'	=> $league_details['entry_fee'],
 														'transaction_type'		=> '2',
 														'megapool_id'			=> $league_details['mega_pool_id'],
 														'transaction_purpose'	=> 'Megapool - '.$league_details['mega_pool_title'].' joining fee'

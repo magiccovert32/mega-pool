@@ -42,7 +42,7 @@
 							<div class="col-sm-12 col-md-4">
 								<div class="position-relative form-group">
 									<label for="team_selection_ends_on" class="">Team Selection Ends On</label>
-									<input name="team_selection_ends_on" id="team_selection_ends_on" placeholder="Enter timeing" type="text" class="datepicker form-control" required="required" autocomlete="off">
+									<input readonly="readonly" name="team_selection_ends_on" id="team_selection_ends_on" placeholder="Enter timeing" type="text" class="datepicker form-control" required="required" autocomlete="off" value="31-12-2020">
 								</div>
 							</div>
 						</div>

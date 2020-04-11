@@ -119,12 +119,14 @@
 						</div>
 					<?php } ?>
 			<?php }else{ ?>
-				<div class="col-md-12">
-					<br/>
-					<div class="alert alert-danger fade show" role="alert">
-						<div>
-							<strong>Error</strong>
-							<div class="page-title-subheading">Nothing to display! Seems, there are no Draft created yet.</div>
+				<div class="row">
+					<div class="col-md-12">
+						<br/>
+						<div class="alert alert-danger fade show" role="alert">
+							<div>
+								<strong>Error</strong>
+								<div class="page-title-subheading">Nothing to display! Seems, there are no Draft created yet.</div>
+							</div>
 						</div>
 					</div>
 				</div>

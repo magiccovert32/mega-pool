@@ -8,14 +8,16 @@ $('#signup-btn').on('click', function(){
     $('.alert').hide();
 
     let full_name   = $.trim($('#full_name').val());
+	let dob   		= $.trim($('#dob').val());
     let email       = $.trim($('#email').val());
     let password    = $.trim($('#password').val());
     let cpassword   = $.trim($('#confirm-password').val());
     let error       = 0;
     let error_msg   = [];
     let email_ptr   = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    // check login fields
+	let dob_str		= /^\d{2}[./-]\d{2}[./-]\d{4}$/;
+    
+	// check login fields
     if(full_name == ''){
         error = 1;
         error_msg.push('Enter your full name.');
@@ -29,6 +31,16 @@ $('#signup-btn').on('click', function(){
     }else{
         error = 1;
         error_msg.push('Enter valid email address.');
+    }
+	
+	if(dob !== ''){
+        if(!dob_str.test(dob)){
+            error = 1;
+            error_msg.push('Enter valid date.');
+        }
+    }else{
+        error = 1;
+        error_msg.push('Enter date of birth.');
     }
 
     if(password !== ''){
@@ -60,7 +72,7 @@ $('#signup-btn').on('click', function(){
 
                     setTimeout(() => {
                         location.reload();
-                    }, 3000)
+                    }, 3000);
                 }else{
                     $('#signup-btn').removeAttr('disabled');
                     $('#error-msg').find('.alert_message').html(response.message);
@@ -81,3 +93,13 @@ $('#signup-btn').on('click', function(){
         $('#error-msg').show();
     }
 })
+
+
+$(function () {
+	$("#dob").datepicker({
+		endDate: '+0d',
+		autoclose: true, 
+		todayHighlight: true,
+		format: 'dd-mm-yyyy',
+	}).datepicker('update', new Date());
+});

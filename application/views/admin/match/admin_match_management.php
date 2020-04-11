@@ -32,6 +32,29 @@
 		</div>
 	</div>
 	
+	
+	<div class="col-lg-5">
+		<form action="#" method="get">
+			<div class="position-relative form-group">
+				<label for="exampleEmail" class="card-title">Search by team name</label>
+				<input name="team_name" id="team_name" placeholder="team name" type="text" class="form-control" autocomplete="off" value="<?php echo @$_GET['team_name']; ?>">
+				<button type="button" class="mt-1 btn btn-primary" onclick="searchTeam();">Search</button>
+			</div>
+		</form>
+	</div>
+	
+	<script>
+		function searchTeam(){
+			let team_name = $.trim($('#team_name').val());
+			
+			if(team_name.length > 0){
+				window.location.replace("<?php echo base_url('admin-match-management?league_id='.$_GET['league_id']); ?>&team_name="+team_name);
+			}else{
+				window.location.replace("<?php echo base_url('admin-match-management?league_id='.$_GET['league_id']); ?>");
+			}
+		}
+	</script>
+	
 	<div class="col-lg-12">
 		<div class="main-card mb-3 card">
 			<div class="card-header-tab card-header">
@@ -97,30 +120,18 @@
 									</div>
 								</div>
 								
-								<?php if($list['is_published'] == 2){ ?>
-									<div class="col-sm-12 col-md-1">
-										<div class="widget-content-wrapper" style="justify-content: center;">
-											<a href="<?php echo base_url('admin-edit-match/'.$list['match_url']); ?>">
-												<div class="text-info"><strong>Manage</strong></div>
-											</a>
-										</div>
-									</div>
-								<?php } ?>
+								<a href="<?php echo base_url('admin-edit-match/'.$list['match_url']); ?>">
+									<div class="badge badge-info ml-2">Edit</div>
+								</a>
 								
 								<?php if($list['is_published'] == 2){ ?>
-									<div class="col-sm-12 col-md-1">
-										<div class="widget-content-wrapper" style="justify-content: center;">
-											<a href="#" class="publish-match" data-match-id = "<?php echo $list['match_url']; ?>">
-												<button class="mt-1 btn btn-warning" type="button">Publish</button>
-											</a>
-										</div>
-									</div>
+									<a href="#" data-match-id = "<?php echo $list['match_url']; ?>">
+										<div class="badge badge-warning ml-2">Publish</div>
+									</a>
 								<?php }else{ ?>
-									<div class="col-sm-12 col-md-2">
-										<div class="widget-content-wrapper" style="justify-content: center;">
-											<strong class="text-success">Published</strong>
-										</div>
-									</div>
+									<a href="#">
+										<div class="badge badge-warning ml-2">Published</div>
+									</a>
 								<?php } ?>
 							</div>
 						</li>

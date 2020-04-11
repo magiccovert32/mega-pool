@@ -17,7 +17,7 @@
 </div>
 
 <style>
-	img {
+	.img-fluid {
 		float: left;
 		margin: 0 20px 20px 0;
 	}

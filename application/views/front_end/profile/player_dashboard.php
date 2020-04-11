@@ -46,3 +46,38 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="widget-heading text-dark">Select your Draft to see the Standing Table</h5>
+				<div class="row">
+					<div class="col-sm-12 col-md-4">
+						<div class="position-relative form-group">
+							<label for="megapool-id" class="">Draft List :</label>
+							<select name="select" id="draft-id" class="form-control">
+								<option value="">Choose...</option>
+								<?php if($league_list){ foreach($league_list as $league){ ?>
+									<option value="<?php echo $league['draft_url']; ?>"><?php echo $league['draft_title']; ?></option>
+								<?php }} ?>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div id="standing-table">
+					<div class="row">
+						<div class="col-sm-12 col-md-12">
+							<div class="alert alert-info fade show" role="alert">
+								<span class="alert-link">Megapool Standing Table</span> will be displayed here!
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="<?php echo base_url('assets/front_end/js/player/view_standing_table.js'); ?>" ></script>

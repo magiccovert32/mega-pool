@@ -26,6 +26,7 @@ class Home extends CI_Controller {
 		$this->load->library('session');
 		
 		$this->load->model("Blog_model");
+		$this->load->model("Cms_pages_model");
 	}
 	
 	public function index(){
@@ -35,7 +36,8 @@ class Home extends CI_Controller {
 		$this->front_template->set('header', 'Home');
 		$this->front_template->set('action', 'home');
 
-		$data['blog'] = $this->Blog_model->getAllActiveBlog();
+		$data['blog'] 			= $this->Blog_model->getAllActiveBlog();
+		$data['page_details'] 	= $this->Cms_pages_model->getPageDetailsByPageUrl('home_page');
 		
 		$this->front_template->load('front_template', 'contents' , 'front_end/home/index', $data);
 	}

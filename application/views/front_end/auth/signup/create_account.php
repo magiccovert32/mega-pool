@@ -1,3 +1,7 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" >
+
 <div class="h-100 d-flex bg-white justify-content-center align-items-center col-md-12 col-lg-8">
 	<div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
 		<div class="app-logo"></div>
@@ -35,6 +39,14 @@
 							<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" autocomplete="off">
 						</div>
 					</div>
+					
+					<div class="col-md-6">
+						<div class="position-relative form-group">
+							<label for="dob" class="card-title">DOB</label>
+							<input type="text" readonly="readonly" class="form-control" id="dob" placeholder="Enter date of birth" name="dob" autocomplete="off">
+						</div>
+					</div>
+					
 					<div class="col-md-6">
 						<div class="position-relative form-group">
 							<label for="password" class="card-title">Password</label>
@@ -72,61 +84,5 @@
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-<!-- <div class="container align-baseline">
-    <div class="jumbotron">
-        <div class="container">
-            <form method="post" id="signup-frm">
-                <div class="form-group">
-                    <label for="full_name">Full Name</label>
-                    <input type="text" class="form-control" id="full_name" placeholder="Enter your name" name="full_name" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <div>
-                        <label for="password">I am a</label>
-                    </div>
-                    <input type="radio"  name="user_type_id" value="1"> Commissioner 
-                    <input type="radio"  name="user_type_id" value="2" checked="checked"> Player
-                </div>
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password"  autocomplete="off" name="password">
-                </div>
-                <div class="form-group">
-                    <label for="password">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password"  autocomplete="off" name="confirm_password">
-                </div>
-                <button type="button" class="btn btn-primary" id="signup-btn">Create Account</button>
-            </form>
-            <div class="alert alert-danger display_none mt-2" role="alert" id="error-msg">
-                <h5 class="alert-heading">Please correct the following error(s)</h5>
-                <div class="alert_message">
-                
-                </div>
-            </div>
-            <div class="alert alert-success display_none mt-2" role="alert" id="success-msg">
-                <h5 class="alert-heading">Success</h5>
-                <div class="alert_message">
-                
-                </div>
-            </div>
-            <div class="divider"></div>
-            <p>
-                <small id="emailHelp" class="form-text text-muted">Already have an account? <a href="<?php echo base_url('account-login'); ?>">Sign in</a></small>
-            </p>
-        </div>
-    </div>
-</div> -->
 
 <script src="<?php echo base_url('assets/front_end/js/auth/create_account.js'); ?>" ></script>

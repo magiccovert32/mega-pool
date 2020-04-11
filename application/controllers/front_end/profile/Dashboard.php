@@ -53,6 +53,8 @@ class Dashboard extends CI_Controller {
 			
 			
 			$data['megapool_list'] 	= $this->Megapoolmaster_model->getAllActiveMegapoolByCommissionerId($this->session->userdata('user_id'));
+		}else{
+			$data['league_list'] 	= $this->Megapoolmaster_model->getAllActiveDraftLeagueByPlayerId($this->session->userdata('user_id'));
 		}
 		
 		if($this->session->userdata('user_type_id') == 2){

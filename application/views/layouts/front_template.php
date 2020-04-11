@@ -29,20 +29,26 @@
 	
 	<style>
 		body{
-			font-family: 'Lato', sans-serif;
+			font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
 			font-size: 14px;
-			color: #212529;
-			background: #F8F9FA;
+			color: #3c4257;
+			background: #FFFFFF;
 		}
 		
 		.card-title{
 			font-size: 26px;
-			font-family: nunito,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+			font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
 			color: rgb(221, 61, 49);
 		}
 		
 		a{
-			color: #0B2239;
+			color: #5469d4;
+			text-decoration: none !important;
+		}
+		
+		.nav-link{
+			color: #ccc;
+			text-decoration: none;
 		}
 		
 		.btn-md{

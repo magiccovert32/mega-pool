@@ -61,7 +61,7 @@
 									</div>
 								</div>
 								
-								<div class="col-md-4 col-xl-4">
+								<!--<div class="col-md-4 col-xl-4">
 									<div class="widget-content">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-right ml-0 mr-3">
@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                     </div>
-								</div>
+								</div>-->
 								
 								<div class="col-md-4 col-xl-4">
 									<div class="widget-content">
@@ -153,12 +153,14 @@
 					<?php } ?>
 				</ul>
 			<?php }else{ ?>
-				<div class="col-md-12">
-					<br/>
-					<div class="alert alert-danger fade show" role="alert">
-						<div>
-							<strong>Error</strong>
-							<div class="page-title-subheading">Nothing to display! Seems, there are no Mega Pool created yet.</div>
+				<div class="row">
+					<div class="col-md-12">
+						<br/>
+						<div class="alert alert-danger fade show" role="alert">
+							<div>
+								<strong>Error</strong>
+								<div class="page-title-subheading">Nothing to display! Seems, there are no Mega Pool created yet.</div>
+							</div>
 						</div>
 					</div>
 				</div>

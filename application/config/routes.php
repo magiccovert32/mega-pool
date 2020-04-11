@@ -143,6 +143,7 @@ $route['update-match-point']			= 'admin/match/update_match_point';
 $route['cms/about-us']		= 'admin/cms/about_us';
 $route['cms/contact-us']	= 'admin/cms/contact_us';
 $route['cms/privacy-policy']= 'admin/cms/privacy_policy';
+$route['cms/home-page']		= 'admin/cms/home_page';
 
 $route['about-us']		= 'front_end/cms/about_us';
 $route['contact-us']	= 'front_end/cms/contact_us';
@@ -178,19 +179,21 @@ $route['update-password']   = 'front_end/profile/profile/update_password';
 
 
 #megapool route for commissioner
-$route['my-megapool']           	= 'front_end/commissioner/megapool/my_megapool';
-$route['my-megapool/(:num)']    	= 'front_end/commissioner/megapool/my_megapool/$1';
-$route['create-megapool']       	= 'front_end/commissioner/megapool/create_megapool';
-$route['save-megapool']         	= 'front_end/commissioner/megapool/save_megapool';
-$route['edit-megapool/(:any)']  	= 'front_end/commissioner/megapool/edit_megapool/$1';
-$route['update-megapool']       	= 'front_end/commissioner/megapool/update_megapool';
-$route['publish-megapool']      	= 'front_end/commissioner/megapool/publish_megapool';
-$route['remove-megapool']       	= 'front_end/commissioner/megapool/remove_megapool';
-$route['get-related-league-by-sport-id'] = 'front_end/commissioner/megapool/get_related_league_by_sport_id';
-$route['invite-player/(:any)']  	= 'front_end/commissioner/megapool/invite_player/$1';
-$route['send-invitation']  			= 'front_end/commissioner/megapool/send_invitation';
-$route['view-megapool/(:any)']		= 'front_end/commissioner/megapool/view_megapool/$1';
-$route['megapool-players/(:any)']	= 'front_end/commissioner/megapool/megapool_players/$1';
+$route['my-megapool']           			= 'front_end/commissioner/megapool/my_megapool';
+$route['my-megapool/(:num)']    			= 'front_end/commissioner/megapool/my_megapool/$1';
+$route['create-megapool']       			= 'front_end/commissioner/megapool/create_megapool';
+$route['save-megapool']         			= 'front_end/commissioner/megapool/save_megapool';
+$route['edit-megapool/(:any)']  			= 'front_end/commissioner/megapool/edit_megapool/$1';
+$route['update-megapool']       			= 'front_end/commissioner/megapool/update_megapool';
+$route['publish-megapool']      			= 'front_end/commissioner/megapool/publish_megapool';
+$route['remove-megapool']       			= 'front_end/commissioner/megapool/remove_megapool';
+$route['get-related-league-by-sport-id'] 	= 'front_end/commissioner/megapool/get_related_league_by_sport_id';
+$route['invite-player/(:any)']  			= 'front_end/commissioner/megapool/invite_player/$1';
+$route['send-invitation']  					= 'front_end/commissioner/megapool/send_invitation';
+$route['my-invitation']  					= 'front_end/commissioner/megapool/my_invitation';
+$route['my-invitation/(:num)']  			= 'front_end/commissioner/megapool/my_invitation/$1';
+$route['view-megapool/(:any)']				= 'front_end/commissioner/megapool/view_megapool/$1';
+$route['megapool-players/(:any)']			= 'front_end/commissioner/megapool/megapool_players/$1';
 $route['megapool-players/(:any)/(:num)']	= 'front_end/commissioner/megapool/megapool_players/$1/$1';
 $route['view-standings-table/(:any)']		= 'front_end/commissioner/megapool/view_standings_table/$1';
 
@@ -208,10 +211,11 @@ $route['add-player/(:any)']  		= 'front_end/commissioner/draft/add_player/$1';
 $route['attatch-player-to-draft']  	= 'front_end/commissioner/draft/attatch_player_to_draft';
 
 #draft route for players
-$route['draft/(:any)']  		= 'front_end/player/draft/draft/$1';
-$route['submit-team']   		= 'front_end/player/draft/submit_team';
-$route['manage-draft']          = 'front_end/player/draft/manage_draft';
-$route['manage-draft/(:num)']   = 'front_end/player/draft/manage_draft/$1';
+$route['draft/(:any)']  					= 'front_end/player/draft/draft/$1';
+$route['submit-team']   					= 'front_end/player/draft/submit_team';
+$route['manage-draft']          			= 'front_end/player/draft/manage_draft';
+$route['manage-draft/(:num)']   			= 'front_end/player/draft/manage_draft/$1';
+$route['view-draft-standings-table/(:any)'] = 'front_end/player/draft/view_draft_standings_table/$1';
 
 #player wallet
 $route['my-wallet']                     = 'front_end/player/wallet/my_wallet';

@@ -34,6 +34,90 @@ class Cms extends CI_Controller {
 	}
 	
 	
+	public function home_page(){
+		$data = array();
+
+		$this->admin_template->set('title', 'Home Page Content');
+		$this->admin_template->set('header', 'Home Page Content');
+		$this->admin_template->set('action', 'home_page');
+		$this->admin_template->set('page_icon', 'pe-7s-plus');
+		
+		$data['page_details'] = $this->Cms_pages_model->getPageDetailsByPageUrl('home_page');
+		
+		if($this->input->post()){
+			$page_title			= trim($this->input->post('page_title'));
+			$small_content		= trim($this->input->post('small_content'));
+			$old_banner_image	= trim($this->input->post('old_banner_image'));
+			$old_small_image	= trim($this->input->post('old_small_image'));
+			$page_content		= trim($this->input->post('page_content'));
+			
+			#Validate and save blog logo
+			if($_FILES){
+				if(!empty($_FILES['banner_image']["tmp_name"])){
+					#check size grater than 1MB
+					if($_FILES['banner_image']['size'] > 2000000){
+						$this->session->set_flashdata('blog_item', array('message' => 'Please upload banner within 2MB.','class' => 'danger'));
+						redirect(base_url('cms/home-page')); 
+					}else{
+						$imageName 		= md5(strtotime(@date('y-m-d h:i:s')).'_'.rand(111111,999999));
+						$imageFileType 	= pathinfo($_FILES["banner_image"]["name"],PATHINFO_EXTENSION);
+						
+						if (move_uploaded_file($_FILES["banner_image"]["tmp_name"], 'assets/uploads/cms/'.$imageName.'.'.$imageFileType)) {
+							$banner_image = $imageName.'.'.$imageFileType;
+							
+							unlink('assets/uploads/cms/'.$old_banner_image);
+						}else{
+							$this->session->set_flashdata('item', array('message' => 'Something went wrong, while uploading banner. Please try again later.','class' => 'danger'));
+							redirect(base_url('cms/home-page')); 
+						}
+					}
+				}else{
+					$banner_image = $old_banner_image;
+				}
+				
+				if(!empty($_FILES['small_image']["tmp_name"])){
+					#check size grater than 1MB
+					if($_FILES['small_image']['size'] > 2000000){
+						$this->session->set_flashdata('blog_item', array('message' => 'Please upload small image within 2MB.','class' => 'danger'));
+						redirect(base_url('cms/home-page')); 
+					}else{
+						$imageName 		= md5(strtotime(@date('y-m-d h:i:s')).'_'.rand(111111,999999));
+						$imageFileType 	= pathinfo($_FILES["small_image"]["name"],PATHINFO_EXTENSION);
+						
+						if (move_uploaded_file($_FILES["small_image"]["tmp_name"], 'assets/uploads/cms/'.$imageName.'.'.$imageFileType)) {
+							$small_image = $imageName.'.'.$imageFileType;
+							
+							unlink('assets/uploads/cms/'.$old_small_image);
+						}else{
+							$this->session->set_flashdata('item', array('message' => 'Something went wrong, while uploading small image. Please try again later.','class' => 'danger'));
+							redirect(base_url('cms/home-page')); 
+						}
+					}
+				}else{
+					$small_image = $old_small_image;
+				}
+			}else{
+				$small_image = $old_small_image;
+			}
+			
+			$cms_array = array(
+						'page_title' 	=> $page_title,
+						'small_content' => $small_content,
+						'banner_image' 	=> $banner_image,
+						'page_content' 	=> $page_content,
+						'small_image' 	=> $small_image,
+						);
+			
+			$this->Cms_pages_model->update($cms_array,'home_page');
+			
+			$this->session->set_flashdata('item', array('message' => 'Page updated','class' => 'success'));
+			redirect(base_url('cms/home-page')); 
+		}else{
+			$this->admin_template->load('admin_template', 'contents' , 'admin/cms/home_page', $data);
+		}
+	}
+	
+	
 	/**
 	 *
 	 * Function used to display about us page

@@ -168,12 +168,13 @@ class Login extends CI_Controller {
 		if($this->input->post()){			
 			$login_email 	= trim($this->input->post('email'));
 			$login_password = md5(trim($this->input->post('password')));
+			$user_type_id 	= trim($this->input->post('user_type_id'));	
 			
-			if($login_email != '' && $login_password != ''){
+			if($login_email != '' && $login_password != '' && $user_type_id != ''){
 				if (!filter_var($login_email, FILTER_VALIDATE_EMAIL)) {
 					$response = array('status' => 0, 'message' => 'Please enter valid email address.');
 				}else{
-					$login_result = $this->Usermaster_model->getAuth($login_email,$login_password);
+					$login_result = $this->Usermaster_model->getAuth($login_email,$login_password,$user_type_id);
 					
 					if($login_result){
 						if($login_result['current_status'] == 4){

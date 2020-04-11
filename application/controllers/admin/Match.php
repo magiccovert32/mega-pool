@@ -54,16 +54,17 @@ class Match extends CI_Controller {
 		$data['league_list'] 		= $this->Leaguemaster_model->getAllActiveLeagues();
 		
 		if(!empty($_GET['league_id'])){
+			$team_name					= @$_GET['team_name'];
 			$config["base_url"] 		= base_url() . "admin-match-management";
 			$config['suffix'] 			= '?' . http_build_query($_GET, '', "&");
-			$config["total_rows"] 		= $this->Matchmaster_model->getTotalMatchCountForAdmin($_GET['league_id']);
+			$config["total_rows"] 		= $this->Matchmaster_model->getTotalMatchCountForAdmin($_GET['league_id'],$team_name);
 			$config["uri_segment"] 		= 2;
-			$config["per_page"] 		= 20;
+			$config["per_page"] 		= 100;
 			$choice 					= $config["total_rows"] / $config["per_page"];
 			$config["num_links"] 		= round($choice);
 			$config['use_page_numbers'] = true; 
 			$page 						= ($this->uri->segment($config["uri_segment"] )) ? $this->uri->segment($config["uri_segment"] ) : 0;
-			$data["match_list"] 		= $this->Matchmaster_model->getAllMatchForAdmin($page,$config["per_page"],$_GET['league_id']);
+			$data["match_list"] 		= $this->Matchmaster_model->getAllMatchForAdmin($page,$config["per_page"],$_GET['league_id'],$team_name);
 			$config['full_tag_open'] 	= '<ul class="pagination pull-right">';
 			$config['full_tag_close'] 	= '</ul>';
 			$config['first_link'] 		= '&laquo; First';

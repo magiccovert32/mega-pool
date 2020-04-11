@@ -50,7 +50,7 @@ class Team extends CI_Controller {
 		$config["base_url"] 		= base_url() . "admin-team-management";
 		$config["total_rows"] 		= $this->Teammaster_model->getTotalTeamCountForAdmin();
 		$config["uri_segment"] 		= 2;
-		$config["per_page"] 		= 10;
+		$config["per_page"] 		= 100;
 		$choice 					= $config["total_rows"] / $config["per_page"];
 		$config["num_links"] 		= round($choice);
 		$config['use_page_numbers'] = true; 

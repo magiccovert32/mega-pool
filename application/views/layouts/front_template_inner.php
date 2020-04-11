@@ -212,6 +212,23 @@
 								</li>
 							</ul>
 						</li>
+						
+						<?php if($this->session->userdata('user_type_id') == 1){ ?>
+							<li <?php if($action == 'my_invitation'){ ?> class="mm-active" <?php } ?>>
+								<a href="#">
+									<i class="metismenu-icon pe-7s-next-2"></i>
+									Invitations
+									<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+								</a>
+								<ul>
+									<li>
+										<a href="<?php echo  base_url('my-invitation'); ?>" <?php if($action == 'my_invitation'){ ?> class="mm-active" <?php } ?>>
+											<i class="metismenu-icon"></i> View
+										</a>
+									</li>
+								</ul>
+							</li>
+						<?php } ?>
 
                         <?php if($this->session->userdata('user_type_id') == 1){ ?>
 							<li class="app-sidebar__heading">Megapool</li>

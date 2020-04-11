@@ -18,12 +18,12 @@
 								<input name="mega_pool_title" id="mega_pool_title" placeholder="League name" type="text" class="form-control" required="required" autocomlete="off">
 							</div>
 						</div>
-						<div class="col-sm-12 col-md-4">
+						<!--<div class="col-sm-12 col-md-4">
 							<div class="position-relative form-group">
 								<label for="entry_fee" class="">Entry Fee (USD)</label>
 								<input name="entry_fee" id="entry_fee" placeholder="Enter entry fee" type="text" class="form-control" required="required" autocomlete="off">
 							</div>
-						</div>
+						</div>-->
 					</div>
 					
 					<div class="row">
