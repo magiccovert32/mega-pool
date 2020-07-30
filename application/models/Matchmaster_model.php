@@ -177,7 +177,6 @@ class Matchmaster_model extends CI_Model {
                         ->from("match_master MM")
 						->where('match_url',$matchUrl)
 						->where('match_status != 3')
-						//->where('is_published',2)
 						->get();
                         
         if($query->num_rows() > 0){
@@ -223,6 +222,92 @@ class Matchmaster_model extends CI_Model {
 	
 	
 	public function getTeamWinningRelation($team_id,$league_id,$win_point,$draw_point){
+		$total_point = 0;
+		
+		#calculate match played
+		$query = $this->db->select("COUNT(match_id) as total_played")
+                        ->from("match_master MM")
+						->where('(MM.home_team_id = '.$team_id.' OR MM.away_team_id = '.$team_id.')')
+						->where('MM.match_status != 3')
+						->where('MM.is_published',1)
+						->where('MM.league_id',$league_id)
+						->get();
+ 
+        if($query->num_rows() > 0){
+			$played = $query->row_array();
+			$played = $played['total_played'];
+		}else{
+			$played = 0;
+		}
+		
+		#calculate total draw
+		$query = $this->db->select("COUNT(match_id) as total_draw")
+                        ->from("match_master MM")
+						->where('(MM.home_team_id = '.$team_id.' OR MM.away_team_id = '.$team_id.')')
+						->where('MM.home_team_score = MM.away_team_score')
+						->where('MM.match_status != 3')
+						->where('MM.is_published',1)
+						->where('MM.league_id',$league_id)
+						->get();
+ 
+        if($query->num_rows() > 0){
+			$draw = $query->row_array();
+			$draw = $draw['total_draw'];
+		}else{
+			$draw = 0;
+		}
+		
+		$total_point = $draw*$draw_point;
+		
+		#calculate total home win
+		$query = $this->db->select("COUNT(match_id) as total_home_win")
+                        ->from("match_master MM")
+						->where('MM.home_team_id = '.$team_id)
+						->where('MM.home_team_score > MM.away_team_score')
+						->where('MM.match_status != 3')
+						->where('MM.is_published',1)
+						->where('MM.league_id',$league_id)
+						->get();
+ 
+        if($query->num_rows() > 0){
+			$home_win = $query->row_array();
+			$home_win = $home_win['total_home_win'];
+		}else{
+			$home_win = 0;
+		}
+				
+		#calculate total away win
+		$query = $this->db->select("COUNT(match_id) as total_away_win")
+                        ->from("match_master MM")
+						->where('MM.away_team_id = '.$team_id)
+						->where('MM.home_team_score < MM.away_team_score')
+						->where('MM.match_status != 3')
+						->where('MM.is_published',1)
+						->where('MM.league_id',$league_id)
+						->get();
+ 
+        if($query->num_rows() > 0){
+			$away_win = $query->row_array();
+			$away_win = $away_win['total_away_win'];
+		}else{
+			$away_win = 0;
+		}
+		
+		$total_win = $home_win+$away_win;
+		
+		$total_point = $total_point+$total_win*$win_point;
+		
+		$resut_array =  array(
+							'play_count' 	=> $played,
+							'draw_count' 	=> $draw,
+							'win_count' 	=> $away_win+$home_win,
+							'total_point'	=> $total_point
+						);
+		
+		return $resut_array;
+	}
+	
+	public function getTeamLeaguePositionScore($team_id,$league_id,$win_point,$draw_point){
 		$total_point = 0;
 		
 		#calculate match played

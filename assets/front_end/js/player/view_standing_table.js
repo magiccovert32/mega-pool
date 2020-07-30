@@ -1,25 +1,17 @@
 
-$('#draft-id').on('change', function(){
-	var draft_url = $(this).val();
+$('#megapool-id').on('change', function(){
+	var league_url 	= $(this).val();
+	var html 		= $('#loading-screen').html();
 	
-	if(draft_url !== ''){
+	if(league_url !== ''){
+		$('#standing-table').html(html);
 		$.ajax({
-			url: base_path+"view-draft-standings-table/"+draft_url,
+			url: base_path+"view-draft-standings-table/"+league_url,
 			type: "POST",
 			dataType: 'html',
 			success: function (response) {
 				$('#standing-table').html(response);
 			}
 		});
-	}else{
-		let response = `<div class="row">
-							<div class="col-sm-12 col-md-12">
-								<div class="alert alert-info fade show" role="alert">
-									<span class="alert-link">Megapool Standing Table</span> will be displayed here!
-								</div>
-							</div>
-						</div>`;
-						
-		$('#standing-table').html(response);
 	}
 });

@@ -374,7 +374,7 @@ class Megapoolmaster_model extends CI_Model {
 	
 	
 	public function getAllSelectedLeagueDetailsByMegaPoolId($id){				
-		$query = $this->db->select("LM.league_id,LM.league_title,LM.league_logo")
+		$query = $this->db->select("LM.league_id,LM.league_title,LM.league_logo,LM.league_type,LM.win_point,LM.draw_point")
 						->from("mega_pool_league_relation MPLR")
 						->join('leagues_master LM', 'LM.league_id = MPLR.league_id', 'inner')
 						->where('MPLR.mega_pool_id',$id)
@@ -656,6 +656,25 @@ class Megapoolmaster_model extends CI_Model {
 						->from("mega_pool_player_relation MPPR")
 						->where('MPPR.megapool_id',$megapoolId)
 						->where('MPPR.player_id',$user_id)
+						->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+	
+	
+	public function getPlayerMegapoolList($userId){		
+		$query = $this->db->select("MPM.mega_pool_id,MPM.entry_fee,MPM.mega_pool_url,MPM.mega_pool_title")
+						->from("mega_pool_master MPM")
+						->join('mega_pool_player_relation MPPR', 'MPPR.megapool_id = MPM.mega_pool_id', 'inner')
+						->join('sports_master SM', 'SM.sport_id = MPM.related_sport_id', 'inner')
+						->where("MPM.current_status",'4')
+						->group_by('MPM.mega_pool_id')
+						->where('MPPR.player_id',$userId)
+						->order_by('MPPR.joined_on DESC')
 						->get();
                         
         if($query->num_rows() > 0){

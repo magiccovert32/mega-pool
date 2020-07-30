@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-lg-4 mb-2">
 		<div class="position-relative form-group">
-			<form id="search-frm" action="<?php echo base_url('admin-match-management'); ?>" method="get">
+			<form id="search-frm" action="<?php echo base_url('admin-single-match-management'); ?>" method="get">
 				<label for="league_id" class="">Select League</label>
 				<select name="league_id" id="league_id" class="form-control">
 					<option value="">Choose...</option>
@@ -16,44 +16,6 @@
 			</form>
 		</div>
 	</div>
-	
-	<div class="col-lg-12 mb-2">
-		<div class="bg-white mr-3" style="width: 40px;height: 20px;float: left;border: 1px solid #222;">
-			
-		</div>
-		<div style="width: 100px;height: 20px;float: left;">
-			<b>Upcoming</b>
-		</div>
-		<div class="bg-light mr-3"  style="width: 40px;height: 20px;float: left;border: 1px solid #222;">
-			
-		</div>
-		<div style="width: 140px;height: 20px;float: left;">
-			<b>Already played</b>
-		</div>
-	</div>
-	
-	
-	<div class="col-lg-5">
-		<form action="#" method="get">
-			<div class="position-relative form-group">
-				<label for="exampleEmail" class="card-title">Search by team name</label>
-				<input name="team_name" id="team_name" placeholder="team name" type="text" class="form-control" autocomplete="off" value="<?php echo @$_GET['team_name']; ?>">
-				<button type="button" class="mt-1 btn btn-primary" onclick="searchTeam();">Search</button>
-			</div>
-		</form>
-	</div>
-	
-	<script>
-		function searchTeam(){
-			let team_name = $.trim($('#team_name').val());
-			
-			if(team_name.length > 0){
-				window.location.replace("<?php echo base_url('admin-match-management?league_id='.$_GET['league_id']); ?>&team_name="+team_name);
-			}else{
-				window.location.replace("<?php echo base_url('admin-match-management?league_id='.$_GET['league_id']); ?>");
-			}
-		}
-	</script>
 	
 	<div class="col-lg-12">
 		<div class="main-card mb-3 card">
@@ -80,6 +42,7 @@
 								$text = 'upcoming';
 							}
 						?>
+
 						
 						<li class="list-group-item <?php echo $bg; ?>">
 							<div class="row widget-content p-0">
@@ -92,35 +55,27 @@
 									</div>
 									<div class="<?php echo $text_bg; ?> badge badge-pill text-white text-center"><?php echo $text; ?></div>
 								</div>
-								<div class="col-sm-12 col-md-3  col-xs-12 mb-2">
+								<div class="col-sm-12 col-md-4  col-xs-12 mb-2">
 									<div class="widget-content-wrapper" style="justify-content: flex-start;">
 										<div class="widget-content-left mr-3">
-											<img width="30" class="image-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['home_team_logo']); ?>" alt="">
+											<img width="30" class="image-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['team_logo']); ?>" alt="">
 										</div>
 										<div class="widget-content-left">
-											<div class="text-dark"><?php echo $list['home_team']; ?></div>
+											<div class="text-dark"><?php echo $list['team_title']; ?></div>
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-2 col-xs-12 mb-2">
-									<div class="widget-content-wrapper" style="justify-content: center;">
-										<div class="widget-numbers text-success">
-											<?php echo $list['home_team_score']; ?> : <?php echo $list['away_team_score']; ?>
+								<div class="col-sm-12 col-md-4 col-xs-12 mb-2">
+									<div class="widget-content-wrapper" style="justify-content: flex-start;">
+										<div class="text-dark mr-3">
+											<strong>Points</strong>
 										</div>
+										
 									</div>
-								</div>
-								<div class="col-sm-12 col-md-3">
-									<div class="widget-content-wrapper" style="justify-content: flex-end;">
-										<div class="widget-content-left mr-3">
-											<div class="text-dark"><?php echo $list['away_team']; ?></div>
-										</div>
-										<div class="widget-content-left">
-											<img width="30" class="image-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['away_team_logo']); ?>" alt="">
-										</div>
-									</div>
+									<div class="widget-numbers text-success"><?php echo $list['match_point']; ?></div>
 								</div>
 								
-								<a href="<?php echo base_url('admin-edit-match/'.$list['match_url']); ?>">
+								<a href="<?php echo base_url('admin-single-edit-match/'.$list['match_url']); ?>">
 									<div class="badge badge-info ml-2">Edit</div>
 								</a>
 								
@@ -174,7 +129,7 @@
 		.then((willDelete) => {
 			if (willDelete) {
 				$.ajax({
-					url: base_path+"publish-match/"+url,
+					url: base_path+"publish-single-match/"+url,
 					type: "POST",
 					dataType: 'json',
 					success: function (response) {

@@ -284,7 +284,6 @@ class Match extends CI_Controller {
 	}
 	
 	
-	
 	public function get_teams_by_league(){
 		if($this->input->post()){
 			$league_id	= $this->input->post('league_id');

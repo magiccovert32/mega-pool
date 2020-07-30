@@ -140,6 +140,18 @@ $route['publish-match/(:any)']			= 'admin/match/publish_match/$1';
 $route['update-match-point']			= 'admin/match/update_match_point';
 
 
+$route['admin-single-match-management']			= 'admin/singlematch/admin_single_match_management';
+$route['admin-single-match-management/(:num)']	= 'admin/singlematch/admin_single_match_management/$1';
+$route['admin-single-add-match']				= 'admin/singlematch/admin_single_add_match';
+$route['admin-single-save-match']				= 'admin/singlematch/admin_single_save_match';
+$route['admin-single-edit-match/(:num)']		= 'admin/singlematch/admin_single_edit_match/$1';
+$route['admin-single-update-match']				= 'admin/singlematch/admin_single_update_match';
+$route['admin-single-remove-match']				= 'admin/singlematch/admin_single_remove_match';
+$route['admin-single-edit-match/(:any)']		= 'admin/singlematch/admin_single_edit_match/$1';
+$route['publish-single-match/(:any)']			= 'admin/singlematch/publish_single_match/$1';
+$route['update-single-match-point']				= 'admin/singlematch/update_single_match_point';
+
+
 $route['cms/about-us']		= 'admin/cms/about_us';
 $route['cms/contact-us']	= 'admin/cms/contact_us';
 $route['cms/privacy-policy']= 'admin/cms/privacy_policy';
@@ -227,21 +239,17 @@ $route['all-megapool']           = 'front_end/player/megapool/all_megapool';
 $route['all-megapool/(:num)']    = 'front_end/player/megapool/all_megapool/$1';
 $route['megapool/(:any)']        = 'front_end/player/megapool/megapool_preview';
 
-
 $route['invitations']   		= 'front_end/player/invitation/invitations';
 $route['invitations/(:num)']   	= 'front_end/player/invitation/invitations/$1';
 $route['accept-invitation']   	= 'front_end/player/invitation/accept_invitation';
 $route['reject-invitation']   	= 'front_end/player/invitation/reject_invitation';
 $route['join-megapool/(:any)']  = 'front_end/player/invitation/join_megapool/$1';
 
-
-
 $route['my-leagues']   		= 'front_end/player/megapool/my_leagues';
 $route['my-leagues/(:num)'] = 'front_end/player/megapool/my_leagues/$1';
-
 $route['blogs/(:any)']   	= 'home/blog_details/$1';
 
-
+$route['switch-account']    = 'account/switch_account';
 
 
 $route['404_override'] = 'my404';

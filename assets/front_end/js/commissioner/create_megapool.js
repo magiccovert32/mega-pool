@@ -52,16 +52,16 @@ $('#create-mega-pool').on('click', function(){
         error_msg.push('Select at least 1 league.');
     }
 
-    if(entry_fee == ''){
-        error = 1;
-        error_msg.push('Enter entry fee.');
-    }else{
-        var regex = /^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
-        if(!regex.test(entry_fee)){
-            error = 1;
-            error_msg.push('Enter valid entry fee.');
-        }
-    }
+    //if(entry_fee == ''){
+    //    error = 1;
+    //    error_msg.push('Enter entry fee.');
+    //}else{
+    //    var regex = /^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
+    //    if(!regex.test(entry_fee)){
+    //        error = 1;
+    //        error_msg.push('Enter valid entry fee.');
+    //    }
+    //}
 
     if(league_logo == 0){
         error = 1;

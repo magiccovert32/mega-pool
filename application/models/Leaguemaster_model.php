@@ -420,4 +420,35 @@ class Leaguemaster_model extends CI_Model {
 		
 		return true;
 	}
+	
+	
+	public function getAllGenericActiveLeagues(){		
+		$query = $this->db->select("LM.league_id,LM.league_title")
+                        ->from("leagues_master LM")
+						->where('league_status','1')
+						->where('league_type',1)
+						->order_by('league_title')
+						->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+	
+	public function getAllSingleActiveLeagues(){		
+		$query = $this->db->select("LM.league_id,LM.league_title")
+                        ->from("leagues_master LM")
+						->where('league_status','1')
+						->where('league_type',2)
+						->order_by('league_title')
+						->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
 }

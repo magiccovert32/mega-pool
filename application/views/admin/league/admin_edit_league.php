@@ -19,6 +19,23 @@
 							</select>
 						</div>
 						<div class="position-relative form-group">
+							<label for="league_logo" class="">League Type</label>
+							<div>
+								<div class="custom-radio custom-control">
+									<input value="1" type="radio" id="league_type1" name="league_type" class="custom-control-input" <?php if($league_details['league_type'] == 1){ ?> checked <?php } ?>>
+									<label class="custom-control-label" for="league_type1">Generic [<small class="text-danger">Teams will play against each other. Win/Loss</small>]</label>
+								</div>
+								<div class="custom-radio custom-control">
+									<input value="2" type="radio" id="league_type2" name="league_type" class="custom-control-input" <?php if($league_details['league_type'] == 2){ ?> checked <?php } ?>>
+									<label class="custom-control-label" for="league_type2">Single Play [<small class="text-danger">Player will get points</small>]</label>
+								</div>
+								<div class="custom-radio custom-control">
+									<input value="3" type="radio" id="league_type3" name="league_type" class="custom-control-input" <?php if($league_details['league_type'] == 3){ ?> checked <?php } ?>>
+									<label class="custom-control-label" for="league_type3">Tournament [<small class="text-danger">Teams will play against each other. Home score and away score will be calculated</small>]</label>
+								</div>
+							</div>
+						</div>
+						<div class="position-relative form-group">
 							<label for="league_title" class="">League Name</label>
 							<input value="<?php echo $league_details['league_title']; ?>" name="league_title" id="league_title" placeholder="League name" type="text" class="form-control" required="required" autocomlete="off">
 						</div>

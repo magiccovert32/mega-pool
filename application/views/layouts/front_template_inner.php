@@ -122,6 +122,12 @@
                                                             <div class="ml-auto badge badge-success">Profile Edit </div>
                                                         </a>
                                                     </li>
+													<li class="nav-item-header nav-item">Switch Account</li>
+                                                    <li class="nav-item">
+                                                        <a href="<?php echo base_url('switch-account'); ?>" class="nav-link">Change Access
+                                                            <div class="ml-auto badge badge-success">Change Account</div>
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>

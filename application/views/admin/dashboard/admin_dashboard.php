@@ -107,4 +107,6 @@
 	</div>
 	<br/>
 	<a href="<?php echo base_url('update-match-point'); ?>"><button class="mt-1 btn btn-primary" type="button">Update Player Point</button></a>
+	
+	<a href="<?php echo base_url('update-single-match-point'); ?>"><button class="mt-1 btn btn-warning" type="button">Update Single Match Point</button></a>
 </div>

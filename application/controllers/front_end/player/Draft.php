@@ -42,6 +42,7 @@ class Draft extends CI_Controller {
 		$this->load->model("Invitationmaster_model");
 		$this->load->model("Draftmaster_model");
 		$this->load->model("Matchmaster_model");
+		$this->load->model("Singlematchmaster_model");
 	}
 
 
@@ -157,20 +158,40 @@ class Draft extends CI_Controller {
 			
 			$team_score_position = array();
 			
-			if($data['league_teams']){
-				foreach($data['league_teams'] as $key=>$team){
-					$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
-					
-					if($teamResult){
-						$team['play_count'] = $teamResult['play_count'];
-						$team['draw_count'] = $teamResult['draw_count'];
-						$team['win_count'] 	= $teamResult['win_count'];
-						$team['total_point']= $teamResult['total_point'];
+			if($data['league_details']){
+				if($data['league_details']['league_type'] == 1){
+					if($data['league_teams']){
+						foreach($data['league_teams'] as $key=>$team){
+							$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
+							
+							if($teamResult){
+								$team['play_count'] = $teamResult['play_count'];
+								$team['draw_count'] = $teamResult['draw_count'];
+								$team['win_count'] 	= $teamResult['win_count'];
+								$team['total_point']= $teamResult['total_point'];
+							}
+							
+							$team_score_position[$key] = $team;
+						}
 					}
-					
-					$team_score_position[$key] = $team;
+				}elseif($data['league_details']['league_type'] == 2){
+					if($data['league_teams']){
+						foreach($data['league_teams'] as $key=>$team){
+							$teamResult = $this->Singlematchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId);
+
+							if($teamResult){
+								$team['play_count'] = $teamResult['play_count'];
+								$team['draw_count'] = 0;
+								$team['win_count'] 	= 0;
+								$team['total_point']= $teamResult['total_point'];
+							}
+							
+							$team_score_position[$key] = $team;
+						}
+					}
 				}
 			}
+			
 			
 			usort($team_score_position, array($this,'sorting'));
 			
@@ -184,10 +205,6 @@ class Draft extends CI_Controller {
 		}
 		
 		$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/player/draft/draft_details', $data);
-	}
-	
-	function sorting($a,$b) {
-		return ($a["total_point"] >= $b["total_point"]) ? -1 : 1;
 	}
 	
 	public function submit_team(){
@@ -237,42 +254,153 @@ class Draft extends CI_Controller {
 	
 	public function view_draft_standings_table(){
 		$data 		= array();
-		$draft_url	= $this->uri->segment(2);
 		
-		if($draft_url != ''){
-			$draft_details = $this->Draftmaster_model->getDraftDetailsByDraftUrl($draft_url);
+		$league_url = $this->uri->segment(2);
+		$user_id	= $this->session->userdata('user_id');
+		
+		$data['league_details'] = $this->Megapoolmaster_model->getLeagueDetailsByUrl($league_url);
+
+		if($data['league_details']){
+			$data['league_players'] 	= $this->Megapoolmaster_model->getPlayerListByMegapoolId($data['league_details']['mega_pool_id']);
+			$data['associated_leagues'] = $this->Megapoolmaster_model->getAllSelectedLeagueDetailsByMegaPoolId($data['league_details']['mega_pool_id']);
+			$data['draft_list'] 		= $this->Draftmaster_model->getAllPublishedDraftListByMegaPoolId($data['league_details']['mega_pool_id']);
+			$data['player_score']		= false;
+			$data['no_draft']			= 1;
 			
-			if($draft_details){
-				$leagueId = $draft_details['league_id'];
-								
-				$data['league_details'] 		= $this->Leaguemaster_model->getLeagueDetailsByLeagueIdByAdmin($leagueId);
-				$data['league_team_count'] 		= $this->Leaguemaster_model->getLeagueTeamCount($leagueId);
-				$data['league_team_position'] 	= $this->Leaguemaster_model->getLeagueTeamPositionPoint($leagueId);
-				$data['league_teams'] 			= $this->Leaguemaster_model->getAllTeamByLeagueId($leagueId);
-				
-				$team_score_position = array();
-				
-				if($data['league_teams']){
-					foreach($data['league_teams'] as $key=>$team){
-						$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
+			$draft_IDS = array();
+			
+			if($data['associated_leagues']){
+				foreach($data['associated_leagues'] as $key => $league){
+					$league_id 	= $data['associated_leagues'][$key]['league_id'];
+					$win_point 	= $data['associated_leagues'][$key]['win_point'];
+					$draw_point = $data['associated_leagues'][$key]['draw_point'];
+					
+					$data['associated_leagues'][$key]['league_team_position']	= $this->Leaguemaster_model->getLeagueTeamPositionPoint($league['league_id']);
+					$data['associated_leagues'][$key]['league_teams'] 			= $this->Leaguemaster_model->getAllTeamByLeagueId($league['league_id']);
+					
+					if($league['league_type'] == 1){						
+						$team_score_position = array();
 						
-						if($teamResult){
-							$team['play_count'] = $teamResult['play_count'];
-							$team['draw_count'] = $teamResult['draw_count'];
-							$team['win_count'] 	= $teamResult['win_count'];
-							$team['total_point']= $teamResult['total_point'];
+						if($data['associated_leagues'][$key]['league_teams']){
+							foreach($data['associated_leagues'][$key]['league_teams'] as $k => $team){
+								$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$league_id,$win_point,$draw_point);
+							
+								if($teamResult){
+									$team['total_point']= $teamResult['total_point'];
+								}
+								
+								$team_score_position[$k] = $team;
+							}
 						}
 						
-						$team_score_position[$key] = $team;
+						usort($team_score_position, array($this,'sorting'));
+						$data['associated_leagues'][$key]['team_score_position'] = $team_score_position;
+					}else{
+						$team_score_position = array();
+						
+						if($data['associated_leagues'][$key]['league_teams']){
+							foreach($data['associated_leagues'][$key]['league_teams'] as $k => $team){
+								$teamResult = $this->Singlematchmaster_model->getTeamWinningRelation($team['team_id'],$league_id);
+							
+								if($teamResult){
+									$team['total_point']= $teamResult['total_point'];
+								}
+								
+								$team_score_position[$k] = $team;
+							}
+						}
+						
+						usort($team_score_position, array($this,'sorting'));
+						$data['associated_leagues'][$key]['team_score_position'] = $team_score_position;
+					}					
+				}
+			}
+			
+			if($data['draft_list']){
+				foreach($data['draft_list'] as $list){
+					$draft_IDS[] = $list['draft_id'];
+				}
+			}
+			
+			if(count($draft_IDS) > 0){
+				$data['no_draft'] = 2;
+				
+				if($data['league_players']){
+					foreach($data['league_players'] as $key => $player){
+						$data['league_players'][$key]['point_history'] = array();
+						
+						#get point by leagueId
+						if($data['associated_leagues']){
+							foreach($data['associated_leagues'] as $league){
+								$data['league_players'][$key]['point_history'][] = $this->Draftmaster_model->getPointRecordByLeagueIdAndDraftIds($league['league_id'],$draft_IDS,$player['user_id']);							
+								$data['league_players'][$key]['team_name'][] 	 = $this->Draftmaster_model->getTeamRecordByLeagueIdAndDraftIds($league['league_id'],$draft_IDS,$player['user_id']);
+							}
+						}
 					}
 				}
-				
-				usort($team_score_position, array($this,'sorting'));
-				
-				$data['team_score_position'] = $team_score_position;
+			}else{
+				if($data['league_players']){
+					foreach($data['league_players'] as $key => $player){
+						$data['league_players'][$key]['point_history'] = array();
+						
+						#get point by leagueId
+						if($data['associated_leagues']){
+							foreach($data['associated_leagues'] as $league){
+								$data['league_players'][$key]['point_history'][] = 0;							
+							}
+						}
+					}
+				}
 			}
+			
+			#marge player with league and team
+			
+			if($data['league_players']){
+				foreach($data['league_players'] as $key => $player){
+					$data['league_players'][$key]['standing_score'] = 0;
+					
+					if(!empty($player['team_name'])){
+						foreach($player['team_name'] as $k => $team){
+							if($team){
+								#get league postion
+								if($data['associated_leagues'][$k]['team_score_position']){
+									foreach($data['associated_leagues'][$k]['team_score_position'] as $j => $position){
+										if($position['total_point'] != 0){
+											if($position['team_id'] == $team['team_id']){
+												$data['league_players'][$key]['standing_score'] += $data['associated_leagues'][$k]['league_team_position'][$j]['score'];
+											}
+										}
+										
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+						
+			if($data['league_players']){
+				$league_players 		= $data['league_players'];
+				usort($league_players, array($this,'sortingScore'));
+				$data['league_players'] = $league_players;
+			}
+		}else{
+			$data['league_players'] 	= false;
+			$data['associated_leagues'] = false;
+			$data['no_draft']			= 1;
 		}
 		
-		$this->load->view('front_end/player/draft/view_draft_standings_table', $data);
+		
+
+		$this->load->view('front_end/player/draft/view_standings_table', $data);
+	}
+	
+	
+	function sorting($a,$b) {
+		return ($a["total_point"] >= $b["total_point"]) ? -1 : 1;
+	}
+	
+	function sortingScore($a,$b) {
+		return ($a["standing_score"] >= $b["standing_score"]) ? -1 : 1;
 	}
 }

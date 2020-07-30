@@ -51,15 +51,15 @@
 	<div class="col-md-12">
 		<div class="main-card mb-3 card">
 			<div class="card-body">
-				<h5 class="widget-heading text-dark">Select your Draft to see the Standing Table</h5>
+				<h5 class="widget-heading text-dark">Select your Megapool to see the Standing Table</h5>
 				<div class="row">
 					<div class="col-sm-12 col-md-4">
 						<div class="position-relative form-group">
-							<label for="megapool-id" class="">Draft List :</label>
-							<select name="select" id="draft-id" class="form-control">
+							<label for="megapool-id" class="">Megapool List :</label>
+							<select name="select" id="megapool-id" class="form-control">
 								<option value="">Choose...</option>
-								<?php if($league_list){ foreach($league_list as $league){ ?>
-									<option value="<?php echo $league['draft_url']; ?>"><?php echo $league['draft_title']; ?></option>
+								<?php if($megapool_list){ foreach($megapool_list as $megapool){ ?>
+									<option value="<?php echo $megapool['mega_pool_url']; ?>"><?php echo $megapool['mega_pool_title']; ?></option>
 								<?php }} ?>
 							</select>
 						</div>
@@ -76,6 +76,14 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+
+<div style="display: none;" id="loading-screen">
+	<div class="row">
+		<div class="col-sm-12 col-md-12">
+			<span class="alert-link text-warning">Please wait. Loading Standing Table...</span>
 		</div>
 	</div>
 </div>

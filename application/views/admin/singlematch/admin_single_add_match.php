@@ -4,7 +4,7 @@
 			<div class="card-body">
 				<h5 class="card-title">Add Match information <small class="form-text text-danger">All fields are mandatory</small></h5>
 				
-				<form id="add-match" action="<?php echo base_url('admin-save-match'); ?>" method="post">
+				<form id="add-match" action="<?php echo base_url('admin-single-save-match'); ?>" method="post">
 					<div class="row">
 						<div class="col-sm-12 col-md-6">
 							<div class="position-relative form-group">
@@ -28,16 +28,8 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6">
 							<div class="position-relative form-group">
-								<label for="home_team_id" class="">Select Home Team [<span class="text-info">Select league to populate teams</span>]</label>
-								<select name="home_team_id" id="home_team_id" class="form-control">
-									
-								</select>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-6">
-							<div class="position-relative form-group">
-								<label for="away_team_id" class="">Select Away Team [<span class="text-info">Select league to populate teams</span>]</label>
-								<select name="away_team_id" id="away_team_id" class="form-control">
+								<label for="team_id" class="">Select Player [<span class="text-info">Select league to populate player</span>]</label>
+								<select name="team_id" id="team_id" class="form-control">
 									
 								</select>
 							</div>
@@ -46,14 +38,8 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6">
 							<div class="position-relative form-group">
-								<label for="home_team_score" class="">Home Team Score</label>
-								<input name="home_team_score" id="home_team_score" placeholder="Home team score if any" type="number" class="form-control" required="required" autocomlete="off" value=0>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-6">
-							<div class="position-relative form-group">
-								<label for="away_team_score" class="">Away Team Score</label>
-								<input name="away_team_score" id="away_team_score" placeholder="Away team score if any" type="number" class="form-control" required="required" autocomlete="off" value=0>
+								<label for="match_point" class="">Player Score</label>
+								<input name="match_point" id="match_point" placeholder="Player point if any" type="number" class="form-control" required="required" autocomlete="off" value=0>
 							</div>
 						</div>
 					</div>
@@ -87,8 +73,7 @@
 	$('#league_id').on('change', function(){
 		let league_id = $('#league_id').val();
 		
-		$('#home_team_id').html('');
-		$('#away_team_id').html('');
+		$('#team_id').html('');
 		
 		$.ajax({
             url: base_path+"get-teams-by-league",
@@ -105,15 +90,7 @@
 					});
 				}
 				
-				$('#home_team_id').append(home_html);
-				
-				if(response.status === 1){
-					$.each(response.team_list, function(key,value) {
-						away_html += `<option value="`+value.team_id+`">`+value.team_title+`</option>`;
-					});
-				}
-				
-				$('#away_team_id').append(away_html);
+				$('#team_id').append(home_html);
             }
         });
 	});

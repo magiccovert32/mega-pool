@@ -42,6 +42,13 @@
 								<button class="mt-1 btn btn-outline-dark ml-3" type="button">Cancel</button>
 							</a>
 						</form>
+					<?php }else{ ?>
+						<div class="alert alert-danger fade show mt-10" role="alert">
+							<div>
+								<strong>Error</strong>
+								<div class="page-title-subheading">No team added yet.</div>
+							</div>
+						</div>
 					<?php } ?>
 				<?php }else{ ?>
 					<div class="alert alert-info fade show mt-10" role="alert">

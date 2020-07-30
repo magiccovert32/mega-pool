@@ -405,7 +405,7 @@ class Draftmaster_model extends CI_Model {
 	
 	
 	public function getTeamRecordByLeagueIdAndDraftIds($league_id,$draft_IDS,$playerId){
-		$query = $this->db->select("TM.team_title")
+		$query = $this->db->select("TM.team_title,TM.team_id")
 							->from("draft_player_relation DPR")
 							->join('draft_master DM', 'DM.draft_id = DPR.draft_id', 'inner')
 							->join('teams_master TM', 'TM.team_id = DPR.team_id', 'inner')
@@ -417,7 +417,7 @@ class Draftmaster_model extends CI_Model {
         if($query->num_rows() > 0){
 			$res =  $query->row_array();
 			
-			return $res['team_title'];
+			return $res;
 		}else{
 			return false;
 		}
@@ -428,6 +428,21 @@ class Draftmaster_model extends CI_Model {
 		$query = $this->db->select("DPR.player_id")
 							->from("draft_player_relation DPR")
 							->where("DPR.draft_id",$draft_id)
+							->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+	
+	public function getPlayerDraftRelationWithTeamIDAndLeagueId($team_id,$league_id){
+		$query = $this->db->select("DPR.*")
+							->from("draft_player_relation DPR")
+							->join('draft_master DM', 'DM.draft_id = DPR.draft_id', 'inner')
+							->where("DM.league_id",$league_id)
+							->where("DPR.team_id",$team_id)
 							->get();
                         
         if($query->num_rows() > 0){

@@ -251,6 +251,21 @@ class Usermaster_model extends CI_Model {
 	}
 	
 	
+	public function getUserDetailsByUserEmailAndType($user_email,$another_type){				
+		$query = $this->db->select("*")
+                        ->from("user_master")
+						->where("user_email", $user_email)
+						->where("user_type_id", $another_type)
+						->get();
+ 
+        if($query->num_rows() > 0){
+			return $query->row_array();
+		}else{
+			return false;
+		}
+	}
+	
+	
 	
 	/**
 	 *

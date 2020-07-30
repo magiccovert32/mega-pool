@@ -34,6 +34,7 @@ class League extends CI_Controller {
 		$this->load->model("Leaguemaster_model");
 		$this->load->model("Teammaster_model");
 		$this->load->model("Matchmaster_model");
+		$this->load->model("Singlematchmaster_model");
 	}
 	
 	
@@ -52,7 +53,7 @@ class League extends CI_Controller {
 		$config["base_url"] 		= base_url() . "admin-league-management";
 		$config["total_rows"] 		= $this->Leaguemaster_model->getTotalLeagueCountForAdmin();
 		$config["uri_segment"] 		= 2;
-		$config["per_page"] 		= 30;
+		$config["per_page"] 		= 50;
 		$choice 					= $config["total_rows"] / $config["per_page"];
 		$config["num_links"] 		= round($choice);
 		$config['use_page_numbers'] = true; 
@@ -116,6 +117,7 @@ class League extends CI_Controller {
 			$league_description = trim($this->input->post('league_description'));
 			$draw_point 		= trim($this->input->post('draw_point'));
 			$win_point 			= trim($this->input->post('win_point'));
+			$league_type 		= trim($this->input->post('league_type'));
 			$admin_id			= $this->session->userdata('admin_id');
 			
 			if($league_title != '' && $league_description != '' && $_FILES != null && $sport_id != '' && $win_point != '' && $draw_point != ''){
@@ -140,6 +142,7 @@ class League extends CI_Controller {
 									
 									$leagueData = array(
 													'related_sport_id'	=> $sport_id,
+													'league_type'		=> $league_type,
 													'league_title' 		=> $league_title,
 													'league_description'=> $league_description,
 													'win_point'			=> $win_point,
@@ -186,6 +189,7 @@ class League extends CI_Controller {
 	public function admin_update_league(){
 		if($this->input->post()){
 			$sport_id			= trim($this->input->post('sport_id'));
+			$league_type		= trim($this->input->post('league_type'));
 			$league_id			= trim($this->input->post('league_id'));
 			$old_league_image	= trim($this->input->post('old_league_logo'));
 			$league_title		= trim($this->input->post('league_title'));
@@ -230,6 +234,7 @@ class League extends CI_Controller {
 					
 					$leagueData = array(
 									'related_sport_id'	=> $sport_id,
+									'league_type'		=> $league_type,
 									'league_title' 		=> $league_title,
 									'league_description'=> $league_description,
 									'league_logo' 		=> $league_image,
@@ -470,36 +475,65 @@ class League extends CI_Controller {
 		$leagueId = $this->uri->segment(2);
 		
 		$data['league_details'] 		= $this->Leaguemaster_model->getLeagueDetailsByLeagueIdByAdmin($leagueId);
-		$data['league_team_count'] 		= $this->Leaguemaster_model->getLeagueTeamCount($leagueId);
-		$data['league_team_position'] 	= $this->Leaguemaster_model->getLeagueTeamPositionPoint($leagueId);
-		$data['league_teams'] 			= $this->Leaguemaster_model->getAllTeamByLeagueId($leagueId);
 		
-		$team_score_position = array();
-		
-		if($data['league_teams']){
-			foreach($data['league_teams'] as $key=>$team){
-				$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
+		if($data['league_details']){
+			if($data['league_details']['league_type'] == 1){
+				$data['league_team_count'] 		= $this->Leaguemaster_model->getLeagueTeamCount($leagueId);
+				$data['league_team_position'] 	= $this->Leaguemaster_model->getLeagueTeamPositionPoint($leagueId);
+				$data['league_teams'] 			= $this->Leaguemaster_model->getAllTeamByLeagueId($leagueId);
 				
-				if($teamResult){
-					$team['play_count'] = $teamResult['play_count'];
-					$team['draw_count'] = $teamResult['draw_count'];
-					$team['win_count'] 	= $teamResult['win_count'];
-					$team['total_point']= $teamResult['total_point'];
+				$team_score_position = array();
+				
+				if($data['league_teams']){
+					foreach($data['league_teams'] as $key => $team){
+						$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
+						
+						if($teamResult){
+							$team['play_count'] = $teamResult['play_count'];
+							$team['draw_count'] = $teamResult['draw_count'];
+							$team['win_count'] 	= $teamResult['win_count'];
+							$team['total_point']= $teamResult['total_point'];
+						}
+						
+						$team_score_position[$key] = $team;
+					}
 				}
 				
-				$team_score_position[$key] = $team;
+				usort($team_score_position, array($this,'sorting'));
+				
+				$data['team_score_position']	= $team_score_position;
+				
+				$this->admin_template->load('admin_template', 'contents' , 'admin/league/admin_league_standing_table', $data);
+			}else{
+				$data['league_team_count'] 		= $this->Leaguemaster_model->getLeagueTeamCount($leagueId);						
+				$data['league_team_position'] 	= $this->Leaguemaster_model->getLeagueTeamPositionPoint($leagueId);
+				$data['league_teams'] 			= $this->Leaguemaster_model->getAllTeamByLeagueId($leagueId);
+
+				$team_score_position = array();
+				
+				if($data['league_teams']){
+					foreach($data['league_teams'] as $key=>$team){
+						$teamResult = $this->Singlematchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId);
+
+						if($teamResult){
+							$team['play_count'] = $teamResult['play_count'];
+							$team['total_point']= $teamResult['total_point'];
+						}
+						
+						$team_score_position[$key] = $team;
+					}
+				}
+				
+				usort($team_score_position, array($this,'sorting'));
+				
+				$data['team_score_position'] = $team_score_position;
+				
+				$this->admin_template->load('admin_template', 'contents' , 'admin/league/admin_single_league_standing_table', $data);
 			}
 		}
-		
-		usort($team_score_position, array($this,'sorting'));
-		
-		$data['team_score_position']	= $team_score_position;
-		
-		$this->admin_template->load('admin_template', 'contents' , 'admin/league/admin_league_standing_table', $data);
 	}
 	
-	function sorting($a,$b) 
-	{
-	  return ($a["total_point"] >= $b["total_point"]) ? -1 : 1;
+	function sorting($a,$b) {
+		return ($a["total_point"] >= $b["total_point"]) ? -1 : 1;
 	}
 }

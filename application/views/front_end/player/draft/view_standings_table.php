@@ -17,7 +17,15 @@
 					<tbody>
 						<?php if($no_draft == 2){ ?>
 							<?php if($league_players){ foreach($league_players as $player){ ?>
-								<tr>
+								<tr
+								   <?php
+										if($player['user_id'] == $this->session->userdata('user_id')){
+								?>
+									style="background: #f5e942;"
+								<?php
+										}
+								   ?>
+								>
 									<td class="text-muted"><?php echo $player['full_name']; ?></td>
 									
 									<?php if($player['point_history']){ foreach($player['point_history'] as $key => $history){ ?>

@@ -275,7 +275,7 @@
 								</li>
 							</ul>
 						</li>
-						<li <?php if($action == 'admin_match_management'){ ?> class="mm-active" <?php } ?>>
+						<li <?php if(in_array($action, array('admin_match_management','admin_add_match','admin_single_match_management','admin_single_add_match'))){ ?> class="mm-active" <?php } ?>>
 							<a href="#">
 								<i class="metismenu-icon pe-7s-network"></i> Match Management
 								<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -283,12 +283,22 @@
 							<ul>
 								<li>
 									<a href="<?php echo  base_url('admin-match-management'); ?>" <?php if($action == 'admin_match_management'){ ?> class="mm-active" <?php } ?>>
-										<i class="metismenu-icon"></i> All Matches
+										<i class="metismenu-icon"></i> All Generic Matches
 									</a>
 								</li>
 								<li>
 									<a href="<?php echo  base_url('admin-add-match'); ?>" <?php if($action == 'admin_add_match'){ ?> class="mm-active" <?php } ?>>
-										<i class="metismenu-icon"></i> Add New Match
+										<i class="metismenu-icon"></i> Add New Generic Match
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo  base_url('admin-single-match-management'); ?>" <?php if($action == 'admin_single_match_management'){ ?> class="mm-active" <?php } ?>>
+										<i class="metismenu-icon"></i> Single Play Matches
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo  base_url('admin-single-add-match'); ?>" <?php if($action == 'admin_single_add_match'){ ?> class="mm-active" <?php } ?>>
+										<i class="metismenu-icon"></i> Add Single Play Match
 									</a>
 								</li>
 							</ul>

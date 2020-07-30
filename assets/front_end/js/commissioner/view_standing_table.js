@@ -1,8 +1,10 @@
 
 $('#megapool-id').on('change', function(){
-	var league_url = $(this).val();
+	var league_url 	= $(this).val();
+	var html 		= $('#loading-screen').html();
 	
 	if(league_url !== ''){
+		$('#standing-table').html(html);
 		$.ajax({
 			url: base_path+"view-standings-table/"+league_url,
 			type: "POST",

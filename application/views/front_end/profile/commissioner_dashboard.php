@@ -80,4 +80,13 @@
 	</div>
 </div>
 
+<div style="display: none;" id="loading-screen">
+	<div class="row">
+		<div class="col-sm-12 col-md-12">
+			<span class="alert-link text-warning">Please wait. Loading Standing Table...</span>
+		</div>
+	</div>
+</div>
+
+
 <script src="<?php echo base_url('assets/front_end/js/commissioner/view_standing_table.js'); ?>" ></script>
