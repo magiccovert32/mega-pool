@@ -139,7 +139,6 @@ $route['admin-edit-match/(:any)']		= 'admin/match/admin_edit_match/$1';
 $route['publish-match/(:any)']			= 'admin/match/publish_match/$1';
 $route['update-match-point']			= 'admin/match/update_match_point';
 
-
 $route['admin-single-match-management']			= 'admin/singlematch/admin_single_match_management';
 $route['admin-single-match-management/(:num)']	= 'admin/singlematch/admin_single_match_management/$1';
 $route['admin-single-add-match']				= 'admin/singlematch/admin_single_add_match';
@@ -150,7 +149,6 @@ $route['admin-single-remove-match']				= 'admin/singlematch/admin_single_remove_
 $route['admin-single-edit-match/(:any)']		= 'admin/singlematch/admin_single_edit_match/$1';
 $route['publish-single-match/(:any)']			= 'admin/singlematch/publish_single_match/$1';
 $route['update-single-match-point']				= 'admin/singlematch/update_single_match_point';
-
 
 $route['cms/about-us']		= 'admin/cms/about_us';
 $route['cms/contact-us']	= 'admin/cms/contact_us';
@@ -176,6 +174,8 @@ $route['forgot-password']   	= 'front_end/auth/login/forgot_password';
 $route['send-reset-link']   	= 'front_end/auth/login/send_reset_link';
 $route['reset-password/(:any)'] = 'front_end/auth/login/reset_password/$1';
 $route['update-reset-password'] = 'front_end/auth/login/update_reset_password';
+$route['terms-conditions']      = 'termscondition/index';
+$route['send_verification_mail_test']= 'front_end/auth/login/send_verification_mail_test';
 
 
 #signup route
@@ -191,21 +191,19 @@ $route['update-password']   = 'front_end/profile/profile/update_password';
 
 
 #megapool route for commissioner
-$route['my-megapool']           			= 'front_end/commissioner/megapool/my_megapool';
-$route['my-megapool/(:num)']    			= 'front_end/commissioner/megapool/my_megapool/$1';
-$route['create-megapool']       			= 'front_end/commissioner/megapool/create_megapool';
-$route['save-megapool']         			= 'front_end/commissioner/megapool/save_megapool';
-$route['edit-megapool/(:any)']  			= 'front_end/commissioner/megapool/edit_megapool/$1';
-$route['update-megapool']       			= 'front_end/commissioner/megapool/update_megapool';
-$route['publish-megapool']      			= 'front_end/commissioner/megapool/publish_megapool';
-$route['remove-megapool']       			= 'front_end/commissioner/megapool/remove_megapool';
-$route['get-related-league-by-sport-id'] 	= 'front_end/commissioner/megapool/get_related_league_by_sport_id';
-$route['invite-player/(:any)']  			= 'front_end/commissioner/megapool/invite_player/$1';
-$route['send-invitation']  					= 'front_end/commissioner/megapool/send_invitation';
-$route['my-invitation']  					= 'front_end/commissioner/megapool/my_invitation';
-$route['my-invitation/(:num)']  			= 'front_end/commissioner/megapool/my_invitation/$1';
-$route['view-megapool/(:any)']				= 'front_end/commissioner/megapool/view_megapool/$1';
-$route['megapool-players/(:any)']			= 'front_end/commissioner/megapool/megapool_players/$1';
+$route['my-megapool']           	= 'front_end/commissioner/megapool/my_megapool';
+$route['my-megapool/(:num)']    	= 'front_end/commissioner/megapool/my_megapool/$1';
+$route['create-megapool']       	= 'front_end/commissioner/megapool/create_megapool';
+$route['save-megapool']         	= 'front_end/commissioner/megapool/save_megapool';
+$route['edit-megapool/(:any)']  	= 'front_end/commissioner/megapool/edit_megapool/$1';
+$route['update-megapool']       	= 'front_end/commissioner/megapool/update_megapool';
+$route['publish-megapool']      	= 'front_end/commissioner/megapool/publish_megapool';
+$route['remove-megapool']       	= 'front_end/commissioner/megapool/remove_megapool';
+$route['get-related-league-by-sport-id'] = 'front_end/commissioner/megapool/get_related_league_by_sport_id';
+$route['invite-player/(:any)']  	= 'front_end/commissioner/megapool/invite_player/$1';
+$route['send-invitation']  			= 'front_end/commissioner/megapool/send_invitation';
+$route['view-megapool/(:any)']		= 'front_end/commissioner/megapool/view_megapool/$1';
+$route['megapool-players/(:any)']	= 'front_end/commissioner/megapool/megapool_players/$1';
 $route['megapool-players/(:any)/(:num)']	= 'front_end/commissioner/megapool/megapool_players/$1/$1';
 $route['view-standings-table/(:any)']		= 'front_end/commissioner/megapool/view_standings_table/$1';
 
@@ -223,10 +221,10 @@ $route['add-player/(:any)']  		= 'front_end/commissioner/draft/add_player/$1';
 $route['attatch-player-to-draft']  	= 'front_end/commissioner/draft/attatch_player_to_draft';
 
 #draft route for players
-$route['draft/(:any)']  					= 'front_end/player/draft/draft/$1';
-$route['submit-team']   					= 'front_end/player/draft/submit_team';
-$route['manage-draft']          			= 'front_end/player/draft/manage_draft';
-$route['manage-draft/(:num)']   			= 'front_end/player/draft/manage_draft/$1';
+$route['draft/(:any)']  		= 'front_end/player/draft/draft/$1';
+$route['submit-team']   		= 'front_end/player/draft/submit_team';
+$route['manage-draft']          = 'front_end/player/draft/manage_draft';
+$route['manage-draft/(:num)']   = 'front_end/player/draft/manage_draft/$1';
 $route['view-draft-standings-table/(:any)'] = 'front_end/player/draft/view_draft_standings_table/$1';
 
 #player wallet
@@ -239,17 +237,23 @@ $route['all-megapool']           = 'front_end/player/megapool/all_megapool';
 $route['all-megapool/(:num)']    = 'front_end/player/megapool/all_megapool/$1';
 $route['megapool/(:any)']        = 'front_end/player/megapool/megapool_preview';
 
+
 $route['invitations']   		= 'front_end/player/invitation/invitations';
 $route['invitations/(:num)']   	= 'front_end/player/invitation/invitations/$1';
 $route['accept-invitation']   	= 'front_end/player/invitation/accept_invitation';
 $route['reject-invitation']   	= 'front_end/player/invitation/reject_invitation';
 $route['join-megapool/(:any)']  = 'front_end/player/invitation/join_megapool/$1';
 
+
+
 $route['my-leagues']   		= 'front_end/player/megapool/my_leagues';
 $route['my-leagues/(:num)'] = 'front_end/player/megapool/my_leagues/$1';
+$route['view-standing-table/(:any)']	= 'front_end/player/megapool/view_standing_table/$1';
+
 $route['blogs/(:any)']   	= 'home/blog_details/$1';
 
 $route['switch-account']    = 'account/switch_account';
+
 
 
 $route['404_override'] = 'my404';

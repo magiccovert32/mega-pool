@@ -107,7 +107,7 @@ class Teammaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllTeamsForAdmin($page=0,$perpage){		
+	public function getAllTeamsForAdmin($page,$perpage){		
 		$page = $page-1;
 		
 		if ($page<0) { 

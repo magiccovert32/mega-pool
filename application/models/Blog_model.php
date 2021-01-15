@@ -109,7 +109,7 @@ class Blog_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllBlogForAdmin($page=0,$perpage){		
+	public function getAllBlogForAdmin($page,$perpage){		
 		$page = $page-1;
 		
 		if ($page<0) { 

@@ -58,4 +58,11 @@ $('#login-btn').on('click', function(){
         $('#error-msg').find('.alert_message').html(error_str);
         $('#error-msg').show();
     }
-})
+});
+
+$("input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+        $("#login-btn").click();
+    }
+});

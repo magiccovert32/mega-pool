@@ -108,7 +108,7 @@ class Playerwallet_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllTransactionByUserId($page=0,$perpage, $userId){	
+	public function getAllTransactionByUserId($page,$perpage, $userId){	
 		$page = $page-1;
 		
 		if ($page<0) { 

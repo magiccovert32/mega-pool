@@ -38,7 +38,7 @@ class Invitationmaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getInvitationListByUserEmail($page=0,$perpage,$email){		
+	public function getInvitationListByUserEmail($page,$perpage,$email){		
 		$page = $page-1;
 		
 		if ($page<0) { 
@@ -117,7 +117,7 @@ class Invitationmaster_model extends CI_Model {
 	}
 	
 	
-	public function getAllInvitationByCommissionerId($page=0,$perpage, $userId){		
+	public function getAllInvitationByCommissionerId($page,$perpage, $userId){		
 		$page = $page-1;
 		
 		if ($page<0) { 

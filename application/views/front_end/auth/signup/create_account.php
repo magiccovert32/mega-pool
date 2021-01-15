@@ -40,10 +40,20 @@
 						</div>
 					</div>
 					
-					<div class="col-md-6">
+					<div class="col-md-8">
 						<div class="position-relative form-group">
 							<label for="dob" class="card-title">DOB</label>
-							<input type="text" readonly="readonly" class="form-control" id="dob" placeholder="Enter date of birth" name="dob" autocomplete="off">
+							<div class="row">
+								<div class="col-md-4">
+									<select class="form-control" id="dobday" name="dobday"></select>
+								</div>
+								<div class="col-md-4">
+									<select class="form-control" id="dobmonth" name="dobmonth"></select>
+								</div>
+								<div class="col-md-4">
+									<select class="form-control" id="dobyear" name="dobyear"></select>
+								</div>
+							</div>
 						</div>
 					</div>
 					
@@ -59,6 +69,12 @@
 							<input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password"  autocomplete="off" name="confirm_password">
 						</div>
 					</div>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="tandc" checked>
+					<label class="form-check-label" for="tandc">
+						By clicking 'Sign up', you agree to our <a href="<?php echo base_url('terms-conditions'); ?>" class="text-info" style="cursor: pointer;"><b>terms of service, privacy policy</b></a>
+					</label>
 				</div>
 				<div class="divider row"></div>
 				<div class="d-flex align-items-center">
@@ -86,3 +102,4 @@
 </div>
 
 <script src="<?php echo base_url('assets/front_end/js/auth/create_account.js'); ?>" ></script>
+<script src="<?php echo base_url('assets/front_end/js/auth/dobpicker.js'); ?>" ></script>

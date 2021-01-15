@@ -115,7 +115,7 @@ class Draftmaster_model extends CI_Model {
 		}
 	}
 	
-	public function getAllDraftByCommissionerId($page=0,$perpage,$userId){		
+	public function getAllDraftByCommissionerId($page,$perpage,$userId){		
 		$page = $page-1;
 		
 		if ($page<0) { 
@@ -252,7 +252,7 @@ class Draftmaster_model extends CI_Model {
 	
 	
 	
-	public function getAllDraftByPlayerId($page=0,$perpage,$userId){		
+	public function getAllDraftByPlayerId($page,$perpage,$userId){		
 		$page = $page-1;
 		
 		if ($page<0) { 

@@ -38,7 +38,7 @@
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
     <div class="app-header header-shadow">
         <div class="app-header__logo">
-            <div class="logo-src"></div>
+            <a href="<?php echo base_url('my-dashboard'); ?>"><div class="logo-src"></div></a>
             <div class="header__pane ml-auto">
                 <div>
                     <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -113,7 +113,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="scroll-area-xs" style="height: 150px;">
+                                        <div class="scroll-area-xs" style="height: 350px;">
                                             <div class="scrollbar-container ps">
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item-header nav-item">My Account</li>
@@ -126,6 +126,24 @@
                                                     <li class="nav-item">
                                                         <a href="<?php echo base_url('switch-account'); ?>" class="nav-link">Change Access
                                                             <div class="ml-auto badge badge-success">Change Account</div>
+                                                        </a>
+                                                    </li>
+                                                    
+                                                    <li class="nav-item-header nav-item">Wallet</li>
+                                                    <li class="nav-item">
+                                                        <a href="<?php echo base_url('my-wallet'); ?>" class="nav-link">My Wallet
+                                                            <div class="ml-auto badge badge-success">View</div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="<?php echo base_url('wallet-transactions'); ?>" class="nav-link">Wallet Transaction
+                                                            <div class="ml-auto badge badge-success">View</div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item-header nav-item">Invitations</li>
+                                                    <li class="nav-item">
+                                                        <a href="<?php echo base_url('invitations'); ?>" class="nav-link">My Invitations
+                                                            <div class="ml-auto badge badge-success">View</div>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -257,7 +275,7 @@
                                 </ul>
                             </li>
 							
-							<li class="app-sidebar__heading">Draft</li>
+							<!--<li class="app-sidebar__heading">Draft</li>
 							<li <?php if(in_array($action,array('my_draft','create_draft'))){ ?> class="mm-active" <?php } ?>>
                                 <a href="#">
                                     <i class="metismenu-icon pe-7s-photo-gallery"></i> Draft
@@ -270,7 +288,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         <?php } ?>
 
 
@@ -306,26 +324,6 @@
                                     <li>
                                         <a href="<?php echo  base_url('manage-draft'); ?>" <?php if($action == 'my_draft'){ ?> class="mm-active" <?php } ?>>
                                             <i class="metismenu-icon"></i> My Draft
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-							
-							<li class="app-sidebar__heading">Wallet</li>
-                            <li <?php if(in_array($action,array('my_wallet','wallet_transactions'))){ ?> class="mm-active" <?php } ?>>
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-piggy"></i> Wallet
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="<?php echo  base_url('my-wallet'); ?>" <?php if($action == 'my_wallet'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> My Wallet
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo  base_url('wallet-transactions'); ?>" <?php if($action == 'wallet_transactions'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> Wallet Transactions
                                         </a>
                                     </li>
                                 </ul>

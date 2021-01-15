@@ -59,7 +59,7 @@ class Signup extends CI_Controller {
 			$full_name 		= trim($this->input->post('full_name'));	
 			$user_type_id 	= trim($this->input->post('user_type_id'));	
 			$login_email 	= trim($this->input->post('email'));
-			$dob 			= trim($this->input->post('dob'));
+			$dob 			= $this->input->post('dobday').'-'.$this->input->post('dobmonth').'-'.$this->input->post('dobyear');
 			$login_password = md5(trim($this->input->post('password')));
 			
 			if($login_email != '' && $login_password != '' && $user_type_id != '' && $full_name != '' && $dob != ''){
@@ -157,15 +157,14 @@ class Signup extends CI_Controller {
 	
 		$mail = new PHPMailer;
 		
-        $mail->isSMTP();
-        $mail->Host     	= 'email-smtp.us-west-2.amazonaws.com';
-        $mail->SMTPAuth 	= true;
-        $mail->Username 	= 'AKIAX4SIXGNNHPBQEUPT';
-        $mail->Password 	= 'BAWQ8phJv1lOmHH5xeQhIc/tWcfzwYY1Ab90bw2PAfDT';
-        $mail->SMTPSecure	= 'tls';
-        $mail->Port    		= 587;
-        
-        $mail->setFrom('debasish.wdc@gmail.com', 'Mega Pool support team');
+		$mail->isSMTP();
+        $mail->setFrom('debasishpaul2014@gmail.com', 'Playthemegapool.com support team');
+		$mail->Username 	= 'AKIAX4SIXGNNN7KFNMTJ';
+		$mail->Password 	= 'BD4AF7Er/z+tj4aLS9eaZpIEXVvIrt2/r5SOguoGTObj';
+		$mail->Host     	= 'email-smtp.us-east-1.amazonaws.com';
+		$mail->SMTPSecure	= 'tls';
+		$mail->Port    		= 587;
+		$mail->SMTPAuth 	= true;
         
 		$mail->addAddress($email);
         $mail->Subject = 'MEGA POOL ACCOUNT VERIFICATION';
@@ -173,6 +172,7 @@ class Signup extends CI_Controller {
 		
         $mailContent = "<p>Please click on the below link to verify your email address.</p>
             			<a href='".base_url()."verify-account/".$link."'>Verify Account</a>";
+						
         $mail->Body = $mailContent;
         
         if(!$mail->send()){

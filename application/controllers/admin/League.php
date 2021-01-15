@@ -485,7 +485,7 @@ class League extends CI_Controller {
 				$team_score_position = array();
 				
 				if($data['league_teams']){
-					foreach($data['league_teams'] as $key => $team){
+					foreach($data['league_teams'] as $key=>$team){
 						$teamResult = $this->Matchmaster_model->getTeamWinningRelation($team['team_id'],$leagueId,$data['league_details']['win_point'],$data['league_details']['draw_point']);
 						
 						if($teamResult){

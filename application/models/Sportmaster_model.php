@@ -108,7 +108,7 @@ class Sportmaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllSportsForAdmin($page=0,$perpage){		
+	public function getAllSportsForAdmin($page,$perpage){		
 		$page = $page-1;
 		
 		if ($page<0) { 

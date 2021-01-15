@@ -257,30 +257,33 @@ class Login extends CI_Controller {
 	function send_verification_mail($link,$email){
 		require_once('./vendor/autoload.php');
 	
-		$mail = new PHPMailer;
-		
-        $mail->isSMTP();
-        $mail->Host     	= 'email-smtp.us-west-2.amazonaws.com';
-        $mail->SMTPAuth 	= true;
-        $mail->Username 	= 'AKIAX4SIXGNNHPBQEUPT';
-        $mail->Password 	= 'BAWQ8phJv1lOmHH5xeQhIc/tWcfzwYY1Ab90bw2PAfDT';
-        $mail->SMTPSecure	= 'tls';
-        $mail->Port    		= 587;
-        
-        $mail->setFrom('debasish.wdc@gmail.com', 'Mega Pool support team');
-        
-		$mail->addAddress($email);
-        $mail->Subject = "Here's how to reset your password.";
-        $mail->isHTML(true);
-		
-        $mailContent = "<p>Please click on the below link to reset password.</p>
-            			<a href='".base_url()."reset-password/".$link."'>Reset Password</a>";
-        $mail->Body = $mailContent;
-        
-        if(!$mail->send()){
-            return 0;
-        }else{
-            return 1;
+		try{
+			$mail = new PHPMailer;
+			
+			$mail->isSMTP();
+			$mail->setFrom('debasishpaul2014@gmail.com', 'Playthemegapool.com support team');
+			$mail->Username 	= 'AKIAX4SIXGNNN7KFNMTJ';
+			$mail->Password 	= 'BD4AF7Er/z+tj4aLS9eaZpIEXVvIrt2/r5SOguoGTObj';
+			$mail->Host     	= 'smtp.mail.us-west-2.awsapps.com';
+			$mail->SMTPSecure	= 'tls';
+			$mail->Port    		= 587;
+			$mail->SMTPAuth 	= true;
+			
+			$mail->addAddress($email);
+			$mail->Subject = "Here's how to reset your password.";
+			$mail->isHTML(true);
+			
+			$mailContent = "<p>Please click on the below link to reset password.</p>
+							<a href='".base_url()."reset-password/".$link."'>Reset Password</a>";
+			$mail->Body = $mailContent;
+			
+			$mail->send();
+			
+			return true;
+        }catch (phpmailerException $e) {
+            return true;
+		}catch (Exception $e) {
+            return true;
 		}
     }
 }

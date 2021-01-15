@@ -60,7 +60,7 @@ class Matchmaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllMatchForAdmin($page=0,$perpage,$league_id,$team){		
+	public function getAllMatchForAdmin($page,$perpage,$league_id,$team){		
 		$page = $page-1;
 		
 		if ($page<0) { 

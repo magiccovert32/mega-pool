@@ -108,7 +108,7 @@ class Leaguemaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllLeaguesForAdmin($page=0,$perpage){		
+	public function getAllLeaguesForAdmin($page,$perpage){		
 		$page = $page-1;
 		
 		if ($page<0) { 

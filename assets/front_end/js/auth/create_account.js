@@ -8,7 +8,7 @@ $('#signup-btn').on('click', function(){
     $('.alert').hide();
 
     let full_name   = $.trim($('#full_name').val());
-	let dob   		= $.trim($('#dob').val());
+	let dob   		= $.trim($('#dobday').val()+'-'+$('#dobmonth').val()+'-'+$('#dobyear').val());
     let email       = $.trim($('#email').val());
     let password    = $.trim($('#password').val());
     let cpassword   = $.trim($('#confirm-password').val());
@@ -36,7 +36,7 @@ $('#signup-btn').on('click', function(){
 	if(dob !== ''){
         if(!dob_str.test(dob)){
             error = 1;
-            error_msg.push('Enter valid date.');
+            error_msg.push('Enter valid DOB.');
         }
     }else{
         error = 1;
@@ -56,6 +56,11 @@ $('#signup-btn').on('click', function(){
     }else{
         error = 1;
         error_msg.push('Enter account password.');
+    }
+    
+    if(!$('#tandc').is(":checked")){
+        error = 1;
+        error_msg.push('Please accept the Terms & Conditions.');
     }
 
     if(error == 0){
@@ -102,4 +107,24 @@ $(function () {
 		todayHighlight: true,
 		format: 'dd-mm-yyyy',
 	}).datepicker('update', new Date());
+});
+
+$(function () {
+    $.dobPicker({
+        daySelector: '#dobday', /* Required */
+        monthSelector: '#dobmonth', /* Required */
+        yearSelector: '#dobyear', /* Required */
+        dayDefault: 'Day', /* Optional */
+        monthDefault: 'Month', /* Optional */
+        yearDefault: 'Year', /* Optional */
+        minimumAge: 12, /* Optional */
+        maximumAge: 80 /* Optional */
+    });
+});
+
+$("input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+        $("#signup-btn").click();
+    }
 });

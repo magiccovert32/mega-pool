@@ -55,7 +55,7 @@ class Singlematch extends CI_Controller {
 		
 		if(!empty($_GET['league_id'])){
 			$team_name					= @$_GET['team_name'];
-			$config["base_url"] 		= base_url() . "admin-match-management";
+			$config["base_url"] 		= base_url() . "admin-single-match-management";
 			$config['suffix'] 			= '?' . http_build_query($_GET, '', "&");
 			$config["total_rows"] 		= $this->Singlematchmaster_model->getTotalMatchCountForAdmin($_GET['league_id'],$team_name);
 			$config["uri_segment"] 		= 2;

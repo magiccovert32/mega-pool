@@ -179,10 +179,10 @@ class Usermaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllUserForAdmin($type,$page=0,$perpage){		
+	public function getAllUserForAdmin($type,int $page,int $perpage){		
 		$page = $page-1;
 		
-		if ($page<0) { 
+		if ($page < 0) { 
 			$page = 0;
 		}
 		

@@ -151,7 +151,7 @@ class Megapoolmaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllLeaguesByCommissionerId($page=0,$perpage, $userId){		
+	public function getAllLeaguesByCommissionerId($page,$perpage, $userId){		
 		$page = $page-1;
 		
 		if ($page<0) { 
@@ -249,7 +249,7 @@ class Megapoolmaster_model extends CI_Model {
 		}
 	}
 	
-	public function getAllPlayersByMegapoolLeagueId($page=0,$perpage, $leagueId){		
+	public function getAllPlayersByMegapoolLeagueId($page,$perpage, $leagueId){		
 		$page = $page-1;
 		
 		if ($page<0) { 
@@ -463,7 +463,7 @@ class Megapoolmaster_model extends CI_Model {
 
 
 
-	public function getPublishedMegapoolList($page=0,$perpage){		
+	public function getPublishedMegapoolList($page,$perpage){		
 		$page = $page-1;
 		
 		if ($page<0) { 
@@ -537,7 +537,7 @@ class Megapoolmaster_model extends CI_Model {
 
 
 
-	public function getMyMegapoolList($page=0,$perpage,$userId){		
+	public function getMyMegapoolList($page,$perpage,$userId){		
 		$page = $page-1;
 		
 		if ($page<0) { 
