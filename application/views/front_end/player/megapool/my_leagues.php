@@ -19,7 +19,7 @@
 		</div>
 		
 		
-			<?php if($megapool_list){ ?>
+		<?php if($megapool_list){ ?>
 			<div class="main-card mb-3">
 				<?php foreach($megapool_list as $list){ ?>
 					<li class="main-card mb-2 card mt-2">

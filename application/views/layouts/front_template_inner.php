@@ -19,7 +19,7 @@
 
 	<style>
         body{
-			/*font-family: 'Open Sans', sans-serif !important;*/
+			font-family: 'Open Sans', sans-serif !important;
 			letter-spacing: 0.03em;
 		}
 
@@ -93,15 +93,6 @@
                                                                 <div class="widget-heading">
 																	<?php echo $this->session->userdata('full_name'); ?>
                                                                 </div>
-                                                                <div class="widget-subheading opacity-8">
-                                                                    <?php
-                                                                        if($this->session->userdata('user_type_id') == 1){
-                                                                            echo "Logged-in as Commissioner";
-                                                                        }else{
-                                                                            echo "Logged-in as Player";
-                                                                        }
-                                                                    ?>
-                                                                </div>
                                                             </div>
                                                             <div class="widget-content-right mr-2">
 																<a href="<?php echo base_url('account-logout'); ?>">
@@ -113,7 +104,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="scroll-area-xs" style="height: 350px;">
+                                        <div class="scroll-area-xs">
                                             <div class="scrollbar-container ps">
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item-header nav-item">My Account</li>
@@ -122,13 +113,7 @@
                                                             <div class="ml-auto badge badge-success">Profile Edit </div>
                                                         </a>
                                                     </li>
-													<li class="nav-item-header nav-item">Switch Account</li>
-                                                    <li class="nav-item">
-                                                        <a href="<?php echo base_url('switch-account'); ?>" class="nav-link">Change Access
-                                                            <div class="ml-auto badge badge-success">Change Account</div>
-                                                        </a>
-                                                    </li>
-                                                    
+													
                                                     <li class="nav-item-header nav-item">Wallet</li>
                                                     <li class="nav-item">
                                                         <a href="<?php echo base_url('my-wallet'); ?>" class="nav-link">My Wallet
@@ -156,15 +141,6 @@
                             <div class="widget-content-left  ml-3 header-user-info">
                                 <div class="widget-heading">
                                     <?php echo $this->session->userdata('full_name') ?>
-                                </div>
-                                <div class="widget-subheading">
-                                    <?php
-                                        if($this->session->userdata('user_type_id') == 1){
-                                            echo "Logged-in as Commissioner";
-                                        }else{
-                                            echo "Logged-in as Player";
-                                        }
-                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -237,98 +213,55 @@
 							</ul>
 						</li>
 						
-						<?php if($this->session->userdata('user_type_id') == 1){ ?>
-							<li <?php if($action == 'my_invitation'){ ?> class="mm-active" <?php } ?>>
-								<a href="#">
-									<i class="metismenu-icon pe-7s-next-2"></i>
-									Invitations
-									<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-								</a>
-								<ul>
-									<li>
-										<a href="<?php echo  base_url('my-invitation'); ?>" <?php if($action == 'my_invitation'){ ?> class="mm-active" <?php } ?>>
-											<i class="metismenu-icon"></i> View
-										</a>
-									</li>
-								</ul>
-							</li>
-						<?php } ?>
-
-                        <?php if($this->session->userdata('user_type_id') == 1){ ?>
-							<li class="app-sidebar__heading">Megapool</li>
-                            <li <?php if(in_array($action,array('my_megapool','create_megapool'))){ ?> class="mm-active" <?php } ?>>
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-rocket"></i> Megapool
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="<?php echo  base_url('my-megapool'); ?>" <?php if($action == 'my_megapool'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> My Megapool
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo  base_url('create-megapool'); ?>" <?php if($action == 'create_megapool'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> Create Megapool
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-							
-							<!--<li class="app-sidebar__heading">Draft</li>
-							<li <?php if(in_array($action,array('my_draft','create_draft'))){ ?> class="mm-active" <?php } ?>>
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-photo-gallery"></i> Draft
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="<?php echo  base_url('my-draft'); ?>" <?php if($action == 'my_draft'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> My Draft
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>-->
-                        <?php } ?>
+                        <li class="app-sidebar__heading">Megapool Management</li>
+                        <li <?php if(in_array($action,array('my_megapool','create_megapool','my_draft','my_invitation'))){ ?> class="mm-active" <?php } ?>>
+                            <a href="#">
+                                <i class="metismenu-icon pe-7s-rocket"></i> Megapool
+                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="<?php echo  base_url('my-megapool'); ?>" <?php if($action == 'my_megapool'){ ?> class="mm-active" <?php } ?>>
+                                        <i class="metismenu-icon"></i> My Megapool
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo  base_url('create-megapool'); ?>" <?php if($action == 'create_megapool'){ ?> class="mm-active" <?php } ?>>
+                                        <i class="metismenu-icon"></i> Create Megapool
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo  base_url('my-draft'); ?>" <?php if($action == 'my_draft'){ ?> class="mm-active" <?php } ?>>
+                                        <i class="metismenu-icon"></i> Created Drafts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo  base_url('my-invitation'); ?>" <?php if($action == 'my_invitation'){ ?> class="mm-active" <?php } ?>>
+                                        <i class="metismenu-icon pe-7s-star"></i> Sent Invitations
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
-                        <?php if($this->session->userdata('user_type_id') == 2){ ?>
-							<li class="app-sidebar__heading">Megapool</li>
-							<li <?php if(in_array($action,array('invitations'))){ ?> class="mm-active" <?php } ?>>
-                                <a href="<?php echo  base_url('invitations'); ?>">
-                                    <i class="metismenu-icon pe-7s-star"></i> Invitations
-                                </a>
-                            </li>
-						
-							<li <?php if(in_array($action,array('my_leagues'))){ ?> class="mm-active" <?php } ?>>
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-cup"></i> Megapool
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="<?php echo  base_url('my-leagues'); ?>" <?php if($action == 'my_leagues'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> My Leagues
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-							
-							<li class="app-sidebar__heading">Draft</li>
-							<li <?php if(in_array($action,array('my_draft'))){ ?> class="mm-active" <?php } ?>>
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-photo-gallery"></i> My Drafts
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="<?php echo  base_url('manage-draft'); ?>" <?php if($action == 'my_draft'){ ?> class="mm-active" <?php } ?>>
-                                            <i class="metismenu-icon"></i> My Draft
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        <?php } ?>
+                        <li class="app-sidebar__heading">Joined Megapool</li>
+                        <li>
+                            <a href="<?php echo  base_url('invitations'); ?>" <?php if(in_array($action,array('invitations'))){ ?> class="mm-active" <?php } ?>>
+                                <i class="metismenu-icon pe-7s-star"></i> Received Invitations
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="<?php echo  base_url('my-leagues'); ?>" <?php if($action == 'joined_megapool'){ ?> class="mm-active" <?php } ?>>
+                                <i class="metismenu-icon"></i> My Leagues
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="<?php echo  base_url('manage-draft'); ?>" <?php if($action == 'manage_draft'){ ?> class="mm-active" <?php } ?>>
+                                <i class="metismenu-icon"></i> My Draft
+                            </a>
+                        </li>
 					</ul>
 				</div>
 			</div>
@@ -370,5 +303,4 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/scripts/main.cba69814a806ecc7945a.js"></script>
 
 
-<!-- Mirrored from demo.dashboardpack.com/architectui-html-pro/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Aug 2019 18:19:54 GMT -->
 </html>

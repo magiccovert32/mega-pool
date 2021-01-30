@@ -3,7 +3,13 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="main-card mb-3 card">
+		<div class="card-header-tab card-header">
+			<div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+				<i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Received Invitations
+			</div>
+		</div>
+		
+		<div class="main-card mb-3">
 			<?php if($invitation_list){ ?>
 				<ul class="todo-list-wrapper list-group list-group-flush">
 					<?php foreach($invitation_list as $list){ ?>
@@ -22,11 +28,6 @@
 												</div>
 											</div>
 										</div>
-										<!--<div class="row">
-											<div class="col-sm-12">
-												<span class="widget-numbers text-success">Entry $<?php echo $list['entry_fee']; ?></span>
-											</div>
-										</div>-->
 									</div>
 									<div class="widget-content-right widget-content-actions">
 										<button data-url="<?php echo $list['mega_pool_url']; ?>" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-success accept-invitation"><i class="ion-android-done-all btn-icon-wrapper"> </i>Accept</button>
@@ -38,13 +39,11 @@
 					<?php } ?>
 				</ul>
 			<?php }else{ ?>
-				<div class="col-md-12">
-					<br/>
-					<div class="alert alert-danger fade show" role="alert">
-						<div>
-							<strong>Oops</strong>
-							<div class="page-title-subheading">Nothing to display! Seems, there is no invitation.</div>
-						</div>
+				<br/>
+				<div class="alert alert-danger fade show" role="alert">
+					<div>
+						<strong>Oops</strong>
+						<div class="page-title-subheading">Nothing to display! Seems, there is no invitation.</div>
 					</div>
 				</div>
 			<?php } ?>

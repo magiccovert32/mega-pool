@@ -23,13 +23,12 @@ $('#edit-mega-pool').on('click', function(){
 
     let mega_pool_title     = $.trim($('#mega_pool_title').val());
     let sport_id            = $.trim($('#sport_id').val());
-    let entry_fee           = $.trim($('#entry_fee').val());
 
     let error                   = 0;
     let error_msg               = [];
     let selected_league_count   = 0;
 
-    $("input[name='selected_league[]']").each(function (index, obj) {
+    $("input[name='selected_league[]']").each(function () {
         if ($(this).prop('checked')==true){ 
             selected_league_count++;
         }
@@ -50,17 +49,11 @@ $('#edit-mega-pool').on('click', function(){
         error = 1;
         error_msg.push('Select at least 1 league.');
     }
-	
-    //if(entry_fee == ''){
-    //    error = 1;
-    //    error_msg.push('Enter entry fee.');
-    //}else{
-    //    var regex = /^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
-    //    if(!regex.test(entry_fee)){
-    //        error = 1;
-    //        error_msg.push('Enter valid entry fee.');
-    //    }
-    //}
+    
+    if(selected_league_count > 10){
+        error = 1;
+        error_msg.push('You can select max 10 leagues.');
+    }
 
     if(error == 0){
         var formData = new FormData($('#mega-pool-edit-frm')[0]);

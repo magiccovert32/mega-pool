@@ -32,40 +32,6 @@ class Account extends CI_Controller {
 	}
 	
 	public function switch_account(){
-		$generate_session 	= md5(@date('Y-m-d h:i:s')).md5(rand(2000,4000));
-		$user_id			= $this->session->userdata('user_id');
 		
-		$userDetails = $this->Usermaster_model->getUserDetailsByUserIdByAdmin($user_id);
-		
-		if($userDetails){
-			$user_type 	= $userDetails['user_type_id'];
-			$user_email = $userDetails['user_email'];
-			
-			if($user_type == 1){
-				$another_type = 2;
-			}else{
-				$another_type = 1;
-			}
-			
-			$userDetails = $this->Usermaster_model->getUserDetailsByUserEmailAndType($user_email,$another_type);
-			
-			if($userDetails){
-				#Store login session
-				$user_session = array(
-									'user_session_id' 	=> $generate_session,
-									'user_id' 			=> $userDetails['user_id'],
-									'full_name'			=> $userDetails['full_name'],
-									'profile_image'		=> $userDetails['profile_image'],
-									'user_type_id'		=> $userDetails['user_type_id']
-									);
-				
-				$this->session->set_userdata($user_session);
-				redirect(base_url('my-dashboard'));
-			}else{
-				redirect(base_url('my-dashboard'));
-			}
-		}else{
-			redirect(base_url('my-dashboard'));
-		}		
 	}
 }

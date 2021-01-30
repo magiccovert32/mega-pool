@@ -32,9 +32,9 @@ class Wallet extends CI_Controller {
             redirect(base_url('account-login'));
 		}
 
-		if ($this->session->userdata('user_type_id') != 2) {
-            redirect(base_url('home'));
-		}
+//		if ($this->session->userdata('user_type_id') != 2) {
+//            redirect(base_url('home'));
+//		}
 
 		$this->load->model("Usermaster_model");
 		$this->load->model("Playerwallet_model");

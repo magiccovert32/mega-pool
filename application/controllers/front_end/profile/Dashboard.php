@@ -32,6 +32,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model("Usermaster_model");
 		$this->load->model("Megapoolmaster_model");
 		$this->load->model("Draftmaster_model");
+		$this->load->model("Invitationmaster_model");
 	}
 
 
@@ -46,22 +47,15 @@ class Dashboard extends CI_Controller {
 		$this->front_template_inner->set('action', 'my_dashboard');	
 		$this->front_template_inner->set('page_icon', 'pe-7s-graph2');
 		
-		if($this->session->userdata('user_type_id') == 1){
-			$data['megapool_count'] = $this->Megapoolmaster_model->getTotalLeagueCountCommissionerId($this->session->userdata('user_id'));
-			$data['draft_count'] 	= $this->Draftmaster_model->getTotalDraftCountCommissionerId($this->session->userdata('user_id'));
-			$data['player_count'] 	= $this->Megapoolmaster_model->getTotalPlayerCountByCommissionerId($this->session->userdata('user_id'));
-			
-			
-			$data['megapool_list'] 	= $this->Megapoolmaster_model->getAllActiveMegapoolByCommissionerId($this->session->userdata('user_id'));
-		}else{
-			//$data['league_list'] 	= $this->Megapoolmaster_model->getAllActiveDraftLeagueByPlayerId($this->session->userdata('user_id'));
-			$data['megapool_list'] 	= $this->Megapoolmaster_model->getPlayerMegapoolList($this->session->userdata('user_id'));
-		}
+		$data['megapool_count'] 		= $this->Megapoolmaster_model->getTotalLeagueCountCommissionerId($this->session->userdata('user_id'));
+		$data['draft_count'] 			= $this->Draftmaster_model->getTotalDraftCountCommissionerId($this->session->userdata('user_id'));
+		$data['player_count'] 			= $this->Megapoolmaster_model->getTotalPlayerCountByCommissionerId($this->session->userdata('user_id'));			
+		$data['created_megapool_list'] 	= $this->Megapoolmaster_model->getAllActiveMegapoolByCommissionerId($this->session->userdata('user_id'));
 		
-		if($this->session->userdata('user_type_id') == 2){
-			$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/profile/player_dashboard', $data);
-		}else{
-			$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/profile/commissioner_dashboard', $data);
-		}
+		$data['megapool_list'] 		= $this->Megapoolmaster_model->getPlayerMegapoolList($this->session->userdata('user_id'));
+		$data["my_megapool_list"] 	= $this->Megapoolmaster_model->getMyMegapoolList(1,10,$this->session->userdata('user_id'));
+		$data["invitation_list"] 	= $this->Invitationmaster_model->getInvitationListByUserEmail(1,10,$data['user_details']['user_email']);
+		
+		$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/profile/commissioner_dashboard', $data);
 	}
 }

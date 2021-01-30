@@ -17,10 +17,28 @@
 								</select>
 							</div>
 						</div>
+					</div>
+					
+					<div class="row">
 						<div class="col-sm-12 col-md-6">
 							<div class="position-relative form-group">
 								<label for="league_title" class="">Match Date</label>
 								<input name="match_date" id="match_date" placeholder="Match date" type="date" class="form-control" required="required" autocomlete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<div class="position-relative form-group">
+								<label for="league_title" class="">Match Time</label>
+								<input name="match_time" id="match_time" placeholder="Match time" type="time" class="form-control" required="required" autocomlete="off">
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12 col-md-12">
+							<div class="position-relative form-group">
+								<label for="home_team_id" class="">Where can watch</label>
+								<textarea name="where_can_watch" id="where_can_watch" placeholder="Enter where user can see this match" class="form-control"></textarea>
 							</div>
 						</div>
 					</div>

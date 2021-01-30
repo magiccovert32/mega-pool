@@ -17,12 +17,11 @@ class Usermaster_model extends CI_Model {
 	 * @return result
 	 *
 	 */
-	public function getAuth($email,$password,$user_type_id){
-		$query = $this->db->select("user_id,user_type_id,user_email,full_name,profile_image,current_status")
+	public function getAuth($email,$password){
+		$query = $this->db->select("user_id,user_email,full_name,profile_image,current_status")
 							->from("user_master")
 							->where('user_email',$email)
 							->where('user_password',$password)
-							->where('user_type_id',$user_type_id)
 							->get();
 
 		if($query->num_rows() > 0){
@@ -115,11 +114,10 @@ class Usermaster_model extends CI_Model {
 	}
 	
 	
-	public function checkEmailExistsByType($email,$user_type_id){				
+	public function checkEmailExistsByType($email){				
 		$query = $this->db->select("user_id")
                         ->from("user_master")
 						->where("user_email", $email)
-						->where("user_type_id", $user_type_id)
 						->get();
  
         if($query->num_rows() > 0){
@@ -179,7 +177,7 @@ class Usermaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getAllUserForAdmin($type,int $page,int $perpage){		
+	public function getAllUserForAdmin(int $page,int $perpage){		
 		$page = $page-1;
 		
 		if ($page < 0) { 
@@ -191,7 +189,6 @@ class Usermaster_model extends CI_Model {
 		
 		$query = $this->db->select("UM.*")
                         ->from("user_master UM")
-						->where("UM.user_type_id",$type)
 						->order_by('registration_date DESC')
 						->get();
                         
@@ -211,10 +208,9 @@ class Usermaster_model extends CI_Model {
 	 * 
 	 *
 	 */
-	public function getTotalUserCountForAdmin($type){				
+	public function getTotalUserCountForAdmin(){				
 		$query = $this->db->select("COUNT(UM.user_id) as count")
                         ->from("user_master UM")
-						->where("UM.user_type_id",$type)
 						->get();
                         
         if($query->num_rows() > 0){
@@ -251,11 +247,10 @@ class Usermaster_model extends CI_Model {
 	}
 	
 	
-	public function getUserDetailsByUserEmailAndType($user_email,$another_type){				
+	public function getUserDetailsByUserEmailAndType($user_email){				
 		$query = $this->db->select("*")
                         ->from("user_master")
 						->where("user_email", $user_email)
-						->where("user_type_id", $another_type)
 						->get();
  
         if($query->num_rows() > 0){
@@ -275,7 +270,6 @@ class Usermaster_model extends CI_Model {
 	public function getAllCommissionerCount(){
 		$query = $this->db->select("COUNT(UM.user_id) as count")
                         ->from("user_master UM")
-						->where("UM.user_type_id",'1')
 						->get();
                         
         if($query->num_rows() > 0){
@@ -296,7 +290,6 @@ class Usermaster_model extends CI_Model {
 	public function getAllPlayerCount(){
 		$query = $this->db->select("COUNT(UM.user_id) as count")
                         ->from("user_master UM")
-						->where("UM.user_type_id",'2')
 						->get();
                         
         if($query->num_rows() > 0){

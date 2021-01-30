@@ -31,9 +31,9 @@ class Draft extends CI_Controller {
             redirect(base_url('account-login'));
 		}
 
-		if ($this->session->userdata('user_type_id') != 2) {
-            redirect(base_url('home'));
-		}
+//		if ($this->session->userdata('user_type_id') != 2) {
+//            redirect(base_url('home'));
+//		}
 
 		$this->load->model("Usermaster_model");
 		$this->load->model("Megapoolmaster_model");
@@ -57,7 +57,7 @@ class Draft extends CI_Controller {
 
 		$this->front_template_inner->set('title', 'Draft Management');
 		$this->front_template_inner->set('header', 'Draft Management');
-		$this->front_template_inner->set('action', 'my_draft');
+		$this->front_template_inner->set('action', 'manage_draft');
 		$this->front_template_inner->set('page_icon', 'pe-7s-note2');
 		
 		$data = array();

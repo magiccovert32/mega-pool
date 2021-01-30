@@ -26,19 +26,7 @@
 							</div>
 						</div>
 					</div>
-					<!--<div class="col-md-6 col-xl-4">
-						<div class="widget-content">
-							<div class="widget-content-wrapper">
-								<div class="widget-content-right ml-0 mr-3">
-									<div class="widget-numbers text-warning">$<?php echo $invitation_details['entry_fee']; ?></div>
-								</div>
-								<div class="widget-content-left">
-									<div class="widget-heading">Entry Fee</div>
-									<div class="widget-subheading">You will be charged</div>
-								</div>
-							</div>
-						</div>
-					</div>-->
+					
 					<div class="col-md-6 col-xl-4">
 						<div class="widget-content">
 							<div class="widget-content-wrapper">
@@ -62,13 +50,14 @@
 		</div>
 	<?php }else{ ?>
 		<div class="col-md-12">
-			<br/>
+			
 			<div class="alert alert-danger fade show" role="alert">
 				<div>
 					<strong>Error</strong>
 					<div class="page-title-subheading">You don't have access to view this page!</div>
 				</div>
 			</div>
+			<br/>
 			<div class="widget-content-right widget-content-actions text-center">
 				<a href="<?php echo base_url('invitations'); ?>">
 					<button class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg">

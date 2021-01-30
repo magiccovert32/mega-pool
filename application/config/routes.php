@@ -127,17 +127,17 @@ $route['admin-update-team']				= 'admin/team/admin_update_team';
 
 
 #Admin match management
-$route['admin-match-management']		= 'admin/match/admin_match_management';
-$route['admin-match-management/(:num)']	= 'admin/match/admin_match_management/$1';
-$route['admin-add-match']				= 'admin/match/admin_add_match';
-$route['admin-save-match']				= 'admin/match/admin_save_match';
-$route['admin-edit-match/(:num)']		= 'admin/match/admin_edit_match/$1';
-$route['admin-update-match']			= 'admin/match/admin_update_match';
-$route['admin-remove-match']			= 'admin/match/admin_remove_match';
-$route['get-teams-by-league']			= 'admin/match/get_teams_by_league';
-$route['admin-edit-match/(:any)']		= 'admin/match/admin_edit_match/$1';
-$route['publish-match/(:any)']			= 'admin/match/publish_match/$1';
-$route['update-match-point']			= 'admin/match/update_match_point';
+$route['admin-match-management']		= 'admin/matchmaster/admin_match_management';
+$route['admin-match-management/(:num)']	= 'admin/matchmaster/admin_match_management/$1';
+$route['admin-add-match']				= 'admin/matchmaster/admin_add_match';
+$route['admin-save-match']				= 'admin/matchmaster/admin_save_match';
+$route['admin-edit-match/(:num)']		= 'admin/matchmaster/admin_edit_match/$1';
+$route['admin-update-match']			= 'admin/matchmaster/admin_update_match';
+$route['admin-remove-match']			= 'admin/matchmaster/admin_remove_match';
+$route['get-teams-by-league']			= 'admin/matchmaster/get_teams_by_league';
+$route['admin-edit-match/(:any)']		= 'admin/matchmaster/admin_edit_match/$1';
+$route['publish-match/(:any)']			= 'admin/matchmaster/publish_match/$1';
+$route['update-match-point']			= 'admin/matchmaster/update_match_point';
 
 $route['admin-single-match-management']			= 'admin/singlematch/admin_single_match_management';
 $route['admin-single-match-management/(:num)']	= 'admin/singlematch/admin_single_match_management/$1';
@@ -149,6 +149,20 @@ $route['admin-single-remove-match']				= 'admin/singlematch/admin_single_remove_
 $route['admin-single-edit-match/(:any)']		= 'admin/singlematch/admin_single_edit_match/$1';
 $route['publish-single-match/(:any)']			= 'admin/singlematch/publish_single_match/$1';
 $route['update-single-match-point']				= 'admin/singlematch/update_single_match_point';
+
+
+$route['create-megapool-template']       	= 'admin/megapooltemplate/create_megapool_template';
+$route['save-megapool-template']         	= 'admin/megapooltemplate/save_megapool_template';
+$route['edit-megapool-template/(:any)']  	= 'admin/megapooltemplate/edit_megapool_template/$1';
+$route['update-megapool-template']       	= 'admin/megapooltemplate/update_megapool_template';
+$route['megapool-template']       	        = 'admin/megapooltemplate/megapool_template';
+
+$route['megapool-template']		    = 'admin/megapooltemplate/megapool_template';
+$route['megapool-template/(:num)']	= 'admin/megapooltemplate/megapool_template/$1';
+
+
+$route['get-related-league-by-sport-id-by-admin']    = 'admin/megapooltemplate/get_related_league_by_sport_id';
+
 
 $route['cms/about-us']		= 'admin/cms/about_us';
 $route['cms/contact-us']	= 'admin/cms/contact_us';
@@ -199,13 +213,17 @@ $route['edit-megapool/(:any)']  	= 'front_end/commissioner/megapool/edit_megapoo
 $route['update-megapool']       	= 'front_end/commissioner/megapool/update_megapool';
 $route['publish-megapool']      	= 'front_end/commissioner/megapool/publish_megapool';
 $route['remove-megapool']       	= 'front_end/commissioner/megapool/remove_megapool';
-$route['get-related-league-by-sport-id'] = 'front_end/commissioner/megapool/get_related_league_by_sport_id';
-$route['invite-player/(:any)']  	= 'front_end/commissioner/megapool/invite_player/$1';
-$route['send-invitation']  			= 'front_end/commissioner/megapool/send_invitation';
-$route['view-megapool/(:any)']		= 'front_end/commissioner/megapool/view_megapool/$1';
-$route['megapool-players/(:any)']	= 'front_end/commissioner/megapool/megapool_players/$1';
+$route['get-related-league-by-sport-id']    = 'front_end/commissioner/megapool/get_related_league_by_sport_id';
+$route['invite-player/(:any)']  	        = 'front_end/commissioner/megapool/invite_player/$1';
+$route['send-invitation']  			        = 'front_end/commissioner/megapool/send_invitation';
+$route['view-megapool/(:any)']		        = 'front_end/commissioner/megapool/view_megapool/$1';
+$route['megapool-players/(:any)']	        = 'front_end/commissioner/megapool/megapool_players/$1';
 $route['megapool-players/(:any)/(:num)']	= 'front_end/commissioner/megapool/megapool_players/$1/$1';
 $route['view-standings-table/(:any)']		= 'front_end/commissioner/megapool/view_standings_table/$1';
+$route['my-invitation']           		    = 'front_end/commissioner/megapool/my_invitation';
+$route['get-league-template-details']       = 'front_end/commissioner/megapool/get_league_template_details';
+$route['create-megapool-from-league-template']       = 'front_end/commissioner/megapool/create_megapool_from_league_template';
+
 
 #draft route for commissioner
 $route['my-draft']           		= 'front_end/commissioner/draft/my_draft';

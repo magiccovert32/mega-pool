@@ -211,7 +211,7 @@
 									?>
 									<tr>
 										<th scope="row" style="color: <?php echo $rank_color; ?>">#<?php echo $k; ?></th>
-										<td><img class="img-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$team['team_logo']) ?>" style="width: 30px;height: 30px;margin-right: 10px;"> <?php echo $team['team_title']; ?></td>
+										<td><img class="img-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$team['team_logo']) ?>" style="width: 50px;height: 50px;margin-right: 10px;"> <?php echo $team['team_title']; ?></td>
 										<td class="text-center"><span class="text-success" style="font-weight: 700;"><?php echo $team['total_point']; ?></span></td>
 										<td class="text-center"><?php echo $team['play_count']; ?></td>
 										<td class="text-center"><?php echo $team['win_count']; ?></td>

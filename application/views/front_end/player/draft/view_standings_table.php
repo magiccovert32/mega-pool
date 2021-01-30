@@ -3,15 +3,15 @@
 	<div class="col-sm-12">
 		<div class="main-card mb-3">
 			<div class="card-title">Standings Table</div>
-			<div class="table-responsive"> 
+			<div class="" style="width: auto; overflow-x: scroll;">
 				<table class="mb-0 table table-border table-hover">
 					<thead>
 						<tr>
-							<td class="text-success">Player Name</td>
+							<td class="text-success" style="width: 150px">Player Name</td>
 							<?php if($associated_leagues){ foreach($associated_leagues as $league){ ?>
 								<td style="font-size: 12px;font-weight: 500"><?php echo $league['league_title']; ?></td>
 							<?php }} ?>
-							<td class="text-warning">Standing Score</td>
+							<td class="text-warning text-center">Standing Score</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -20,16 +20,19 @@
 								<tr
 								   <?php
 										if($player['user_id'] == $this->session->userdata('user_id')){
+											$textColor = "text-light";
 								?>
-									style="background: #f5e942;"
+									style="background: #222550;"
 								<?php
+										}else{
+											$textColor = "text-dark";
 										}
 								   ?>
 								>
-									<td class="text-muted"><?php echo $player['full_name']; ?></td>
+									<td class="<?php echo $textColor; ?>"><?php echo $player['full_name']; ?></td>
 									
 									<?php if($player['point_history']){ foreach($player['point_history'] as $key => $history){ ?>
-										<td>
+										<td class="<?php echo $textColor; ?>">
 											<div class="badge badge-warning"><?php echo $history; ?> </div>
 											
 											<?php
@@ -44,7 +47,7 @@
 										</td>
 									<?php }} ?>
 									
-									<td class="widget-heading"><?php echo $player['standing_score']; ?></td>
+									<td class="widget-heading text-success text-center"><?php echo $player['standing_score']; ?></td>
 								</tr>
 							<?php }}else{ ?>
 								<tr>

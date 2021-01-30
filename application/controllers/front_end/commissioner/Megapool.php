@@ -31,10 +31,6 @@ class Megapool extends CI_Controller {
             redirect(base_url('account-login'));
 		}
 
-		if ($this->session->userdata('user_type_id') != 1) {
-            redirect(base_url('home'));
-		}
-
 		$this->load->model("Usermaster_model");
 		$this->load->model("Megapoolmaster_model");
 		$this->load->model("Sportmaster_model");
@@ -43,8 +39,8 @@ class Megapool extends CI_Controller {
 		$this->load->model("Draftmaster_model");
 		$this->load->model("Matchmaster_model");
 		$this->load->model("Singlematchmaster_model");
+		$this->load->model("Megapooltemplate_model");
 	}
-
 
 
 	/**
@@ -111,9 +107,96 @@ class Megapool extends CI_Controller {
 		$this->front_template_inner->set('action', 'create_megapool');			
 		$this->front_template_inner->set('page_icon', 'pe-7s-plus');	
 
-		$data['sport_list'] = $this->Sportmaster_model->getAllActiveSports();
-
+		$data['sport_list'] 		= $this->Sportmaster_model->getAllActiveSports();
+		$data['megapool_template'] 	= $this->Megapooltemplate_model->getAllActiveLeagueTemplate();
+		
 		$this->front_template_inner->load('front_template_inner', 'contents' , 'front_end/commissioner/megapool/create_megapool', $data);
+	}
+	
+	
+	public function get_league_template_details(){
+		$data = array();
+		
+		if($this->input->post()){
+			$template_id			= $this->input->post('template_id');
+			$data['league_details'] = $this->Megapooltemplate_model->getDetailedTemplateDetails($template_id);
+			
+			if($data['league_details']){
+				$data['related_league'] = $this->Megapooltemplate_model->getRelatedLeagueDetails($template_id);
+			}
+
+			$this->load->view('front_end/commissioner/megapool/get_league_template_details', $data);
+		}else{
+			$this->load->view('front_end/commissioner/megapool/get_league_template_details', $data);
+		}
+	}
+	
+	
+	public function create_megapool_from_league_template(){	
+		if($this->input->post()){
+			$template_id	= $this->input->post('selected_template_id');
+			$user_id		= $this->session->userdata('user_id');
+
+			if($template_id){
+				$league_details = $this->Megapooltemplate_model->getDetailedTemplateDetails($template_id);
+			
+				if($league_details){
+					$selected_league = $this->Megapooltemplate_model->getAllSelectedLeagueByMegaPoolId($league_details['mega_pool_id']);
+					
+					if($selected_league){
+						$league_image 	= md5(strtotime(@date('y-m-d h:i:s')).'_'.rand(100,200));
+						$new_name		= $league_image.'-'.$league_details['league_logo'];
+						$logo 			= 'assets/uploads/megapool_template/'.$league_details['league_logo'];
+						$copy_image 	= 'assets/uploads/megapool_logo/'.$new_name;						
+						
+						if (!copy($logo, $copy_image)) {
+							echo "failed to copy";
+						}
+						
+						$string = str_replace(' ', '-', $league_details['mega_pool_title']);
+						$string = preg_replace('/[^A-Za-z0-9\-]/', '-', $string);
+						$url	= hash('sha256', trim(preg_replace('/-+/', '-', $string), '-').'-'.rand(100,200).'-'.md5(@date('Y-m-d h:i:s')));
+	
+						$leagueData = array(
+										'related_sport_id'	=> $league_details['related_sport_id'],
+										'mega_pool_title' 	=> $league_details['mega_pool_title'],
+										'mega_pool_url'		=> strtolower($url),
+										'league_logo' 		=> $new_name,
+										'created_by' 		=> $user_id,
+										'current_status'	=> '2'
+										);
+						
+						if($mega_pool_id = $this->Megapoolmaster_model->save($leagueData)){
+							if($selected_league){
+								foreach($selected_league as $league){
+									$leagueData = array(
+													'mega_pool_id'	=> $mega_pool_id,
+													'league_id' 	=> $league['league_id'],
+													);
+	
+									$this->Megapoolmaster_model->saveMegapoolLeagueRelation($leagueData);
+								}
+							}
+	
+							$response = array('status' => 1,'message' => 'Your megapool created successfully.');
+						}else{
+							$response = array('status' => 0,'message' => 'Something went wrong, while saving information. Please try again later.');
+						}
+					}else{
+						$response = array('status' => 0,'message' => 'Unable to find related league information.');
+					}
+				}else{
+					$response = array('status' => 0,'message' => 'Unable to find league information.');
+				}
+			}else{
+				$response = array('status' => 0,'message' => 'Some informations are missing. Please fill up all informations');
+			}
+		}else{
+			$response = array('status' => 0,'message' => 'Some informations are missing. Please fill up all informations1');
+		}
+
+		echo json_encode($response);
+		die;
 	}
 
 
@@ -127,16 +210,15 @@ class Megapool extends CI_Controller {
 			$sport_id			= $this->input->post('sport_id');
 			$league_title		= trim($this->input->post('mega_pool_title'));
 			$selected_league 	= $this->input->post('selected_league');
-			//$entry_fee 			= $this->input->post('entry_fee');
 			$user_id			= $this->session->userdata('user_id');
 
-			if($league_title != '' && $selected_league != '' && $_FILES != null && $sport_id != '' && is_array($sport_id)){
+			if($league_title != '' && $selected_league != '' && $sport_id != '' && is_array($sport_id)){
 				#Check League name exists
 				if($this->Megapoolmaster_model->checkLeagueNameExists($league_title)){
 					$response = array('status' => 0,'message' => 'League name already exists into this system. Please try with different name.');
 				}else{
 					#Validate and save league logo
-					if($_FILES){
+					if($_FILES['league_logo']["tmp_name"] != ''){
 						if(!empty($_FILES['league_logo']["tmp_name"])){
 							#check size grater than 1MB
 							if($_FILES['league_logo']['size'] > 1000000){
@@ -147,44 +229,48 @@ class Megapool extends CI_Controller {
 								
 								if (move_uploaded_file($_FILES["league_logo"]["tmp_name"], 'assets/uploads/megapool_logo/'.$imageName.'.'.$imageFileType)) {
 									$league_image = $imageName.'.'.$imageFileType;
-
-									$string = str_replace(' ', '-', $league_title);
-   									$string = preg_replace('/[^A-Za-z0-9\-]/', '-', $string);
-									$url	= trim(preg_replace('/-+/', '-', $string), '-').'-'.rand(100,200).'-'.md5(@date('Y-m-d h:i:s'));
-
-									$leagueData = array(
-													'related_sport_id'	=> implode(',',$sport_id),
-													'mega_pool_title' 	=> $league_title,
-													//'entry_fee'			=> $entry_fee,
-													'mega_pool_url'		=> strtolower($url),
-													'league_logo' 		=> $league_image,
-													'created_by' 		=> $user_id,
-													'current_status'	=> '2'
-													);
-									
-									if($mega_pool_id = $this->Megapoolmaster_model->save($leagueData)){
-										if($selected_league){
-											foreach($selected_league as $league){
-												$leagueData = array(
-																'mega_pool_id'	=> $mega_pool_id,
-																'league_id' 	=> $league,
-																);
-
-												$this->Megapoolmaster_model->saveMegapoolLeagueRelation($leagueData);
-											}
-										}
-
-										$response = array('status' => 1,'message' => 'Your megapool created successfully.');
-									}else{
-										$response = array('status' => 0,'message' => 'Something went wrong, while saving information. Please try again later.');
-									}
-								}else{
-									$response = array('status' => 0,'message' => 'Something went wrong, while uploading logo. Please try again later.');
 								}
 							}
-						}else{
-							$response = array('status' => 0,'message' => 'Some informations are missing. Please fill up all informations');
 						}
+					}else{
+						$league_image 	= md5(strtotime(@date('y-m-d h:i:s')).'_'.rand(100,200)).'.png';
+						$logo 			= 'assets/images/shield.png';
+						$copy_image 	= 'assets/uploads/megapool_logo/'.$league_image;						
+						
+						if (!copy($logo, $copy_image)) {
+							echo "failed to copy";
+						}
+					}
+					
+					
+					$string = str_replace(' ', '-', $league_title);
+					$string = preg_replace('/[^A-Za-z0-9\-]/', '-', $string);
+					$url	= hash('sha256', trim(preg_replace('/-+/', '-', $string), '-').'-'.rand(100,200).'-'.md5(@date('Y-m-d h:i:s')));
+
+					$leagueData = array(
+									'related_sport_id'	=> implode(',',$sport_id),
+									'mega_pool_title' 	=> $league_title,
+									'mega_pool_url'		=> strtolower($url),
+									'league_logo' 		=> $league_image,
+									'created_by' 		=> $user_id,
+									'current_status'	=> '2'
+									);
+					
+					if($mega_pool_id = $this->Megapoolmaster_model->save($leagueData)){
+						if($selected_league){
+							foreach($selected_league as $league){
+								$leagueData = array(
+												'mega_pool_id'	=> $mega_pool_id,
+												'league_id' 	=> $league,
+												);
+
+								$this->Megapoolmaster_model->saveMegapoolLeagueRelation($leagueData);
+							}
+						}
+
+						$response = array('status' => 1,'message' => 'Your megapool created successfully.');
+					}else{
+						$response = array('status' => 0,'message' => 'Something went wrong, while saving information. Please try again later.');
 					}
 				}
 			}else{
@@ -279,16 +365,15 @@ class Megapool extends CI_Controller {
 							$league_image = $old_league_image;
 						}
 	
-						$string = str_replace(' ', '-', $league_title);
-						$string = preg_replace('/[^A-Za-z0-9\-]/', '-', $string);
-						$url	= trim(preg_replace('/-+/', '-', $string), '-').'-'.rand(100,200).'-'.md5(@date('Y-m-d h:i:s'));
-		
+						//$string = str_replace(' ', '-', $league_title);
+						//$string = preg_replace('/[^A-Za-z0-9\-]/', '-', $string);
+						//$url	= hash('sha256', trim(preg_replace('/-+/', '-', $string), '-').'-'.rand(100,200).'-'.md5(@date('Y-m-d h:i:s')));
+						//
 						$leagueData = array(
 										'related_sport_id'	=> implode(',',$sport_id),
 										'mega_pool_title' 	=> $league_title,
-										'mega_pool_url'		=> strtolower($url),
+										//'mega_pool_url'		=> strtolower($url),
 										'league_logo' 		=> $league_image,
-										//'entry_fee'			=> $entry_fee,
 										'current_status'	=> $league_status,
 										'last_modified_on'	=> @date('Y-m-d h:i:s'),
 										'last_modified_by' 	=> $user_id,
@@ -650,7 +735,7 @@ class Megapool extends CI_Controller {
 			$url 				= $this->input->post('url');
 			$mailSendArray 		= array();
 			$user_id			= $this->session->userdata('user_id');
-			$invitation_code 	= uniqid();
+			$invitation_code 	= hash('sha256', rand(100,200).'-'.md5(@date('Y-m-d h:i:s')));
 			
 			if(count($emails) > 0){
 				$league_details = $this->Megapoolmaster_model->getPublichedLeagueDetailsByUrlAndCommissionerId($url,$user_id);
@@ -775,15 +860,14 @@ class Megapool extends CI_Controller {
 		
         //SMTP configuration
         $mail->isSMTP();
-        $mail->Host     	= 'email-smtp.us-west-2.amazonaws.com';
-        $mail->SMTPAuth 	= true;
-        $mail->Username 	= 'AKIAX4SIXGNNHPBQEUPT';
-        $mail->Password 	= 'BAWQ8phJv1lOmHH5xeQhIc/tWcfzwYY1Ab90bw2PAfDT';
-        $mail->SMTPSecure	= 'tls';
-        $mail->Port    		= 587;
-        
-        $mail->setFrom('debasish.wdc@gmail.com', 'Mega Pool support team');
-        
+		$mail->setFrom('support@playthemegapool.com', 'Playthemegapool.com support team');
+		$mail->Username 	= 'support@playthemegapool.com';
+		$mail->Password 	= 'support123!@#';
+		$mail->Host     	= 'smtp.mail.us-east-1.awsapps.com';
+		$mail->SMTPSecure	= 'ssl';
+		$mail->Port    		= 465;
+		$mail->SMTPAuth 	= true;
+                
         // Add a recipient
 		foreach($emails as $email){
 			$mail->addAddress($email);

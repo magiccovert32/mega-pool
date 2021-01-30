@@ -34,12 +34,12 @@ class Invitation extends CI_Controller {
             redirect(base_url('account-login'));
 		}
 
-		if($route == 'join-megapool'){
-			if ($this->session->userdata('user_type_id') != 2) {
-				$this->session->sess_destroy();
-				redirect(base_url('account-login'));
-			}
-		}
+		//if($route == 'join-megapool'){
+		//	if ($this->session->userdata('user_type_id') != 2) {
+		//		$this->session->sess_destroy();
+		//		redirect(base_url('account-login'));
+		//	}
+		//}
 
 		$this->load->model("Usermaster_model");
 		$this->load->model("Invitationmaster_model");

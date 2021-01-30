@@ -1,5 +1,5 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<?php $this->session->unset_userdata('league_item'); ?>
 <div class="row">
 	<div class="col-lg-4 mb-2">
 		<div class="position-relative form-group">
@@ -91,11 +91,17 @@
 										
 									</div>
 									<div class="<?php echo $text_bg; ?> badge badge-pill text-white text-center"><?php echo $text; ?></div>
+									
+									<?php if($list['match_time'] != null){ ?>
+										<div class="text-dark mr-3">
+											<small>From <?php echo @date('h:i A', strtotime($list['match_time'])); ?></small>
+										</div>
+									<?php } ?>
 								</div>
 								<div class="col-sm-12 col-md-3  col-xs-12 mb-2">
 									<div class="widget-content-wrapper" style="justify-content: flex-start;">
 										<div class="widget-content-left mr-3">
-											<img width="30" class="image-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['home_team_logo']); ?>" alt="">
+											<img width="50" class="img-fluid img-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['home_team_logo']); ?>" alt="">
 										</div>
 										<div class="widget-content-left">
 											<div class="text-dark"><?php echo $list['home_team']; ?></div>
@@ -115,7 +121,7 @@
 											<div class="text-dark"><?php echo $list['away_team']; ?></div>
 										</div>
 										<div class="widget-content-left">
-											<img width="30" class="image-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['away_team_logo']); ?>" alt="">
+											<img width="50" class="img-fluid img-thumbnail" src="<?php echo base_url('assets/uploads/team_logo/'.$list['away_team_logo']); ?>" alt="">
 										</div>
 									</div>
 								</div>
@@ -138,8 +144,7 @@
 					<?php } ?>
 				</ul>
 			<?php }else{ ?>
-				<div class="col-md-12">
-					<br/>
+				<div class="card-body">
 					<div class="alert alert-danger fade show" role="alert">
 						<div>
 							<strong>Error</strong>

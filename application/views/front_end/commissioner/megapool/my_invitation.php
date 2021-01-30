@@ -3,7 +3,7 @@
 		<div class="">
 			<div class="card-header-tab card-header">
 				<div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-					<i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>My Invitations
+					<i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Sent Invitations
 				</div>
 			</div>
 			<?php if($invitation_list){ ?>

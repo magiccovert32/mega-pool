@@ -57,16 +57,15 @@ class Signup extends CI_Controller {
 	public function save_account(){
 		if($this->input->post()){	
 			$full_name 		= trim($this->input->post('full_name'));	
-			$user_type_id 	= trim($this->input->post('user_type_id'));	
 			$login_email 	= trim($this->input->post('email'));
 			$dob 			= $this->input->post('dobday').'-'.$this->input->post('dobmonth').'-'.$this->input->post('dobyear');
 			$login_password = md5(trim($this->input->post('password')));
 			
-			if($login_email != '' && $login_password != '' && $user_type_id != '' && $full_name != '' && $dob != ''){
+			if($login_email != '' && $login_password != '' && $full_name != '' && $dob != ''){
 				if (!filter_var($login_email, FILTER_VALIDATE_EMAIL)) {
 					$response = array('status' => 0, 'message' => 'Please enter valid email address.');
 				}else{
-					$email_exists = $this->Usermaster_model->checkEmailExistsByType($login_email,$user_type_id);
+					$email_exists = $this->Usermaster_model->checkEmailExistsByType($login_email);
 					
 					if(!$email_exists){
 						#save account information to database
@@ -75,7 +74,6 @@ class Signup extends CI_Controller {
 
 						$user_profile_data = array(
 											'user_unique_id' 			=> $user_unique_id,
-											'user_type_id'				=> $user_type_id,
 											'user_email'				=> $login_email,
 											'user_password'				=> $login_password,
 											'dob'						=> @date('Y-m-d', strtotime($dob)),
@@ -84,24 +82,22 @@ class Signup extends CI_Controller {
 											);
 						
 						if($user_id = $this->Usermaster_model->save($user_profile_data)){
-							if($user_type_id == 2){
-								$user_wallet_data = array(
-														'user_id' 			=> $user_id,
-														'wallet_balance'	=> 100,
-													);
+							$user_wallet_data = array(
+													'user_id' 			=> $user_id,
+													'wallet_balance'	=> 100,
+												);
 
-								$walletId = $this->Playerwallet_model->save($user_wallet_data);
+							$walletId = $this->Playerwallet_model->save($user_wallet_data);
 
-								if($walletId){
-									$user_wallet_history = array(
-																'wallet_id' 	 		=> $walletId,
-																'transaction_amount'	=> 100,
-																'transaction_type'		=> '1',
-																'transaction_purpose'	=> 'Signup bonus amount received.'
-															);
+							if($walletId){
+								$user_wallet_history = array(
+															'wallet_id' 	 		=> $walletId,
+															'transaction_amount'	=> 100,
+															'transaction_type'		=> '1',
+															'transaction_purpose'	=> 'Signup bonus amount received.'
+														);
 
-									$walletId = $this->Playerwallet_model->saveWalletHistory($user_wallet_history);
-								}
+								$walletId = $this->Playerwallet_model->saveWalletHistory($user_wallet_history);
 							}
 
 							$this->send_verification_mail($email_verification_link,$login_email);
@@ -158,12 +154,12 @@ class Signup extends CI_Controller {
 		$mail = new PHPMailer;
 		
 		$mail->isSMTP();
-        $mail->setFrom('debasishpaul2014@gmail.com', 'Playthemegapool.com support team');
-		$mail->Username 	= 'AKIAX4SIXGNNN7KFNMTJ';
-		$mail->Password 	= 'BD4AF7Er/z+tj4aLS9eaZpIEXVvIrt2/r5SOguoGTObj';
-		$mail->Host     	= 'email-smtp.us-east-1.amazonaws.com';
-		$mail->SMTPSecure	= 'tls';
-		$mail->Port    		= 587;
+		$mail->setFrom('support@playthemegapool.com', 'Playthemegapool.com support team');
+		$mail->Username 	= 'support@playthemegapool.com';
+		$mail->Password 	= 'support123!@#';
+		$mail->Host     	= 'smtp.mail.us-east-1.awsapps.com';
+		$mail->SMTPSecure	= 'ssl';
+		$mail->Port    		= 465;
 		$mail->SMTPAuth 	= true;
         
 		$mail->addAddress($email);

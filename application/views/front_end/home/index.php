@@ -39,21 +39,18 @@
 			<?php echo $page_details['small_content']; ?>
 		</div>
 		
-		<?php if($this->session->userdata('user_type_id') == 2){ ?>
-			<div class="col-md-4">
-				<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url('my-leagues'); ?>">
-					<img src="<?php echo base_url('assets/images/shield.png'); ?>" alt="" width="30" height="30">
-					Create League
-				</a>
-			</div>
-		<?php }else{ ?>
-			<div class="col-md-4">
-				<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url('my-megapool'); ?>">
-					<img src="<?php echo base_url('assets/images/shield.png'); ?>" alt="" width="30" height="30">
-					My Megapool
-				</a>
-			</div>
-		<?php } ?>
+		<div class="col-md-4">
+			<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url('my-leagues'); ?>">
+				<img src="<?php echo base_url('assets/images/shield.png'); ?>" alt="" width="30" height="30">
+				Create League
+			</a>
+		</div>
+		<div class="col-md-4">
+			<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url('my-megapool'); ?>">
+				<img src="<?php echo base_url('assets/images/shield.png'); ?>" alt="" width="30" height="30">
+				My Megapool
+			</a>
+		</div>
 	</div>
 	
 	<?php if($blog){ ?>

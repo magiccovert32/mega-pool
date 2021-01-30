@@ -8,6 +8,42 @@
 	<div class="col-md-12">
 		<div class="main-card mb-3 card">
 			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<div class="position-relative form-group">
+							<div>
+								<label for="sport_id" class="">Select from Template</label>
+							</div>
+							
+							<select name="template_id" class="form-control" id="template_id">
+								<option value="">Select Template</option>
+								<?php if($megapool_template){ foreach($megapool_template as $template){ ?>
+									<option value="<?php echo $template['mega_pool_id']; ?>"><?php echo $template['mega_pool_title']; ?></option>
+								<?php }} ?>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="position-relative form-group">
+					<label for="mega_pool_title" class="">League template details will appear here</label>
+					<div class="row">
+						<div class="col-sm-12" style="max-height: 400px; overflow-y: auto;">
+							<ul class="todo-list-wrapper list-group list-group-flush" id="template-details">
+								<li class="list-group-item" style="padding: 0;">
+									<div class="alert alert-info fade show mt-10" role="alert">
+										<div>
+											<div class="page-title-subheading">No league template to display! Select any template to check details.</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				<hr/>
+				<h2>Create custom Megapool</h2>
 				<h5 class="card-title">Add megapool information <small class="form-text text-danger">All fields are mandatory</small></h5>
 				
 				<form id="mega-pool-create-frm" method="post" enctype="multipart/form-data">
@@ -18,12 +54,6 @@
 								<input name="mega_pool_title" id="mega_pool_title" placeholder="League name" type="text" class="form-control" required="required" autocomlete="off">
 							</div>
 						</div>
-						<!--<div class="col-sm-12 col-md-4">
-							<div class="position-relative form-group">
-								<label for="entry_fee" class="">Entry Fee (USD)</label>
-								<input name="entry_fee" id="entry_fee" placeholder="Enter entry fee" type="text" class="form-control" required="required" autocomlete="off">
-							</div>
-						</div>-->
 					</div>
 					
 					<div class="row">
@@ -47,6 +77,7 @@
 					
 					<div class="position-relative form-group">
 						<label for="mega_pool_title" class="">Select Leagues</label>
+						<span class="text-danger">You can select max 10 leagues</span>
 						<div class="row">
 							<div class="col-sm-12" style="max-height: 400px; overflow-y: auto;">
 								<ul class="todo-list-wrapper list-group list-group-flush" id="league-list">
@@ -64,6 +95,9 @@
 
 					<div class="row">
 						<div class="col-sm-12 col-md-6">
+							<div class="position-relative form-group">
+								<img width=200 height=200 class="img-thumbnail" src="<?php echo base_url('assets/images/shield.png') ?>">
+							</div>
 							<div class="position-relative form-group">
 								<label for="league_logo" class="">Megapool Logo</label>
 								<input name="league_logo" id="league_logo" type="file" class="form-control-file" accept="image/*">
@@ -119,7 +153,7 @@
 </style>
 
 <script>
-	$('select').multipleSelect();
+	$('#sport_id').multipleSelect();
 </script>
 
 <script src="<?php echo base_url('assets/front_end/js/commissioner/create_megapool.js'); ?>" ></script>

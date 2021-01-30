@@ -32,9 +32,9 @@ class Megapool extends CI_Controller {
             redirect(base_url('account-login'));
 		}
 
-		if ($this->session->userdata('user_type_id') != 2) {
-            redirect(base_url('home'));
-		}
+//		if ($this->session->userdata('user_type_id') != 2) {
+//            redirect(base_url('home'));
+//		}
 
 		$this->load->model("Usermaster_model");
 		$this->load->model("Megapoolmaster_model");
@@ -129,7 +129,7 @@ class Megapool extends CI_Controller {
 
 		$this->front_template_inner->set('title', 'My Megapools');
 		$this->front_template_inner->set('header', 'My Megapools');
-		$this->front_template_inner->set('action', 'my_megapool');
+		$this->front_template_inner->set('action', 'joined_megapool');
 		$this->front_template_inner->set('page_icon', 'pe-7s-note2');
 		
 		$data = array();

@@ -1,13 +1,13 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="main-card mb-3 card">
-			<div class="card-header-tab card-header">
-				<div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-					<i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Commissioners List
-				</div>
+		<div class="card-header-tab card-header">
+			<div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+				<i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Commissioners List
 			</div>
-			<?php if($commissioner_list){ ?>
+		</div>
+		<?php if($commissioner_list){ ?>
+			<div class="main-card mb-3 card">
 				<ul class="todo-list-wrapper list-group list-group-flush">
 					<?php foreach($commissioner_list as $list){ ?>
 						<li class="list-group-item">
@@ -64,18 +64,16 @@
 						</li>
 					<?php } ?>
 				</ul>
-			<?php }else{ ?>
-				<div class="col-md-12">
-					<br/>
-					<div class="alert alert-info fade show" role="alert">
-						<div>
-							<strong>Error</strong>
-							<div class="page-title-subheading">Nothing to display! Seems, there are no commissioner registered yet.</div>
-						</div>
-					</div>
+			</div>
+		<?php }else{ ?>
+			<br/>
+			<div class="alert alert-info fade show" role="alert">
+				<div>
+					<strong>Error</strong>
+					<div class="page-title-subheading">Nothing to display! Seems, there are no commissioner registered yet.</div>
 				</div>
-			<?php } ?>
-		</div>
+			</div>
+		<?php } ?>
 		
 		<?php if (isset($links)) { ?>
 			<?php echo $links ?>

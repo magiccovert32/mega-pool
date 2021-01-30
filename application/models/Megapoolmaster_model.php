@@ -220,8 +220,9 @@ class Megapoolmaster_model extends CI_Model {
 	
 	
 	public function getAllActiveMegapoolByCommissionerId($userId){				
-		$query = $this->db->select("MPM.mega_pool_id,MPM.mega_pool_url,MPM.mega_pool_title")
+		$query = $this->db->select("MPM.mega_pool_id,MPM.entry_fee,MPM.mega_pool_url,MPM.mega_pool_title,MPM.related_sport_id,MPM.league_logo,MPM.created_on,MPM.current_status,SM.sport_title")
 						->from("mega_pool_master MPM")
+						->join('sports_master SM', 'SM.sport_id = MPM.related_sport_id', 'inner')
 						->where('MPM.created_by',$userId)
 						->where("MPM.current_status != 3")
 						->get();
@@ -639,7 +640,6 @@ class Megapoolmaster_model extends CI_Model {
 						->from("mega_pool_player_relation MPPR")
 						->join('user_master UM', 'UM.user_id = MPPR.player_id', 'inner')
 						->where('MPPR.megapool_id',$id)
-						->where('UM.user_type_id','2')
 						->get();
                         
         if($query->num_rows() > 0){

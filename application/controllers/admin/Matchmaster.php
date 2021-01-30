@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Match extends CI_Controller {
+class Matchmaster extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -127,6 +127,8 @@ class Match extends CI_Controller {
 			$away_team_id		= trim($this->input->post('away_team_id'));
 			$home_team_score	= trim($this->input->post('home_team_score'));
 			$away_team_score	= trim($this->input->post('away_team_score'));
+			$match_time			= trim($this->input->post('match_time'));
+			$where_can_watch	= trim($this->input->post('where_can_watch'));
 			
 			if($league_id != '' && $match_date != '' && $home_team_id != '' && $away_team_id != '' && $home_team_score != '' && $away_team_score != ''){
 				
@@ -135,14 +137,16 @@ class Match extends CI_Controller {
 					redirect(base_url('admin-add-match')); 
 				}else{
 					$matchData = array(
-								'league_id'			=> $league_id,
-								'match_url'			=> md5(@date('Y-m-d h:i:s')),
-								'match_type'		=> '1',
-								'home_team_id' 		=> $home_team_id,
-								'away_team_id'		=> $away_team_id,
-								'home_team_score' 	=> $home_team_score,
-								'match_date'		=> @date('Y-m-d' , strtotime($match_date)),
-								'away_team_score' 	=> $away_team_score
+									'league_id'			=> $league_id,
+									'match_url'			=> md5(@date('Y-m-d h:i:s')),
+									'match_type'		=> '1',
+									'home_team_id' 		=> $home_team_id,
+									'away_team_id'		=> $away_team_id,
+									'home_team_score' 	=> $home_team_score,
+									'match_date'		=> @date('Y-m-d' , strtotime($match_date)),
+									'match_time'		=> $match_time,
+									'away_team_score' 	=> $away_team_score,
+									'where_can_watch' 	=> $where_can_watch
 								);
 				
 					#check Match already exists
@@ -215,6 +219,10 @@ class Match extends CI_Controller {
 			$home_team_score	= trim($this->input->post('home_team_score'));
 			$away_team_score	= trim($this->input->post('away_team_score'));
 			$note				= trim($this->input->post('note'));
+			$match_time			= trim($this->input->post('match_time'));
+			$where_can_watch	= trim($this->input->post('where_can_watch'));
+			$highlight_link		= trim($this->input->post('highlight_link'));
+			$box_score_link		= trim($this->input->post('box_score_link'));
 			
 			if($league_id != '' && $match_date != '' && $home_team_id != '' && $away_team_id != '' && $home_team_score != '' && $away_team_score != ''){
 				if($home_team_id == $away_team_id){
@@ -229,7 +237,11 @@ class Match extends CI_Controller {
 								'home_team_score' 	=> $home_team_score,
 								'match_date'		=> @date('Y-m-d' , strtotime($match_date)),
 								'away_team_score' 	=> $away_team_score,
-								'note'				=> $note
+								'match_time' 		=> $match_time,
+								'note'				=> $note,
+								'where_can_watch'	=> $where_can_watch,
+								'highlight_link'	=> $highlight_link,
+								'box_score_link'	=> $box_score_link,
 								);
 				
 					#check Match already exists

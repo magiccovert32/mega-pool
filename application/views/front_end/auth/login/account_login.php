@@ -10,19 +10,6 @@
 		<div>
 			<form method="post" id="login-frm">
 				<div class="form-row">
-					<div class="col-md-12">
-						<div class="position-relative form-group">
-							<label for="full_name" class="card-title">I am a</label>
-                            <div class="custom-radio custom-control">
-                                <input type="radio" id="user_type_id1" name="user_type_id" value="1" class="custom-control-input">
-                                <label class="custom-control-label" for="user_type_id1">Commissioner</label>
-                            </div>
-                            <div class="custom-radio custom-control">
-                                <input type="radio" id="user_type_id2" name="user_type_id" value="2" class="custom-control-input" checked="checked">
-                                <label class="custom-control-label" for="user_type_id2">Player</label>
-                            </div>
-                        </div>
-					</div>
 					<div class="col-md-6">
 						<div class="position-relative form-group">
 							<label for="exampleEmail" class="card-title">Email</label>

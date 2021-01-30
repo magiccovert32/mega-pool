@@ -17,16 +17,21 @@
 	<link href="<?php echo base_url(); ?>main.cba69814a806ecc7945a.css" rel="stylesheet"></head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-	<style>
-		body{
+    <style>
+        body{
 			font-family: 'Lato', sans-serif !important;
+			letter-spacing: 0.03em;
 		}
-		
-		a{
-			text-decoration: none !important;
-		}
+
+        a{
+            text-decoration: none !important;
+        }
+
+        .display_none{
+            display: none;
+        }
 	</style>
-	
+    
 	<script>
         var base_path = "<?php echo base_url(); ?>";
     </script>
@@ -217,6 +222,13 @@
 									</a>
 								</li>
 							</ul>
+						</li>
+                        
+                        <li <?php if(in_array($action, array('megapool_template','create_megapool_template'))){ ?> class="mm-active" <?php } ?>>
+							<a href="<?php echo  base_url('megapool-template'); ?>" <?php if(in_array($action, array('megapool_template','create_megapool_template'))){ ?> class="mm-active" <?php } ?>>
+								<i class="metismenu-icon pe-7s-star"></i>
+								League Template
+							</a>
 						</li>
 						
 						<li class="app-sidebar__heading">Sports</li>

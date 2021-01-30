@@ -23,13 +23,32 @@
 									</select>
 								</div>
 							</div>
+						</div>
+						
+						<div class="row">
 							<div class="col-sm-12 col-md-6">
 								<div class="position-relative form-group">
 									<label for="league_title" class="">Match Date</label>
 									<input value="<?php echo @date('Y-m-d', strtotime($match_details['match_date'])); ?>" name="match_date" id="match_date" placeholder="Match date" type="date" class="form-control" required="required" autocomlete="off">
 								</div>
 							</div>
+							<div class="col-sm-12 col-md-6">
+								<div class="position-relative form-group">
+									<label for="league_title" class="">Match Time</label>
+									<input value="<?php echo $match_details['match_time']; ?>" name="match_time" id="match_time" placeholder="Match time" type="time" class="form-control" required="required" autocomlete="off">
+								</div>
+							</div>
 						</div>
+						
+						<div class="row">
+							<div class="col-sm-12 col-md-12">
+								<div class="position-relative form-group">
+									<label for="home_team_id" class="">Where can watch</label>
+									<textarea name="where_can_watch" id="where_can_watch" placeholder="Enter where user can see this match" class="form-control"><?php echo $match_details['where_can_watch']; ?></textarea>
+								</div>
+							</div>
+						</div>
+						
 						<div class="row">
 							<div class="col-sm-12 col-md-6">
 								<div class="position-relative form-group">
@@ -51,6 +70,22 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="row">
+							<div class="col-sm-12 col-md-6">
+								<div class="position-relative form-group">
+									<label for="highlight_link" class="">Highlights Link</label>
+									<input value="<?php echo $match_details['highlight_link']; ?>" name="highlight_link" id="highlight_link" placeholder="Enter highlight link" type="text" class="form-control" autocomlete="off">
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6">
+								<div class="position-relative form-group">
+									<label for="box_score_link" class="">Box Score Llink</label>
+									<input value="<?php echo $match_details['box_score_link']; ?>" name="box_score_link" id="box_score_link" placeholder="Enter box score link" type="text" class="form-control" autocomlete="off">
+								</div>
+							</div>
+						</div>
+						
 						<button class="mt-1 btn btn-primary" type="submit">Update Match</button>
 						<a href="<?php echo  base_url('admin-single-match-management?league_id='.$match_details['league_id']); ?>">
 							<button class="mt-1 btn btn-outline-dark ml-3 mr-3" type="button">Cancel</button>

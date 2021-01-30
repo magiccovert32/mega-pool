@@ -57,3 +57,10 @@ $('#forgot-pass-btn').on('click', function(){
         $('#error-msg').show();
     }
 });
+
+$("input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+        $("#forgot-pass-btn").click();
+    }
+});

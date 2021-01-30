@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 class Login extends CI_Controller {
 
@@ -168,13 +169,12 @@ class Login extends CI_Controller {
 		if($this->input->post()){			
 			$login_email 	= trim($this->input->post('email'));
 			$login_password = md5(trim($this->input->post('password')));
-			$user_type_id 	= trim($this->input->post('user_type_id'));	
 			
-			if($login_email != '' && $login_password != '' && $user_type_id != ''){
+			if($login_email != '' && $login_password != ''){
 				if (!filter_var($login_email, FILTER_VALIDATE_EMAIL)) {
 					$response = array('status' => 0, 'message' => 'Please enter valid email address.');
 				}else{
-					$login_result = $this->Usermaster_model->getAuth($login_email,$login_password,$user_type_id);
+					$login_result = $this->Usermaster_model->getAuth($login_email,$login_password);
 					
 					if($login_result){
 						if($login_result['current_status'] == 4){
@@ -201,7 +201,6 @@ class Login extends CI_Controller {
 												'user_id' 			=> $login_result['user_id'],
 												'full_name'			=> $login_result['full_name'],
 												'profile_image'		=> $login_result['profile_image'],
-												'user_type_id'		=> $login_result['user_type_id']
 												);
 							
 							$this->session->set_userdata($user_session);
@@ -261,12 +260,12 @@ class Login extends CI_Controller {
 			$mail = new PHPMailer;
 			
 			$mail->isSMTP();
-			$mail->setFrom('debasishpaul2014@gmail.com', 'Playthemegapool.com support team');
-			$mail->Username 	= 'AKIAX4SIXGNNN7KFNMTJ';
-			$mail->Password 	= 'BD4AF7Er/z+tj4aLS9eaZpIEXVvIrt2/r5SOguoGTObj';
-			$mail->Host     	= 'smtp.mail.us-west-2.awsapps.com';
-			$mail->SMTPSecure	= 'tls';
-			$mail->Port    		= 587;
+			$mail->setFrom('support@playthemegapool.com', 'Playthemegapool.com support team');
+			$mail->Username 	= 'support@playthemegapool.com';
+			$mail->Password 	= 'support123!@#';
+			$mail->Host     	= 'smtp.mail.us-east-1.awsapps.com';
+			$mail->SMTPSecure	= 'ssl';
+			$mail->Port    		= 465;
 			$mail->SMTPAuth 	= true;
 			
 			$mail->addAddress($email);
@@ -274,12 +273,14 @@ class Login extends CI_Controller {
 			$mail->isHTML(true);
 			
 			$mailContent = "<p>Please click on the below link to reset password.</p>
-							<a href='".base_url()."reset-password/".$link."'>Reset Password</a>";
+							<a href='".base_url()."reset-password/".$link."'>".base_url()."reset-password/".$link."</a>";
 			$mail->Body = $mailContent;
 			
-			$mail->send();
-			
-			return true;
+			if($mail->send()){
+				return true;
+			}else{
+				echo "Unable to send mail";
+			}
         }catch (phpmailerException $e) {
             return true;
 		}catch (Exception $e) {

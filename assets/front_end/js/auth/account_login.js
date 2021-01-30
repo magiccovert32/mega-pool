@@ -41,7 +41,7 @@ $('#login-btn').on('click', function(){
 
                     setTimeout(function(){
                         window.location.href = "home";
-                    },500)
+                    },500);
                 }else{
                     $('#error-msg').find('.alert_message').html(response.message);
                     $('#error-msg').show();

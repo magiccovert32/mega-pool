@@ -125,6 +125,8 @@ class Singlematch extends CI_Controller {
 			$match_date		= trim($this->input->post('match_date'));
 			$team_id 		= trim($this->input->post('team_id'));
 			$match_point	= trim($this->input->post('match_point'));
+			$match_time		= trim($this->input->post('match_time'));
+			$where_can_watch= trim($this->input->post('where_can_watch'));
 			
 			if($league_id != '' && $match_date != '' && $team_id != '' && $match_point != ''){
 				$matchData = array(
@@ -133,6 +135,8 @@ class Singlematch extends CI_Controller {
 								'team_id' 			=> $team_id,
 								'match_point'		=> $match_point,
 								'match_date'		=> @date('Y-m-d' , strtotime($match_date)),
+								'match_time' 		=> $match_time,
+								'where_can_watch'	=> $where_can_watch,
 								);
 				
 				#check Match already exists
@@ -201,14 +205,22 @@ class Singlematch extends CI_Controller {
 			$match_point	= trim($this->input->post('match_point'));
 			$match_id		= trim($this->input->post('match_id'));
 			$match_url		= trim($this->input->post('match_url'));
+			$match_time		= trim($this->input->post('match_time'));
+			$where_can_watch= trim($this->input->post('where_can_watch'));
+			$highlight_link	= trim($this->input->post('highlight_link'));
+			$box_score_link	= trim($this->input->post('box_score_link'));
 
 			if($league_id != '' && $match_date != '' && $team_id != '' && $match_point != ''){
 				$matchData = array(
-								'league_id'		=> $league_id,
-								'match_url'		=> md5(@date('Y-m-d h:i:s')),
-								'team_id' 		=> $team_id,
-								'match_point'	=> $match_point,
-								'match_date'	=> @date('Y-m-d' , strtotime($match_date)),
+								'league_id'			=> $league_id,
+								'match_url'			=> md5(@date('Y-m-d h:i:s')),
+								'team_id' 			=> $team_id,
+								'match_point'		=> $match_point,
+								'match_date'		=> @date('Y-m-d' , strtotime($match_date)),
+								'match_time' 		=> $match_time,
+								'where_can_watch'	=> $where_can_watch,
+								'highlight_link'	=> $highlight_link,
+								'box_score_link'	=> $box_score_link,
 							);
 			
 				#check Match already exists
