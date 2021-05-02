@@ -42,7 +42,22 @@
 							<div class="col-sm-12 col-md-4">
 								<div class="position-relative form-group">
 									<label for="team_selection_ends_on" class="">Team Selection Ends On</label>
-									<input readonly="readonly" name="team_selection_ends_on" id="team_selection_ends_on" placeholder="Enter timeing" type="text" class="datepicker form-control" required="required" autocomlete="off" value="31-12-2020">
+									<input readonly="readonly" name="team_selection_ends_on" id="team_selection_ends_on" placeholder="Enter timeing" type="text" class="datepicker form-control" required="required" autocomlete="off">
+								</div>
+							</div>
+							
+							<div class="col-sm-12 col-md-4">
+								<div class="position-relative form-group">
+									<div>
+										<label for="team_selection_ends_on" class="">Enter Selection Time</label>
+									</div>
+									<select class="form-control" aria-label="Default select" name="selection_timing">
+										<option value="1">1 minute</option>
+										<option value="2">2 minute</option>
+										<option value="3">3 minute</option>
+										<option value="4">4 minute</option>
+										<option value="5">5 minute</option>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -102,7 +117,7 @@
 </style>
 
 <script>
-	$('#team_selection_ends_on').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD H:mm',minDate : new Date() });
+	$('#team_selection_ends_on').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD H:mm',minDate:new Date(), startDate: new Date() });
 </script>
 
 <script src="<?php echo base_url('assets/front_end/js/commissioner/create_draft.js'); ?>" ></script>

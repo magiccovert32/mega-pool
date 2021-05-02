@@ -2,6 +2,13 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TCNFDV8');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
@@ -35,6 +42,10 @@
         var base_path = "<?php echo base_url(); ?>";
     </script>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCNFDV8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
     <div class="app-header header-shadow">
         <div class="app-header__logo">
@@ -258,7 +269,7 @@
                         </li>
                         
                         <li>
-                            <a href="<?php echo  base_url('manage-draft'); ?>" <?php if($action == 'manage_draft'){ ?> class="mm-active" <?php } ?>>
+                            <a href="<?php echo  base_url('manage-draft'); ?>" <?php if(in_array($action,array('manage_draft','my_draft_player'))){ ?> class="mm-active" <?php } ?>>
                                 <i class="metismenu-icon"></i> My Draft
                             </a>
                         </li>

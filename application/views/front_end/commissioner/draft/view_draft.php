@@ -4,72 +4,115 @@
 			<div class="card-body">
 				<?php if($league_details && $draft_details){ ?>
 				
-					<div class="no-gutters row">
-						<div class="col-md-4 col-xl-4">
-							<div class="widget-content">
-								<div class="widget-content-wrapper">
-									<div class="widget-content-left">
-										<div class="widget-heading text-success">
-											<?php echo $draft_details['draft_title']; ?>
+					<div class="no-gutters">
+						<div class="no-gutters row">
+							<div class="col-md-3 col-xl-3">
+								<div class="widget-content">
+									<div class="widget-content-wrapper">
+										<div class="widget-content-left">
+											<div class="widget-heading text-success">
+												<?php echo $draft_details['draft_title']; ?>
+											</div>
+											<?php
+												if($draft_details['draft_status'] == 1){
+													$status_class="success";
+													$status_text = "Active";
+												}elseif($draft_details['draft_status'] == 2){
+													$status_class="warning";
+													$status_text = "In-active";
+												}elseif($draft_details['draft_status'] == 3){
+													$status_class="danger";
+													$status_text = "Removed";
+												}elseif($draft_details['draft_status'] == 4){
+													$status_class="success";
+													$status_text = "Published";
+												}
+											?>
+											<div class="widget-subheading">
+												<div class="badge badge-<?php echo $status_class; ?>"><?php echo $status_text; ?></div>
+											</div>
 										</div>
-										<?php
-											if($draft_details['draft_status'] == 1){
-												$status_class="success";
-												$status_text = "Active";
-											}elseif($draft_details['draft_status'] == 2){
-												$status_class="warning";
-												$status_text = "In-active";
-											}elseif($draft_details['draft_status'] == 3){
-												$status_class="danger";
-												$status_text = "Removed";
-											}elseif($draft_details['draft_status'] == 4){
-												$status_class="success";
-												$status_text = "Published";
-											}
-										?>
-										<div class="widget-subheading">
-											<div class="badge badge-<?php echo $status_class; ?>"><?php echo $status_text; ?></div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3 col-xl-3">
+								<div class="widget-content">
+									<div class="widget-content-wrapper">
+										<div class="widget-content-left">
+											<div class="widget-heading text-info">Selected League</div>
+											<small><?php echo $draft_details['league_title']; ?></small>
 										</div>
-										<div>
-											<span>Created on <?php echo @date('Y-m-d h:i:s', strtotime($draft_details['created_on'])); ?></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3 col-xl-3">
+								<div class="widget-content">
+									<div class="widget-content-wrapper">
+										<div class="widget-content-left">
+											<div class="widget-heading text-warning">Megapool</div>
+											<small><?php echo $draft_details['mega_pool_title']; ?></small>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3 col-xl-3">
+								<div class="widget-content">
+									<div class="widget-content-wrapper">
+										<div class="widget-content-left">
+											<div class="widget-heading text-warning">Player Joined</div>
+											<small><?php echo $player_joined; ?></small>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						
-						<div class="col-md-4 col-xl-4">
-							<div class="widget-content">
-								<div class="widget-content-wrapper">
-									<div class="widget-content-left">
-										<div class="widget-heading text-info">Selected League</div>
-										<div class="widget-subheading"><?php echo $draft_details['league_title']; ?></div>
-									</div>
+						<hr/>
+						<div class="no-gutters row">
+							<div class="col-md-2 col-xl-2">
+								<div class="widget-content-right">
+									<a class="widget-content-left ml-0" href="<?php echo base_url('my-draft') ?>">
+										<div class=" btn-pill btn btn-outline-dark">Back to Draft</div>
+									</a>
 								</div>
 							</div>
-						</div>
-						
-						<div class="col-md-4 col-xl-4">
-							<div class="widget-content">
-								<div class="widget-content-wrapper">
-									<div class="widget-content-left">
-										<div class="widget-heading text-warning">Associated Megapool</div>
-										<div class="widget-subheading"><?php echo $draft_details['mega_pool_title']; ?></div>
+							
+							<?php
+								$countDownDate 	= new DateTime(@date('Y-m-d H:i:s', strtotime($draft_details['team_selection_ends_on'])));
+								$now 			= new DateTime(@date('Y-m-d H:i:s'));
+							?>
+							
+							<?php
+								if($countDownDate > $now){
+							?>
+								<?php if($draft_details['team_selection_started'] == 2 && $draft_details['team_selection_ended'] == 2){ ?>
+									<div class="col-md-2 col-xl-2">
+										<div class="widget-content-right">
+											<div class=" btn-pill btn btn-warning" id="start-selection">Start Selection</div>
+										</div>
 									</div>
-								</div>
-							</div>
+								<?php } ?>
+								
+								<?php if($draft_details['team_selection_started'] == 1 && $draft_details['team_selection_ended'] == 2){ ?>
+									<div class="col-md-2 col-xl-2">
+										<div class="widget-content-right">
+											<div class=" btn-pill btn btn-success">Selection Started</div>
+										</div>
+									</div>
+								<?php } ?>
+								
+								<?php if($draft_details['team_selection_started'] == 2 && $draft_details['team_selection_ended'] == 1){ ?>
+									<div class="col-md-2 col-xl-2">
+										<div class="widget-content-right">
+											<div class=" btn-pill btn btn-danger">Selection Ended</div>
+										</div>
+									</div>
+								<?php } ?>
+							<?php } ?>
 						</div>
-		
-						<div class="col-md-12 col-xl-12 card-footer">
-							<div class="widget-content-right ml-3 mt-3">
-								<a class="widget-content-left ml-0" href="<?php echo base_url('my-draft') ?>">
-									<div class=" btn-pill btn btn-outline-dark">Back to Draft</div>
-								</a>
-							</div>
-						</div>
-					</div>
-					
-					
+					</div>					
 				<?php }else{ ?>
 					<div class="alert alert-danger fade show">
 							<strong>Notification</strong>
@@ -130,3 +173,23 @@
 		<?php } ?>
 	</div>
 </div>
+
+<script>
+	$('#start-selection').on('click', function(){
+		$.ajax({
+			url: base_path+"start-team-selection",
+			type: "POST",
+			data: {draft_url: '<?php echo $draft_details['draft_url']; ?>'},
+			dataType: 'json',
+			success: function (response) {
+				if(response.status === 1){
+					location.reload();
+				}else{
+					alert(response.message);
+					location.reload();
+				}
+			}
+		});
+	});
+	
+</script>

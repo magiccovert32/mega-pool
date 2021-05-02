@@ -683,4 +683,20 @@ class Megapoolmaster_model extends CI_Model {
 			return false;
 		}
 	}
+    
+    public function getPlayerCountInDraft($megapool_id,$user_id){				
+		$query = $this->db->select("COUNT(MPPR.player_id) as count")
+						->from("mega_pool_player_relation MPPR")
+                        ->join('mega_pool_master MPM', 'MPM.mega_pool_id = MPPR.megapool_id', 'inner')
+						->where('MPM.created_by',$user_id)
+                        ->where('MPM.mega_pool_id',$megapool_id)
+						->get();
+                        
+        if($query->num_rows() > 0){
+			$count =  $query->row();
+			return $count->count;
+		}else{
+			return 0;
+		}
+	}
 }

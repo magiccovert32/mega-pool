@@ -40,6 +40,19 @@
 												<div class="widget-content-left">
 													<div class="widget-heading text-success">Starting Date</div>
 													<div class="widget-subheading text-dark"><span><?php echo @date('d-m-Y H:i:s', strtotime($list['team_selection_ends_on'])); ?></span></div>
+						
+													
+													<?php  if($list['team_selection_started'] == 1 && $list['team_selection_ended'] == 2){ ?>
+														<div class="badge badge-success" id="selection_status_<?php echo $list['draft_url']; ?>">Selection is happening</div>
+													<?php } ?>
+													
+													<?php if($list['team_selection_started'] == 2 && $list['team_selection_ended'] == 1){ ?>
+														<div class="badge badge-danger" id="selection_status_<?php echo $list['draft_url']; ?>">Selection Ended</div>
+													<?php } ?>
+													
+													<?php if($list['team_selection_started'] == 2 && $list['team_selection_ended'] == 2){ ?>
+														<div class="badge badge-warning" id="selection_status_<?php echo $list['draft_url']; ?>">Selection Not Started</div>
+													<?php } ?>
 												</div>
 											</div>
 										</div>
@@ -123,3 +136,42 @@
 		<?php } ?>
 	</div>
 </div>
+
+<script>
+	setInterval(function(){
+		$.ajax({
+			url: base_path+"check-draft-selection-timing",
+			type: "POST",
+			data: {draft: null},
+			dataType: 'json',
+			success: function (response) {
+				if(response.status === 1){
+					let data_json = response.draft_list_status;
+					
+					$.each(data_json, function(index, item) {
+						var team_selection_ended 	= item.team_selection_ended;
+						var team_selection_started 	= item.team_selection_started;
+						var draft_url 				= item.draft_url;
+																		
+						if(team_selection_started == 1 && team_selection_ended == 2){
+							$('#selection_status_'+draft_url).removeClass('badge-warning');
+							$('#selection_status_'+draft_url).removeClass('badge-success');
+							$('#selection_status_'+draft_url).addClass('badge-success');
+							$('#selection_status_'+draft_url).text('Selection is happening');
+						}else if(team_selection_started == 2 && team_selection_ended == 1){
+							$('#selection_status_'+draft_url).removeClass('badge-warning');
+							$('#selection_status_'+draft_url).removeClass('badge-success');
+							$('#selection_status_'+draft_url).addClass('badge-danger');
+							$('#selection_status_'+draft_url).text('Selection has ended');
+						}else if(team_selection_started == 2 && team_selection_ended == 2){
+							$('#selection_status_'+draft_url).removeClass('badge-danger');
+							$('#selection_status_'+draft_url).removeClass('badge-success');
+							$('#selection_status_'+draft_url).addClass('badge-warning');
+							$('#selection_status_'+draft_url).text('Selection Not Started');
+						}
+					});
+				}
+			}
+		});
+	}, 5000);
+</script>

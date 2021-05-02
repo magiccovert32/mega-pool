@@ -39,7 +39,15 @@
 												if($player['team_name'][$key]){
 											?>
 												<div>
-													<span class="text-success" style="font-size: 13px;"><?php echo $player['team_name'][$key]['team_title']; ?></span>
+													<span class="text-success" style="font-size: 13px;">
+														<?php
+															foreach($player['team_name'][$key] as $team){
+														?>
+															<span class="badge badge-light"><?php echo $team['team_title']; ?></span>
+														<?php
+															}
+														?>
+													</span>
 												</div>
 											<?php 
 												}
@@ -47,7 +55,7 @@
 										</td>
 									<?php }} ?>
 									
-									<td class="widget-heading text-success text-center"><?php echo $player['standing_score']; ?></td>
+									<td class="widget-heading text-success text-center"><span class="badge badge-success"><?php echo $player['standing_score']; ?></span></td>
 								</tr>
 							<?php }}else{ ?>
 								<tr>

@@ -31,10 +31,6 @@ class Draft extends CI_Controller {
             redirect(base_url('account-login'));
 		}
 
-//		if ($this->session->userdata('user_type_id') != 1) {
-//            redirect(base_url('home'));
-//		}
-
 		$this->load->model("Usermaster_model");
 		$this->load->model("Megapoolmaster_model");
 		$this->load->model("Sportmaster_model");
@@ -136,7 +132,8 @@ class Draft extends CI_Controller {
 			$league_id				= $this->input->post('league_id');
 			$team_selection_ends_on = $this->input->post('team_selection_ends_on');
 			$user_id				= $this->session->userdata('user_id');
-			
+			$selection_timing		= $this->input->post('selection_timing');
+
 			if($draft_title != '' && $mega_pool_url != '' && $league_id != '' && $team_selection_ends_on != null && $team_selection_ends_on != ''){
 				
 				$league_details = $this->Megapoolmaster_model->getPublichedLeagueDetailsByUrlAndCommissionerId($mega_pool_url,$user_id);
@@ -150,11 +147,12 @@ class Draft extends CI_Controller {
 					}else{
 						$draftData = array(
 										'user_id'				=> $user_id,
-										'draft_url' 			=> md5(@date('Y-m-d h:i').rand(100,300)),
+										'draft_url' 			=> md5(@date('Y-m-d H:i:s').rand(100,300)),
 										'draft_title'			=> $draft_title,
 										'megapool_id'			=> $league_details['mega_pool_id'],
 										'league_id'				=> $league_id,
-										'team_selection_ends_on'=> @date('Y-m-d h:i:s',strtotime($team_selection_ends_on))
+										'selection_timing'		=> $selection_timing,
+										'team_selection_ends_on'=> @date('Y-m-d H:i:s',strtotime($team_selection_ends_on))
 										);
 						
 						if($this->Draftmaster_model->save($draftData)){
@@ -217,36 +215,47 @@ class Draft extends CI_Controller {
 			$league_id				= $this->input->post('league_id');
 			$team_selection_ends_on = $this->input->post('team_selection_ends_on');
 			$user_id				= $this->session->userdata('user_id');
+			$selection_timing		= $this->input->post('selection_timing');
+
+			$draft_details	=  $this->Draftmaster_model->getDraftDetailsByUrlAndCommissionerId($draft_url,$user_id);
 			
-			if($draft_title != '' && $league_id != '' && $team_selection_ends_on != null && $team_selection_ends_on != ''){
-				$draftDetails 	= $this->Draftmaster_model->getDraftDetailsByUrlAndCommissionerId($draft_url,$user_id);
-								
-				if($draftDetails){
-					$curdate	= strtotime(@date('Y-m-d H:i'));
-					$mydate		= strtotime($team_selection_ends_on);
-					
-					if($curdate > $mydate){
-						$response = array('status' => 0,'message' => "Date should be grater than current date time.");
-					}else{
-						$draftData = array(
-										'user_id'				=> $user_id,
-										'draft_title'			=> $draft_title,
-										//'league_id'				=> $league_id,
-										'team_selection_ends_on'=> @date('Y-m-d h:i:s',strtotime($team_selection_ends_on))
-										);
+			$curdate	= strtotime(@date('Y-m-d H:i'));
+			$mydate		= strtotime($draft_details['team_selection_ends_on']);
+			
+			if($curdate < $mydate){
+				if($draft_title != '' && $league_id != '' && $team_selection_ends_on != null && $team_selection_ends_on != ''){
+					$draftDetails 	= $this->Draftmaster_model->getDraftDetailsByUrlAndCommissionerId($draft_url,$user_id);
+									
+					if($draftDetails){
+						$curdate	= strtotime(@date('Y-m-d H:i'));
+						$mydate		= strtotime($team_selection_ends_on);
 						
-						if($this->Draftmaster_model->update($draftData,$draftDetails['draft_id'])){
-							$response = array('status' => 1,'message' => "Draft updated successfully. Now publish to notify your players.");
+						if($curdate > $mydate){
+							$response = array('status' => 0,'message' => "Date should be grater than current date time.");
 						}else{
-							$response = array('status' => 0,'message' => "Something went wrong , while saving your draft. Please try again later.");
+							$draftData = array(
+											'user_id'				=> $user_id,
+											'league_id'				=> $league_id,
+											'draft_title'			=> $draft_title,
+											'selection_timing'		=> $selection_timing,
+											'team_selection_ends_on'=> @date('Y-m-d H:i:s',strtotime($team_selection_ends_on))
+											);
+							
+							if($this->Draftmaster_model->update($draftData,$draftDetails['draft_id'])){
+								$response = array('status' => 1,'message' => "Draft updated successfully. Now publish to notify your players.");
+							}else{
+								$response = array('status' => 0,'message' => "Something went wrong , while saving your draft. Please try again later.");
+							}
 						}
-					}
+					}else{
+						$response = array('status' => 0,'message' => "You don't have access to perform this action.");
+					}				
 				}else{
-					$response = array('status' => 0,'message' => "You don't have access to perform this action.");
-				}				
+					$response = array('status' => 0,'message' => 'Some informations are missing. Please fill up all informations');
+				}
 			}else{
-				$response = array('status' => 0,'message' => 'Some informations are missing. Please fill up all informations');
-			}
+				$response = array('status' => 0,'message' => 'Unable to update draft information. Time expired.');
+			}			
 		}else{
 			$response = array('status' => 0,'message' => 'Some informations are missing. Please fill up all informations');
 		}
@@ -269,12 +278,20 @@ class Draft extends CI_Controller {
 		$user_id	= $this->session->userdata('user_id');
 
 		$data['draft_details'] 	=  $this->Draftmaster_model->getDraftDetailsByUrlAndCommissionerId($draft_url,$user_id);
-		
+
 		if($data['draft_details']){
-			$data['league_details'] = $this->Megapoolmaster_model->getLeagueDetailsByIdAndCommiossionerId($data['draft_details']['megapool_id'],$user_id);
+			$curdate	= strtotime(@date('Y-m-d H:i'));
+			$mydate		= strtotime($data['draft_details']['team_selection_ends_on']);
 			
-			if($data['league_details']){
-				$data['selected_league'] 	= $this->Megapoolmaster_model->getRelatedLeagueByMegaPoolId($data['league_details']['mega_pool_id']);
+			if($curdate < $mydate){
+				$data['league_details'] = $this->Megapoolmaster_model->getLeagueDetailsByIdAndCommiossionerId($data['draft_details']['megapool_id'],$user_id);
+				
+				if($data['league_details']){
+					$data['selected_league'] = $this->Megapoolmaster_model->getRelatedLeagueByMegaPoolId($data['league_details']['mega_pool_id']);
+				}
+			}else{
+				$data['draft_details'] = false;
+				$data['league_details'] = false;
 			}
 		}else{
 			$data['league_details'] = false;
@@ -331,7 +348,7 @@ class Draft extends CI_Controller {
 			
 			$data['related_team'] 	= $this->Leaguemaster_model->getAllTeamByLeagueId($data['draft_details']['league_id']);
 			$data['selected_team'] 	= $this->Draftmaster_model->getAllSelectedTeamByDraftId($data['draft_details']['draft_id']);
-			
+
 			if($data['selected_team']){
 				$data['selected_team'] = explode(',',$data['selected_team']['team_ids']);
 			}else{
@@ -423,7 +440,8 @@ class Draft extends CI_Controller {
 		
 		if($data['draft_details']){
 			$data['league_details'] = $this->Megapoolmaster_model->getLeagueDetailsByIdAndCommiossionerId($data['draft_details']['megapool_id'],$user_id);
-			
+			$data['player_joined'] = $this->Megapoolmaster_model->getPlayerCountInDraft($data['draft_details']['megapool_id'],$user_id);
+
 			if($data['league_details']){
 				$data['team_list'] = $this->Leaguemaster_model->getAllTeamByLeagueId($data['draft_details']['league_id']);
 			}
@@ -431,7 +449,7 @@ class Draft extends CI_Controller {
 			$data['selected_team_ids'] = $this->Draftmaster_model->getAllSelectedTeamByDraftId($data['draft_details']['draft_id']);
 			
 			if($data['selected_team_ids']){
-				$data['selected_team_ids'] = explode(',',$data['selected_team_ids']['team_ids']);
+				$data['selected_team_ids'] = explode(',',$data['selected_team_ids']);
 			}else{
 				$data['selected_team_ids'] = array();
 			}
@@ -501,16 +519,14 @@ class Draft extends CI_Controller {
 	
 			$mail = new PHPMailer;
 			
-			//SMTP configuration
 			$mail->isSMTP();
-			$mail->Host     	= 'email-smtp.us-west-2.amazonaws.com';
+			$mail->setFrom('support@playthemegapool.com', 'Playthemegapool.com support team');
+			$mail->Username 	= 'support@playthemegapool.com';
+			$mail->Password 	= 'support123!@#';
+			$mail->Host     	= 'smtp.mail.us-east-1.awsapps.com';
+			$mail->SMTPSecure	= 'ssl';
+			$mail->Port    		= 465;
 			$mail->SMTPAuth 	= true;
-			$mail->Username 	= 'AKIAX4SIXGNNHPBQEUPT';
-			$mail->Password 	= 'BAWQ8phJv1lOmHH5xeQhIc/tWcfzwYY1Ab90bw2PAfDT';
-			$mail->SMTPSecure	= 'tls';
-			$mail->Port    		= 587;
-			
-			$mail->setFrom('debasish.wdc@gmail.com', 'Mega Pool support team');
 			
 			// Add a recipient
 			foreach($players as $player){

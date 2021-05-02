@@ -53,7 +53,7 @@
 											</div>
 										</div>
 
-										<div><?php echo @date('d-m-Y h:i:s', strtotime($list['team_selection_ends_on'])); ?></div>
+										<div><?php echo @date('d-m-Y h:i A', strtotime($list['team_selection_ends_on'])); ?></div>
 									</div>
 									
 									<div class="col-md-4 col-xl-4">
@@ -110,6 +110,10 @@
 												<button class="mr-3 mb-3 btn-icon btn-pill btn btn-outline-warning"><i class="pe-7s-notes btn-icon-wrapper"> </i>Add Player</button>
 											</a>
 										<?php } ?>
+										
+										<a href="<?php echo  base_url('edit-draft/'.$list['draft_url']); ?>">
+											<button class="mr-3 mb-3 btn-icon btn-pill btn btn-outline-success"><i class="pe-7s-tools btn-icon-wrapper"> </i>Edit</button>
+										</a>
 									<?php } ?>
 									<a href="<?php echo  base_url('view-draft/'.$list['draft_url']); ?>">
 										<button class="mr-3 mb-3 btn-icon btn-pill btn btn-outline-info"><i class="pe-7s-notes btn-icon-wrapper"> </i>View Draft</button>

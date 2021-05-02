@@ -19,23 +19,41 @@
 									<input name="draft_title" value="<?php echo $draft_details['draft_title']; ?>" id="draft_title" placeholder="Enter title" type="text" class="form-control" required="required" autocomlete="off">
 								</div>
 							</div>
-							<div class="col-sm-12 col-md-4">
-								<div class="position-relative form-group">
-									<div>
-										<label for="sport_id" class="">Select League</label>
+							<?php if($draft_details['draft_status'] != 4){ ?>
+								<div class="col-sm-12 col-md-4">
+									<div class="position-relative form-group">
+										<div>
+											<label for="sport_id" class="">Select League</label>
+										</div>
+										<select name="league_id" id="league_id" class="form-control" style="padding-left: 5px !important;">
+											<option value="">Choose...</option>
+											<?php if($selected_league){ foreach($selected_league as $league){ ?>
+												<option <?php if($draft_details['league_id'] == $league['league_id']){ echo "selected"; } ?> value="<?php echo $league['league_id']; ?>"><?php echo $league['league_title']; ?></option>
+											<?php }} ?>
+										</select>
 									</div>
-									<select name="league_id" id="league_id" class="form-control" style="padding-left: 5px !important;" readonly>
-										<option value="">Choose...</option>
-										<?php if($selected_league){ foreach($selected_league as $league){ if($draft_details['league_id'] != $league['league_id']){ continue; }?>
-											<option <?php if($draft_details['league_id'] == $league['league_id']){ echo "selected"; } ?> value="<?php echo $league['league_id']; ?>"><?php echo $league['league_title']; ?></option>
-										<?php }} ?>
-									</select>
 								</div>
-							</div>
+							<?php }else{ ?>
+								<input type="hidden" name="league_id" id="league_id" class="form-control" value="<?php echo $draft_details['league_id']; ?>">
+							<?php } ?>
 							<div class="col-sm-12 col-md-4">
 								<div class="position-relative form-group">
 									<label for="team_selection_ends_on" class="">Team Selection Ends On</label>
 									<input value="<?php echo $draft_details['team_selection_ends_on']; ?>" name="team_selection_ends_on" id="team_selection_ends_on" placeholder="Enter timeing" type="text" class="datepicker form-control" required="required" autocomlete="off">
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-4">
+								<div class="position-relative form-group">
+									<div>
+										<label for="team_selection_ends_on" class="">Enter Selection Time</label>
+									</div>
+									<select class="form-control" aria-label="Default select" name="selection_timing">
+										<option <?php if($draft_details['selection_timing'] == 1){ echo "selected"; } ?> value="1">1 minute</option>
+										<option <?php if($draft_details['selection_timing'] == 2){ echo "selected"; } ?> value="2">2 minute</option>
+										<option <?php if($draft_details['selection_timing'] == 3){ echo "selected"; } ?> value="3">3 minute</option>
+										<option <?php if($draft_details['selection_timing'] == 4){ echo "selected"; } ?> value="4">4 minute</option>
+										<option <?php if($draft_details['selection_timing'] == 5){ echo "selected"; } ?> value="5">5 minute</option>
+									</select>
 								</div>
 							</div>
 						</div>

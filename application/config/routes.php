@@ -244,6 +244,13 @@ $route['submit-team']   		= 'front_end/player/draft/submit_team';
 $route['manage-draft']          = 'front_end/player/draft/manage_draft';
 $route['manage-draft/(:num)']   = 'front_end/player/draft/manage_draft/$1';
 $route['view-draft-standings-table/(:any)'] = 'front_end/player/draft/view_draft_standings_table/$1';
+$route['check-draft-selection-timing'] = 'front_end/player/draft/check_draft_selection_timing';
+$route['check-draft-selection-timing-by-draft-id'] = 'front_end/player/draft/check_draft_selection_timing_by_draft_id';
+
+$route['check-my-selection-time'] = 'front_end/player/draft/check_my_selection_time';
+$route['get-already-selected-players'] = 'front_end/player/draft/get_already_selected_players';
+$route['get-available-teams-to-select'] = 'front_end/player/draft/get_available_teams_to_select';
+$route['start-team-selection'] = 'front_end/player/draft/start_team_selection';
 
 #player wallet
 $route['my-wallet']                     = 'front_end/player/wallet/my_wallet';

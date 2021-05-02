@@ -233,8 +233,8 @@ class Leaguemaster_model extends CI_Model {
 		}
 	}
 	
-	
-	
+    
+    
 	/**
 	 *
 	 * Function used to get all tams by league and without teamid
@@ -449,6 +449,20 @@ class Leaguemaster_model extends CI_Model {
 			return $query->result_array();
 		}else{
 			return false;
+		}
+	}
+    
+    public function getAllTeamCountLeagueId($leagueId){
+		$query = $this->db->select("COUNT(LTR.team_id) as count")
+                        ->from("league_team_relation LTR")
+						->where("LTR.league_id", $leagueId)
+						->get();
+						
+        if($query->num_rows() > 0){
+			$res = $query->row_array();
+            return $res['count'];
+		}else{
+			return 0;
 		}
 	}
 }
