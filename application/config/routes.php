@@ -110,6 +110,15 @@ $route['admin-edit-commissioner/(:num)']		= 'admin/commissioner/admin_edit_commi
 $route['admin-update-commissioner']				= 'admin/commissioner/admin_update_commissioner';
 
 
+#Admin megapool management
+$route['admin-megapool-leagues']		= 'admin/megapool/admin_megapool_leagues';
+$route['admin-megapool-leagues/(:num)']	= 'admin/megapool/admin_megapool_leagues/$1';
+$route['admin-megapool-draft']			= 'admin/megapool/admin_megapool_draft';
+$route['admin-megapool-draft/(:num)']	= 'admin/megapool/admin_megapool_draft/$1';
+$route['admin-edit-draft/(:num)']	    = 'admin/megapool/admin_edit_draft/$1';
+$route['update-admin-draft']		    = 'admin/megapool/update_admin_draft';
+
+
 #Admin player management
 $route['admin-player-management']			= 'admin/player/admin_player_management';
 $route['admin-player-management/(:num)']	= 'admin/player/admin_player_management/$1';

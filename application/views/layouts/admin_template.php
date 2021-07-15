@@ -347,8 +347,13 @@
 							</a>
 							<ul>
 								<li>
-									<a href="#" <?php if($action == 'admin_megapool_leagues'){ ?> class="mm-active" <?php } ?>>
+									<a href="<?php echo  base_url('admin-megapool-leagues'); ?>" <?php if($action == 'admin_megapool_leagues'){ ?> class="mm-active" <?php } ?>>
 										<i class="metismenu-icon"></i> All Mega Pools
+									</a>
+								</li>
+                                <li>
+									<a href="<?php echo  base_url('admin-megapool-draft'); ?>" <?php if($action == 'admin_megapool_draft'){ ?> class="mm-active" <?php } ?>>
+										<i class="metismenu-icon"></i> All Draft
 									</a>
 								</li>
 							</ul>

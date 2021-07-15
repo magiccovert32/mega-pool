@@ -699,4 +699,92 @@ class Megapoolmaster_model extends CI_Model {
 			return 0;
 		}
 	}
+    
+    public function getTotalMegapoolCountForAdmin(){				
+		$query = $this->db->select("COUNT(MPM.mega_pool_id) as count")
+						->from("mega_pool_master MPM")
+						->where("(MPM.current_status != '3' AND MPM.current_status != '2')")
+						->get();
+                        
+        if($query->num_rows() > 0){
+			$count =  $query->row();
+			return $count->count;
+		}else{
+			return 0;
+		}
+	}
+    
+    public function getAllMegapoolForAdmin($page,$perpage){		
+		$page = $page-1;
+		
+		if ($page<0) { 
+			$page = 0;
+		}
+		
+		$from = $page*$perpage;
+		$this->db->limit($perpage, $from);
+		
+		$query = $this->db->select("MPM.*")
+							->from("mega_pool_master MPM")
+                            ->where("(MPM.current_status != 3 AND MPM.current_status != '2')")
+							->order_by('MPM.created_on DESC')
+							->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+    
+    public function getTotalDraftCountForAdmin(){				
+		$query = $this->db->select("COUNT(DM.draft_id ) as count")
+						->from("draft_master DM")
+                            ->where("(DM.draft_status != '3' AND DM.draft_status != '2')")
+						->get();
+                        
+        if($query->num_rows() > 0){
+			$count =  $query->row();
+			return $count->count;
+		}else{
+			return 0;
+		}
+	}
+    
+    public function getAllDraftForAdmin($page,$perpage){		
+		$page = $page-1;
+		
+		if ($page<0) { 
+			$page = 0;
+		}
+		
+		$from = $page*$perpage;
+		$this->db->limit($perpage, $from);
+		
+		$query = $this->db->select("DM.*")
+							->from("draft_master DM")
+                            ->where("(DM.draft_status != '3' AND DM.draft_status != '2')")
+							->order_by('DM.created_on DESC')
+							->get();
+                        
+        if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+    
+    public function getDraftDetails($id){				
+		$query = $this->db->select("DM.*")
+							->from("draft_master DM")
+							->where("DM.draft_id",$id)
+							->where("DM.draft_status != 3")
+							->get();
+                        
+        if($query->num_rows() > 0){
+			return  $query->row_array();
+		}else{
+			return 0;
+		}
+	}
 }
